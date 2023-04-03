@@ -97,15 +97,15 @@ export class VentaCreateComponent implements OnInit {
           descripcion_venta: ventaForm.value.descripcion_venta,
           iduser: this.identity.id,
           fecha_venta: ventaForm.value.fecha_venta,
-          mes: 4,
-          anio: 2023,
+          mes: +ventaForm.value.mes,
+          anio: +ventaForm.value.anio,
           valor_venta: this.total,
           detalles: this.data_detalle
         }
 
         console.log("Data final: ", data);
 
-        this._ventaService.guardarVenta(data).subscribe(
+        /* this._ventaService.guardarVenta(data).subscribe(
           response => {
             Swal.fire({
               position: 'top-end',
@@ -119,7 +119,7 @@ export class VentaCreateComponent implements OnInit {
           error => {
             console.log("Error: ", error);
           }
-        );
+        ); */
 
       }else{
         console.log("error en el formulario");

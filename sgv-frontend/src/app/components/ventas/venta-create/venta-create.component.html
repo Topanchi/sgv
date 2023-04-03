@@ -47,18 +47,34 @@
                                             <input type="text" class="form-control" value="{{identity.email}}" readonly>
                                         </div>
                                         <div class="col-lg-3 form-group">
-                                            <label><b>Descripción de la venta</b></label>
-                                            <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta">
-                                          
-                                        </div>
-                                        <div class="col-lg-2 form-group">
-                                            <label><b>Fecha venta</b></label>
-                                            <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta">
-                                       
-                                        
+                                            <label><b>Nombre del Cliente</b></label>
+                                            <input type="text" class="form-control" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="venta.nombre_cliente">
                                         </div>
                                         <div class="col-lg-3 form-group">
-                                            <label><b>-</b></label>
+                                            <label><b>Descripción de la venta</b></label>
+                                            <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta">
+                                        </div>
+                                        <div class="col-lg-2 form-group text-center">
+                                            <label><b>Fecha venta</b></label>
+                                            <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta"> -->
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <input type="text" class="form-control" #dia="ngModel" name="dia" [(ngModel)]="venta.dia">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input type="text" class="form-control" #mes="ngModel" name="mes" [(ngModel)]="venta.mes">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input type="text" class="form-control" #anio="ngModel" name="anio" [(ngModel)]="venta.anio">
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-lg-12 col-xl-12 form-group">
+                                            <!-- <label><b>-</b></label> -->
                                             <button type="submit" class="btn btn-success btn-block">Registrar venta</button>
                                         </div>
                                     </div>

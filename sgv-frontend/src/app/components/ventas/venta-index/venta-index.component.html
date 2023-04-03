@@ -93,7 +93,7 @@
                                     <tr>
                                         <th>Descripcion venta</th>
                                         <th>Valor venta</th>
-                                        <!-- <th>Fecha de ingreso</th> -->
+                                        <th>Cliente</th>
                                         <th>Fecha de la venta</th>
                                         <th>Trabajador</th>
                                         <th class="text-center">Acciones</th>
@@ -105,7 +105,7 @@
                                             {{item.descripcion_venta}}
                                         </td>
                                         <td> <b>$</b>{{item.valor_venta}}</td>
-                                        <!-- <td>{{item.fecha_ingreso | date: 'd MMMM y'}}</td> -->
+                                        <td>{{item.nombre_cliente}}</td>
                                         <td>{{item.fecha_venta }}</td>
                                         <td>
                                             {{item.iduser.nombre}}
