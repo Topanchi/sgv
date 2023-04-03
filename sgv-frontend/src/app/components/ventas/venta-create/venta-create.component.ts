@@ -93,33 +93,49 @@ export class VentaCreateComponent implements OnInit {
     if(ventaForm.valid){
       console.log(ventaForm.value);
       if(ventaForm.value.descripcion_venta != ''){
-        let data = {
-          descripcion_venta: ventaForm.value.descripcion_venta,
-          iduser: this.identity.id,
-          fecha_venta: ventaForm.value.fecha_venta,
-          mes: +ventaForm.value.mes,
-          anio: +ventaForm.value.anio,
-          valor_venta: this.total,
-          detalles: this.data_detalle
-        }
 
-        console.log("Data final: ", data);
+        Swal.fire({
+          title: '¿Desea registrar la venta?',
+          text: "Puede esdtiar la venta mas adelante!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí'
+        }).then((result) => {
+          if (result.isConfirmed) {
 
-        /* this._ventaService.guardarVenta(data).subscribe(
-          response => {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Venta registrada!',
-              showConfirmButton: false,
-              timer: 1500
-            })
-            this._router.navigate(['ventas']);
-          },
-          error => {
-            console.log("Error: ", error);
+            let data = {
+              descripcion_venta: ventaForm.value.descripcion_venta,
+              nombre_cliente: ventaForm.value.nombre_cliente,
+              iduser: this.identity.id,
+              fecha_venta: ventaForm.value.fecha_venta != undefined ? ventaForm.value.fecha_venta : '3/04/2023',
+              mes: +ventaForm.value.mes,
+              anio: +ventaForm.value.anio,
+              valor_venta: this.total,
+              detalles: this.data_detalle
+            }
+    
+            console.log("Data final: ", data);
+    
+            this._ventaService.guardarVenta(data).subscribe(
+              response => {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Venta registrada!',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                this._router.navigate(['ventas']);
+              },
+              error => {
+                console.log("Error: ", error);
+              }
+            );
+            
           }
-        ); */
+        })
 
       }else{
         console.log("error en el formulario");
