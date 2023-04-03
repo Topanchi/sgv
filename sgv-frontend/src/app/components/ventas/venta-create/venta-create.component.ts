@@ -13,6 +13,13 @@ import * as Moment from "moment";
 import {extendMoment} from 'moment-range';
 const moment = extendMoment(Moment);
 
+import datepickerFactory from 'jquery-datepicker';
+import datepickerJAFactory from 'jquery-datepicker/i18n/jquery.ui.datepicker-en-GB';
+
+declare const $: any; // avoid the error on $(this.eInput).datepicker();
+datepickerFactory($);
+datepickerJAFactory($);
+
 @Component({
   selector: 'app-venta-create',
   templateUrl: './venta-create.component.html',
@@ -63,12 +70,34 @@ export class VentaCreateComponent implements OnInit {
     private _router: Router,
   ) {
     this.identity = this._userService.getIdentity();
+    $(function() {
+      $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+      };
+      $.datepicker.setDefaults($.datepicker.regional['es']);
+      $(function () {
+        $("#fecha_venta").datepicker();
+      });
+    });
    }
 
   ngOnInit(): void {
     if(this.identity){
       this.obtenerProductos();
-      console.log(this.identity);
     }else{
       this._router.navigate(['']);
     }
@@ -81,15 +110,12 @@ export class VentaCreateComponent implements OnInit {
         console.log("error en el formulario");
         this.error_msg = 'La cantidad debe ser mayor a 0'
       }else{
-        console.log(detalleForm.value);
         this.data_detalle.push({
           idproducto: detalleForm.value.idproducto,
           cantidad: +detalleForm.value.cantidad,
           valor_producto: this.producto.valor_producto,
           producto: this.producto.descripcion
         });
-
-        console.log(this.data_detalle);
 
         this.total = this.total + ((parseInt(this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
 
@@ -110,10 +136,13 @@ export class VentaCreateComponent implements OnInit {
   public onSubmitVenta(ventaForm:any){
     if(ventaForm.valid){
       console.log(ventaForm.value);
-      
+      let fechaPicker = $("#fecha_venta").datepicker()[0].value;
+      ventaForm.value.fecha_venta = fechaPicker;
+      let fechaFinal = ventaForm.value.fecha_venta.toString();
+      console.log(fechaFinal)
+      let fecha2Final = fechaFinal.split('/');
+
       if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
-        let fecha = ventaForm.value.fecha_venta.split('/');
-      if(ventaForm.value.descripcion_venta != ''){
 
         Swal.fire({
           title: '¿Desea registrar la venta?',
@@ -130,16 +159,16 @@ export class VentaCreateComponent implements OnInit {
               descripcion_venta: ventaForm.value.descripcion_venta,
               nombre_cliente: ventaForm.value.nombre_cliente,
               iduser: this.identity.id,
-              fecha_venta: ventaForm.value.fecha_venta,
-              mes: +fecha[1],
-              anio: +fecha[2],
+              fecha_venta: fechaPicker,
+              mes: +fecha2Final[1],
+              anio: +fecha2Final[2],
               valor_venta: this.total,
               detalles: this.data_detalle
             }
     
             console.log("Data final: ", data);
     
-            /* this._ventaService.guardarVenta(data).subscribe(
+            this._ventaService.guardarVenta(data).subscribe(
               response => {
                 Swal.fire({
                   position: 'top-end',
@@ -153,7 +182,7 @@ export class VentaCreateComponent implements OnInit {
               error => {
                 console.log("Error: ", error);
               }
-            ); */
+            ); 
             
           }
         })
@@ -189,7 +218,6 @@ export class VentaCreateComponent implements OnInit {
     this._productoService.getProductoPorId(id.value).subscribe(
       response => {
         this.producto = response;
-        console.log("Selecc?: ",this.producto);
       },
       error => {
 
@@ -211,7 +239,6 @@ export class VentaCreateComponent implements OnInit {
     this._productoService.getProductos('').subscribe(
       response => {
         this.productos = response;
-        console.log("produxtos: ", this.productos);
       },
       error => {
 
