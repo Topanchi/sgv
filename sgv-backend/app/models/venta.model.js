@@ -9,6 +9,7 @@ const Venta = mongoose.model(
     mes: Number,
     anio: Number,
     descripcion_venta: String,
+    nombre_cliente: String,
     iduser: {
       type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }
