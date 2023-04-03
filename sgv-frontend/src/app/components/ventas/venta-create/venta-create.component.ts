@@ -110,7 +110,9 @@ export class VentaCreateComponent implements OnInit {
   public onSubmitVenta(ventaForm:any){
     if(ventaForm.valid){
       console.log(ventaForm.value);
-      let fecha = ventaForm.value.fecha_venta.split('/');
+      
+      if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
+        let fecha = ventaForm.value.fecha_venta.split('/');
       if(ventaForm.value.descripcion_venta != ''){
 
         Swal.fire({
