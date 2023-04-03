@@ -3,4 +3,9 @@ tfoot {
     color: #fafafa;
     font-size: 100%;
 }
+
+button.example-custom-date-class {
+    background: orange;
+    border-radius: 100%;
+}
   

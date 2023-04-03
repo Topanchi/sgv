@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { VentaService } from '../../../services/venta.service';
 import { ProductoService } from '../../../services/producto.service';
 import { UserService } from '../../../services/user.service';
@@ -8,12 +9,29 @@ import { DetalleVenta } from '../../../models/detalleventa';
 import { Venta } from '../../../models/venta';
 import { User } from 'src/app/models/user';
 
+import * as Moment from "moment";
+import {extendMoment} from 'moment-range';
+const moment = extendMoment(Moment);
+
 @Component({
   selector: 'app-venta-create',
   templateUrl: './venta-create.component.html',
-  styleUrls: ['./venta-create.component.css']
+  styleUrls: ['./venta-create.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class VentaCreateComponent implements OnInit {
+
+  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    // Only highligh dates inside the month view.
+    if (view === 'month') {
+      const date = cellDate.getDate();
+
+      // Highlight the 1st and 20th day of each month.
+      return date === 1 || date === 20 ? 'example-custom-date-class' : '';
+    }
+
+    return '';
+  };
 
   public identity: any;
   public venta: any = {
@@ -92,6 +110,7 @@ export class VentaCreateComponent implements OnInit {
   public onSubmitVenta(ventaForm:any){
     if(ventaForm.valid){
       console.log(ventaForm.value);
+      let fecha = ventaForm.value.fecha_venta.split('/');
       if(ventaForm.value.descripcion_venta != ''){
 
         Swal.fire({
@@ -109,16 +128,16 @@ export class VentaCreateComponent implements OnInit {
               descripcion_venta: ventaForm.value.descripcion_venta,
               nombre_cliente: ventaForm.value.nombre_cliente,
               iduser: this.identity.id,
-              fecha_venta: ventaForm.value.fecha_venta != undefined ? ventaForm.value.fecha_venta : '3/04/2023',
-              mes: +ventaForm.value.mes,
-              anio: +ventaForm.value.anio,
+              fecha_venta: ventaForm.value.fecha_venta,
+              mes: +fecha[1],
+              anio: +fecha[2],
               valor_venta: this.total,
               detalles: this.data_detalle
             }
     
             console.log("Data final: ", data);
     
-            this._ventaService.guardarVenta(data).subscribe(
+            /* this._ventaService.guardarVenta(data).subscribe(
               response => {
                 Swal.fire({
                   position: 'top-end',
@@ -132,7 +151,7 @@ export class VentaCreateComponent implements OnInit {
               error => {
                 console.log("Error: ", error);
               }
-            );
+            ); */
             
           }
         })
@@ -175,6 +194,16 @@ export class VentaCreateComponent implements OnInit {
       }
     );
   }
+
+  /* public dateChanged($event) {
+    console.log("fecha: ", typeof $event.target.value);
+    let fecha = $event.target.value;
+
+    console.log("fecha: ", fecha);
+    
+    console.log(fecha.toString());
+    console.log("fecha: ", typeof fecha);
+  } */
 
   private obtenerProductos() {
     this._productoService.getProductos('').subscribe(
