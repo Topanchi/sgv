@@ -1,0 +1,63 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { VentaService } from '../../../services/venta.service';
+import { ProductoService } from '../../../services/producto.service';
+import { UserService } from '../../../services/user.service';
+import Swal from 'sweetalert2';
+
+@Component({
+  selector: 'app-venta-index',
+  templateUrl: './venta-index.component.html',
+  styleUrls: ['./venta-index.component.css']
+})
+export class VentaIndexComponent implements OnInit {
+
+  public p: number = 1;
+  public identity: any;
+  public ventas: any;
+  public filtroText: any;
+  public success_msg: String | undefined;
+  public error_msg: String | undefined;
+
+  constructor(private _ventaService: VentaService, 
+              private _userService: UserService,
+              private _productoService: ProductoService,
+              private _router: Router,
+  ) { 
+    this.identity = this._userService.getIdentity();
+  }
+
+  ngOnInit(): void {
+
+    if(this.identity){
+      this.obtenerVentas();
+    }else{
+      this._router.navigate(['']);
+    }
+  }
+
+  public search(searchForm:any) {
+    console.log(searchForm.value.filtro);
+    this._ventaService.getVentas(searchForm.value.filtro).subscribe(
+      response => {
+        this.ventas = response;
+      },
+      error => {
+
+      }
+    );
+  }
+
+  private obtenerVentas() {
+    this._ventaService.getVentas('').subscribe(
+      response => {
+        this.ventas = response;
+        console.log("ventas: ", this.ventas); 
+      },
+      error => {
+
+      }
+    );
+  }
+
+}

@@ -1,0 +1,57 @@
+<div class="wrapper">
+    <nav id="sidebar" class="sidebar" style="background:#d28f6d !important">
+        <a class="sidebar-brand" href="index.html">
+            <svg>
+                <use xlink:href="#ion-ios-pulse-strong"></use>
+            </svg>
+            SGV Banqueteria
+        </a>
+        <div class="sidebar-content">
+            <div class="sidebar-user">
+                <img src="../../../assets/img/cropped-Imagen-corporativa-Eliana-Tapia.png" class="img-fluid rounded-circle mb-2" alt="Linda Miller" />
+                <div class="font-weight-bold">{{identity.nombre +' '+ identity.apellidos}}</div>
+                <small>{{this.rol}}</small>
+            </div>
+
+            <ul class="sidebar-nav">
+                <li class="sidebar-header">
+                    
+                </li>
+                <li class="sidebar-item">
+                    <a href="#dashboards" data-toggle="collapse" class="sidebar-link">
+                        <i class="align-middle mr-2 fas fa-fw fa-home"></i> <span class="align-middle">Dashboards</span>
+                    </a>
+                    <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show" data-parent="#sidebar">
+                        <li class="sidebar-item" routerLinkActive="sidebar-item active"><a class="sidebar-link" [routerLink]="['/dasboard']">Resúmenes</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="#">Analytics</a></li>
+                        <li class="sidebar-item active"><a class="sidebar-link" href="#">E-commerce</a></li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item" routerLinkActive="sidebar-item active">
+                    <a class="sidebar-link" [routerLink]="['/usuarios']">
+                        <i class="align-middle mr-2 fas fa-fw fa-address-book"></i> <span class="align-middle">Usuarios</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-item" routerLinkActive="sidebar-item active">
+                    <a class="sidebar-link" [routerLink]="['/productos']">
+                        <i class="align-middle mr-2 fas fa-fw fa-anchor"></i> <span class="align-middle">Productos</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item" routerLinkActive="sidebar-item active">
+                    <a class="sidebar-link" [routerLink]="['/ventas']">
+                        <i class="align-middle mr-2 fas fa-fw fa fa-credit-card"></i> <span class="align-middle">Ventas</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-item">
+                    <a class="sidebar-link" (click)="logout()">
+                        <i class="align-middle mr-2 fas fa-fw fa fa-sign-out-alt"></i> <span class="align-middle">Cerrar sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
