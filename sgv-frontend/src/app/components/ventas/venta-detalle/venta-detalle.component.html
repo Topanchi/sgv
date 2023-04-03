@@ -42,6 +42,10 @@
                                             <input type="text" class="form-control" value="{{venta.iduser.email}}" readonly>
                                         </div>
                                         <div class="col-lg-3 form-group">
+                                            <label><b>Nombre del Cliente</b></label>
+                                            <input type="text" class="form-control" value="{{venta.nombre_cliente}}" readonly>
+                                        </div>
+                                        <div class="col-lg-3 form-group">
                                             <label><b>Descripción de la venta</b></label>
                                             <input type="text" class="form-control" value="{{venta.descripcion_venta}}" readonly> 
                                         
@@ -50,8 +54,14 @@
                                             <label><b>Fecha venta</b></label>
                                             <input type="text" class="form-control"value="{{venta.fecha_venta}}" readonly>
                                         </div>
-                                        <div class="col-lg-3 form-group">
+                                        <!-- <div class="col-lg-3 form-group">
                                             <label><b>-</b></label>
+                                            <button type="submit" class="btn btn-warning btn-block" [routerLink]="['/ventas']">Volver</button>
+                                        </div> -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-lg-12 col-xl-12 form-group">
+                                            <!-- <label><b>-</b></label> -->
                                             <button type="submit" class="btn btn-warning btn-block" [routerLink]="['/ventas']">Volver</button>
                                         </div>
                                     </div>

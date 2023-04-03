@@ -38,27 +38,40 @@
                             <div class="card-body">
                                 <form #ventaForm="ngForm" (ngSubmit)="onSubmitVenta(ventaForm)">
                                     <div class="row">
-                                        <div class="col-lg-2 form-group">
+                                        <div class="col-lg-6 form-group">
                                             <label><b>Trabajador que ingresa venta</b></label>
                                             <input type="text" class="form-control" value="{{identity.nombre +' '+ identity.apellidos}}" readonly>
                                         </div>
-                                        <div class="col-lg-2 form-group">
+                                        <div class="col-lg-6 form-group">
                                             <label><b>Correo electrónico</b></label>
                                             <input type="text" class="form-control" value="{{identity.email}}" readonly>
                                         </div>
-                                        <div class="col-lg-3 form-group">
-                                            <label><b>Descripción de la venta</b></label>
-                                            <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta">
-                                          
-                                        </div>
-                                        <div class="col-lg-2 form-group">
-                                            <label><b>Fecha venta</b></label>
-                                            <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta">
-                                       
                                         
-                                        </div>
-                                        <div class="col-lg-3 form-group">
-                                            <label><b>-</b></label>
+                                    </div>
+                                    <div class="row">
+                                       
+                                            <div class="col-lg-4 form-group">
+                                                <label><b>Nombre del Cliente</b></label>
+                                                <input type="text" class="form-control" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="venta.nombre_cliente">
+                                            </div>
+                                            <div class="col-lg-4 form-group">
+                                                <label><b>Descripción de la venta</b></label>
+                                                <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta" placeholder="Pequeña deescripción de la venta">
+                                            </div>
+                                            <div class="col-lg-4 form-group">
+                                                <label><b>Fecha venta</b></label>
+                                                <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" placeholder="Ejemplo 05/06/1999"> -->
+                                                <input type="text" class="form-control" id="fecha_venta" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-lg-12 col-xl-12 form-group">
+                                            <!-- <label><b>-</b></label> -->
                                             <button type="submit" class="btn btn-success btn-block">Registrar venta</button>
                                         </div>
                                     </div>
@@ -125,7 +138,7 @@
                                     </thead>
                                     <tbody *ngFor="let item of data_detalle; let idx = index">
                                         <td class="text-center">
-                                            <button type="submit" class="input-group-test btn btn-danger btn-sm" ngbTooltip="Sacar de la lista" (click)="eliminarProductoLista(idx,item.valor_producto,item.cantidad)">
+                                            <button type="submit" class="input-group-test btn btn-danger" ngbTooltip="Sacar de la lista" (click)="eliminarProductoLista(idx,item.valor_producto,item.cantidad)">
                                                 <i class="fa fa-trash"></i>
                                             </button> 
                                         </td>

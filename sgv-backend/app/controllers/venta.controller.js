@@ -17,6 +17,7 @@ exports.create = (req, res) => {
         mes: req.body.mes,
         anio: req.body.anio,
         descripcion_venta: req.body.descripcion_venta,
+        nombre_cliente: req.body.nombre_cliente,
         iduser: req.body.iduser
     });
 

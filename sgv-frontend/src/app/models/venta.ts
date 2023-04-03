@@ -6,6 +6,7 @@ export class Venta {
         public fecha_venta: String,
         public mes: Number,
         public anio: Number,
+        public nombre_cliente: String,
         public descripcion_venta: String
     ){
         

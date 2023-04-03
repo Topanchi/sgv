@@ -2,8 +2,17 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import "@angular/compiler";
+import { NgbTooltipModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core/';
+import { MatInputModule } from '@angular/material/input';
+
+/* import {  MatDatepickerToggle } from '@angular/material/datepicker/datepicker-toggle'; */
+
+/* import { MatMomentDateModule } from '@angular/material-moment-adapter'; */
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +26,8 @@ import { UserIndexComponent } from './components/users/user-index/user-index.com
 import { VentaIndexComponent } from './components/ventas/venta-index/venta-index.component';
 import { VentaCreateComponent } from './components/ventas/venta-create/venta-create.component';
 import { VentaDetalleComponent } from './components/ventas/venta-detalle/venta-detalle.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -38,9 +49,16 @@ import { VentaDetalleComponent } from './components/ventas/venta-detalle/venta-d
     HttpClientModule,
     FormsModule,
     NgbTooltipModule,
-    NgxPaginationModule
+    NgbModule,
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule, 
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatInputModule,
+    /*MatDatepickerToggle */
   ],
-  providers: [],
+  providers: [MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
