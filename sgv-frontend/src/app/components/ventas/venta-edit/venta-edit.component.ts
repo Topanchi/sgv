@@ -167,6 +167,7 @@ export class VentaEditComponent implements OnInit {
 
   public eliminarProductoLista(idx:any,valor_producto:any,cantidad:any){
     this.data_detalle.splice(idx,1);
+    this.detalle_venta.splice(idx,1);
     this.total = this.total - (parseInt(valor_producto) * parseInt(cantidad));
   }
 
