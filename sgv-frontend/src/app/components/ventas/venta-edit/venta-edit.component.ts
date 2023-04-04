@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { ProductoService } from '../../../services/producto.service';
 import { VentaService } from '../../../services/venta.service';
 import { UserService } from '../../../services/user.service';
@@ -173,7 +174,62 @@ export class VentaEditComponent implements OnInit {
 
   public onSubmitVenta(ventaForm:any){
     if(ventaForm.valid){
+      console.log(ventaForm.value);
+      let fechaPicker = $("#fecha_venta").datepicker()[0].value;
+      ventaForm.value.fecha_venta = fechaPicker;
+      let fechaFinal = ventaForm.value.fecha_venta.toString();
+      console.log(fechaFinal)
+      let fecha2Final = fechaFinal.split('/');
 
+      if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
+
+        Swal.fire({
+          title: '¿Desea registrar la venta?',
+          text: "Puede esdtiar la venta mas adelante!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí'
+        }).then((result) => {
+          if (result.isConfirmed) {
+
+            let data = {
+              descripcion_venta: ventaForm.value.descripcion_venta,
+              nombre_cliente: ventaForm.value.nombre_cliente,
+              iduser: this.identity.id,
+              fecha_venta: fechaPicker,
+              mes: +fecha2Final[1],
+              anio: +fecha2Final[2],
+              valor_venta: this.total,
+              detalles: this.data_detalle
+            }
+    
+            console.log("Data final: ", data);
+    
+            /* this._ventaService.editarVenta(data).subscribe(
+              response => {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Venta registrada!',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                this._router.navigate(['ventas']);
+              },
+              error => {
+                console.log("Error: ", error);
+              }
+            );  */
+            
+          }
+        })
+
+      }else{
+        console.log("error en el formulario");
+        this.error_msg_venta = 'Complete correctamente el formulario';
+      }
     }else{
       
     }
