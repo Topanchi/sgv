@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoService } from '../../../services/producto.service';
 import { VentaService } from '../../../services/venta.service';
 import { UserService } from '../../../services/user.service';
+import { DetalleVenta } from '../../../models/detalleventa';
 
 import datepickerFactory from 'jquery-datepicker';
 import datepickerJAFactory from 'jquery-datepicker/i18n/jquery.ui.datepicker-en-GB';
@@ -88,8 +89,9 @@ export class VentaEditComponent implements OnInit {
         this._ventaService.getVentaPorId(this.id).subscribe(
           response => {
             this.venta = response.venta;
-            console.log("venta editar: ", this.venta);
             this.detalle_venta = response.detalles
+            console.log("venta editar::: ", this.venta);
+            console.log("detalle editar: ", this.detalle_venta);
           },
           error => {}
         );
@@ -136,6 +138,36 @@ export class VentaEditComponent implements OnInit {
 
       }
     );
+  }
+
+  public onSubmitDetalle(detalleForm:any) {
+    if(detalleForm.valid){
+
+      if(detalleForm.value.cantidad == '0' || detalleForm.value.cantidad == null || detalleForm.value.cantidad == ''){
+        console.log("error en el formulario");
+        this.error_msg = 'La cantidad debe ser mayor a 0'
+      }else{
+        this.data_detalle.push({
+          idproducto: detalleForm.value.idproducto,
+          cantidad: +detalleForm.value.cantidad,
+          valor_producto: this.producto.valor_producto,
+          producto: this.producto.descripcion
+        });
+
+        this.total = this.total + ((parseInt(this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
+
+        this.detalle = new DetalleVenta('','','','');
+        this.producto.valor_producto = '0';
+      }
+    }else{
+      console.log("error en el formulario");
+      this.error_msg = 'Complete correctamente el formulario'
+    }
+  }
+
+  public eliminarProductoLista(idx:any,valor_producto:any,cantidad:any){
+    this.data_detalle.splice(idx,1);
+    this.total = this.total - (parseInt(valor_producto) * parseInt(cantidad));
   }
 
   public onSubmitVenta(ventaForm:any){

@@ -1,0 +1,11 @@
+tfoot {
+    background-color: #8a8a8a;
+    color: #fafafa;
+    font-size: 100%;
+}
+
+button.example-custom-date-class {
+    background: orange;
+    border-radius: 100%;
+}
+  

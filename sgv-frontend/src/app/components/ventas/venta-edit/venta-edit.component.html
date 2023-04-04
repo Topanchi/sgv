@@ -47,11 +47,11 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-3 form-group">
+                                        <div class="col-lg-4 form-group">
                                             <label><b>Nombre del Cliente</b></label>
                                             <input type="text" class="form-control" value="{{venta.nombre_cliente}}" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="venta.nombre_cliente">
                                         </div>
-                                        <div class="col-lg-3 form-group">
+                                        <div class="col-lg-4 form-group">
                                             <label><b>Descripción de la venta</b></label>
                                             <input type="text" class="form-control" value="{{venta.descripcion_venta}}" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta"> 
                                         </div>
@@ -59,17 +59,11 @@
                                             <label><b>Fecha venta</b></label>
                                             <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" placeholder="Ejemplo 05/06/1999"> -->
                                             <input type="text" class="form-control" id="fecha_venta" value="{{venta.fecha_venta}}" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    
-                                                </div>
-                                            </div> 
                                         </div>
     
                                     </div>
                                     <div class="row">
                                         <div class="col-12 col-lg-12 col-xl-12 form-group">
-                                            <!-- <label><b>-</b></label> -->
                                             <button type="submit" class="btn btn-success btn-block">Editar venta</button>
                                         </div>
                                     </div>
@@ -92,7 +86,7 @@
                                 <h5 class="card-title">Detalles de la venta</h5>
                             </div>
                             <div class="card-body">
-                                <form #detalleForm="ngForm">
+                                <form #detalleForm="ngForm" (ngSubmit)="onSubmitDetalle(detalleForm)">
                                     <div class="row">
                                         <div class="col-lg-4 form-group">
                                             <label for=""><b>Productos</b></label>
@@ -122,7 +116,40 @@
                     </div>
 
                     <div class="col-12 col-xl-12 form-group">
-                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Productos</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-striped table-hover table-sm">
+                                    <thead class="thead-dark">
+                                        <th class="text-center">Eliminar</th>
+                                        <th class="text-center">Producto</th>
+                                        <th class="text-center">Precio</th>
+                                        <th class="text-center">Cantidad</th>
+                                        <th class="text-center">Subtotal</th>
+                                    </thead>
+                                    <tbody *ngFor="let item of detalle_venta; let idx = index">
+                                        <td class="text-center">
+                                            <button type="submit" class="input-group-test btn btn-danger" ngbTooltip="Sacar de la lista" (click)="eliminarProductoLista(idx,item.valor_producto,item.cantidad)">
+                                                <i class="fa fa-trash"></i>
+                                            </button> 
+                                        </td>
+                                        <td class="text-center">{{item.idProducto.descripcion}}</td>
+                                        <td class="text-center">{{item.idProducto.valor_producto}}</td>
+                                        <td class="text-center">{{item.cantidad}}</td>
+                                        <td class="text-center"><b>{{(item.idProducto.valor_producto)*(item.cantidad)}}</b></td>
+                                    </tbody>
+                                    <tfoot>
+                                        <td class="text-center"><b>Total</b> </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-center"><b>${{this.venta.valor_venta}}</b></td>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     
                 </div>
