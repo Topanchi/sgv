@@ -30,4 +30,9 @@ export class VentaService {
     console.log("service: ", data)
     return this._http.post(this.url + 'ventas/crear', data);
   }
+
+  public actualizarVenta(data: any) {
+    console.log("service: ", data)
+    return this._http.put(this.url + 'ventas/'+ data._id, data);
+  }
 }

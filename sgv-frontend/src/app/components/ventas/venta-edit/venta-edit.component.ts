@@ -171,8 +171,8 @@ export class VentaEditComponent implements OnInit {
       if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
 
         Swal.fire({
-          title: '¿Desea registrar la venta?',
-          text: "Puede esdtiar la venta mas adelante!",
+          title: '¿Desea actualizar la venta?',
+          text: "Puede editar la venta mas adelante!",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -182,6 +182,7 @@ export class VentaEditComponent implements OnInit {
           if (result.isConfirmed) {
 
             let data = {
+              _id: this.id,
               descripcion_venta: ventaForm.value.descripcion_venta,
               nombre_cliente: ventaForm.value.nombre_cliente,
               iduser: this.identity.id,
@@ -194,12 +195,12 @@ export class VentaEditComponent implements OnInit {
     
             console.log("Data final: ", data);
     
-            /* this._ventaService.guardarVenta(data).subscribe(
+            this._ventaService.actualizarVenta({data}).subscribe(
               response => {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'Venta registrada!',
+                  title: 'Venta actualizada!',
                   showConfirmButton: false,
                   timer: 1500
                 })
@@ -208,8 +209,7 @@ export class VentaEditComponent implements OnInit {
               error => {
                 console.log("Error: ", error);
               }
-            );  */
-            
+            ); 
           }
         })
 

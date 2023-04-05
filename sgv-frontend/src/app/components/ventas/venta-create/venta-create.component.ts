@@ -146,7 +146,7 @@ export class VentaCreateComponent implements OnInit {
 
         Swal.fire({
           title: '¿Desea registrar la venta?',
-          text: "Puede esdtiar la venta mas adelante!",
+          text: "Puede editar la venta mas adelante!",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
