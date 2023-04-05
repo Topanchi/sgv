@@ -1,5 +1,6 @@
 <div class="wrapper">
     <app-sidebar style="background: white !important;"></app-sidebar>
+
     <div class="main">
         <nav class="navbar navbar-expand navbar-theme"  style="background:#153d77 !important">
             <a class="sidebar-toggle d-flex mr-2">
@@ -45,26 +46,27 @@
                                             <label><b>Correo electrónico</b></label>
                                             <input type="text" class="form-control" value="{{identity.email}}" readonly>
                                         </div>
+                                        
                                     </div>
                                     <div class="row">
+                                       
                                         <div class="col-lg-4 form-group">
                                             <label><b>Nombre del Cliente</b></label>
-                                            <input type="text" class="form-control" value="{{venta.nombre_cliente}}" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="venta.nombre_cliente">
+                                            <input type="text" class="form-control" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="venta.nombre_cliente">
                                         </div>
                                         <div class="col-lg-4 form-group">
                                             <label><b>Descripción de la venta</b></label>
-                                            <input type="text" class="form-control" value="{{venta.descripcion_venta}}" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta"> 
+                                            <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta" placeholder="Pequeña deescripción de la venta">
                                         </div>
                                         <div class="col-lg-4 form-group">
                                             <label><b>Fecha venta</b></label>
                                             <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" placeholder="Ejemplo 05/06/1999"> -->
-                                            <input type="text" class="form-control" id="fecha_venta" value="{{venta.fecha_venta}}" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta">
+                                            <input type="text" class="form-control" id="fecha_venta" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta">
                                         </div>
-    
                                     </div>
                                     <div class="row">
                                         <div class="col-12 col-lg-12 col-xl-12 form-group">
-                                            <button type="submit" class="btn btn-success btn-block">Editar venta</button>
+                                            <button type="submit" class="btn btn-success btn-block">Registrar venta</button>
                                         </div>
                                     </div>
                                 </form>
@@ -73,9 +75,9 @@
                     </div>
 
                     <div class="col-12 col-xl-12 form-group">
-                        <div *ngIf="error_msg_venta" (click)="close_alert_error_venta()" class="col-12 col-lg-12 alert alert-danger alert-dismissible" role="alert">
+                        <div *ngIf="error_msg" (click)="close_alert_error()" class="col-12 col-lg-12 alert alert-danger alert-dismissible" role="alert">
                             <div class="alert-message">
-                                <strong>{{this.error_msg_venta}}</strong>
+                                <strong>{{this.error_msg}}</strong>
                             </div>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">x</span>
@@ -92,7 +94,7 @@
                                             <label for=""><b>Productos</b></label>
                                             <select class="form-control" (change)="getDataProducto($event.target)" #idproducto="ngModel" name="idproducto" [(ngModel)]="detalle.idproducto">
                                                 <option value="" disabled>Seleccionar</option>
-                                                <option value="{{item._id}}" *ngFor="let item of productos">{{item.descripcion}}</option>
+                                                <option *ngFor="let item of productos" value="{{item._id}}">{{item.descripcion}}</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-3 form-group">
@@ -112,10 +114,9 @@
                                 </form>
                             </div>
                         </div>
-
                     </div>
 
-                    <div class="col-12 col-xl-12 form-group">
+                    <div class="col-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">Productos</h5>
@@ -129,31 +130,33 @@
                                         <th class="text-center">Cantidad</th>
                                         <th class="text-center">Subtotal</th>
                                     </thead>
-                                    <tbody *ngFor="let item of detalle_venta; let idx = index">
+                                    <tbody *ngFor="let item of data_detalle; let idx = index">
                                         <td class="text-center">
                                             <button type="submit" class="input-group-test btn btn-danger" ngbTooltip="Sacar de la lista" (click)="eliminarProductoLista(idx,item.valor_producto,item.cantidad)">
                                                 <i class="fa fa-trash"></i>
                                             </button> 
                                         </td>
-                                        <td class="text-center">{{item.idProducto.descripcion}}</td>
-                                        <td class="text-center">{{item.idProducto.valor_producto}}</td>
+                                        <td class="text-center">{{item.producto}}</td>
+                                        <td class="text-center">{{item.valor_producto}}</td>
                                         <td class="text-center">{{item.cantidad}}</td>
-                                        <td class="text-center"><b>{{(item.idProducto.valor_producto)*(item.cantidad)}}</b></td>
+                                        <td class="text-center"><b>{{(item.valor_producto)*(item.cantidad)}}</b></td>
                                     </tbody>
                                     <tfoot>
                                         <td class="text-center"><b>Total</b> </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-center"><b>${{this.venta.valor_venta}}</b></td>
+                                        <td class="text-center"><b>${{total}}</b></td>
+                                        
                                     </tfoot>
                                 </table>
+                               
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </main>
     </div>
 </div>
+

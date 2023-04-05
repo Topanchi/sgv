@@ -1,10 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { ProductoService } from '../../../services/producto.service';
+import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { VentaService } from '../../../services/venta.service';
+import { ProductoService } from '../../../services/producto.service';
 import { UserService } from '../../../services/user.service';
 import { DetalleVenta } from '../../../models/detalleventa';
+import { Venta } from '../../../models/venta';
+import { User } from 'src/app/models/user';
+
+import * as Moment from "moment";
+import {extendMoment} from 'moment-range';
+const moment = extendMoment(Moment);
 
 import datepickerFactory from 'jquery-datepicker';
 import datepickerJAFactory from 'jquery-datepicker/i18n/jquery.ui.datepicker-en-GB';
@@ -16,23 +23,32 @@ datepickerJAFactory($);
 @Component({
   selector: 'app-venta-edit',
   templateUrl: './venta-edit.component.html',
-  styleUrls: ['./venta-edit.component.css']
+  styleUrls: ['./venta-edit.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class VentaEditComponent implements OnInit {
 
-  public id: any;
-  public identity: any;
-  //public categorias: any;
-  public success_msg: String | undefined;
-  public error_msg_venta: String | undefined;
+  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    // Only highligh dates inside the month view.
+    if (view === 'month') {
+      const date = cellDate.getDate();
 
+      // Highlight the 1st and 20th day of each month.
+      return date === 1 || date === 20 ? 'example-custom-date-class' : '';
+    }
+
+    return '';
+  };
+
+  public identity: any;
+  public id: any;
   public venta: any = {
     descripcion_venta : '',
   };
   public productos: any;
-
+  public success_msg: String | undefined;
   public error_msg: String | undefined;
-
+  public error_msg_venta: String | undefined;
 
   public producto: any = {
     valor_producto: '0',
@@ -43,21 +59,19 @@ export class VentaEditComponent implements OnInit {
   public detalle: any = {
     idproducto: ''
   };
-  public detalle_venta: any = {};
 
   public total: number = 0;
 
   public model:any;
 
   constructor(
-    private _router: Router,
-    private _route: ActivatedRoute,
     private _userService: UserService,
     private _productoService: ProductoService,
-    private _ventaService: VentaService
+    private _ventaService: VentaService,
+    private _router: Router,
+    private _route: ActivatedRoute
   ) {
     this.identity = this._userService.getIdentity();
-
     $(function() {
       $.datepicker.regional['es'] = {
         closeText: 'Cerrar',
@@ -88,11 +102,22 @@ export class VentaEditComponent implements OnInit {
       this._route.params.subscribe(params => {
         this.id = params['id'];
         this._ventaService.getVentaPorId(this.id).subscribe(
-          response => {
+          (response) => {
             this.venta = response.venta;
-            this.detalle_venta = response.detalles
+            console.log("obj:::::::::::: ", response);
+            response.detalles.forEach((element, index) => {
+              console.log(element,index);
+              this.data_detalle.push({
+                idproducto: element.idProducto._id,
+                cantidad: +element.cantidad,
+                valor_producto: element.idProducto.valor_producto,
+                producto: element.idProducto.descripcion
+              });
+              this.total = this.total + ((parseInt(element.idProducto.valor_producto)) * (parseInt(element.cantidad)));
+            });            
             console.log("venta editar::: ", this.venta);
-            console.log("detalle editar: ", this.detalle_venta);
+            console.log("detalle editar: ", this.data_detalle);
+            
           },
           error => {}
         );
@@ -102,43 +127,6 @@ export class VentaEditComponent implements OnInit {
     }else{
       this._router.navigate(['']);
     }
-    
-    
-  }
-
-  /* public onCleanForm(productoForm:any) {
-    productoForm.reset();
-    console.log("Ya limpié el formulario")
-  } */
-
-  public close_alert_success() {
-    this.success_msg = '';
-  }
-
-  public close_alert_error_venta() {
-    this.error_msg_venta = '';
-  }
-
-  public getDataProducto(id:any) {
-    this._productoService.getProductoPorId(id.value).subscribe(
-      response => {
-        this.producto = response;
-      },
-      error => {
-
-      }
-    );
-  }
-
-  private obtenerProductos() {
-    this._productoService.getProductos('').subscribe(
-      response => {
-        this.productos = response;
-      },
-      error => {
-
-      }
-    );
   }
 
   public onSubmitDetalle(detalleForm:any) {
@@ -154,7 +142,7 @@ export class VentaEditComponent implements OnInit {
           valor_producto: this.producto.valor_producto,
           producto: this.producto.descripcion
         });
-
+        console.log("this.data_detalle.push:", this.data_detalle);
         this.total = this.total + ((parseInt(this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
 
         this.detalle = new DetalleVenta('','','','');
@@ -168,7 +156,6 @@ export class VentaEditComponent implements OnInit {
 
   public eliminarProductoLista(idx:any,valor_producto:any,cantidad:any){
     this.data_detalle.splice(idx,1);
-    this.detalle_venta.splice(idx,1);
     this.total = this.total - (parseInt(valor_producto) * parseInt(cantidad));
   }
 
@@ -207,7 +194,7 @@ export class VentaEditComponent implements OnInit {
     
             console.log("Data final: ", data);
     
-            /* this._ventaService.editarVenta(data).subscribe(
+            /* this._ventaService.guardarVenta(data).subscribe(
               response => {
                 Swal.fire({
                   position: 'top-end',
@@ -231,8 +218,57 @@ export class VentaEditComponent implements OnInit {
         this.error_msg_venta = 'Complete correctamente el formulario';
       }
     }else{
-      
+      console.log("error en el formulario");
+      this.error_msg_venta = 'Complete correctamente el formulario';
     }
   }
 
+  public close_alert_success() {
+    this.success_msg = '';
+  }
+
+  public close_alert_error() {
+    this.error_msg = '';
+  }
+
+  public close_alert_error_venta() {
+    this.error_msg_venta = '';
+  }
+
+  public onCleanForm(ventaForm:any) {
+    ventaForm.reset();
+    console.log("Ya limpié el formulario")
+  }
+
+  public getDataProducto(id:any) {
+    this._productoService.getProductoPorId(id.value).subscribe(
+      response => {
+        this.producto = response;
+      },
+      error => {
+
+      }
+    );
+  }
+
+  /* public dateChanged($event) {
+    console.log("fecha: ", typeof $event.target.value);
+    let fecha = $event.target.value;
+
+    console.log("fecha: ", fecha);
+    
+    console.log(fecha.toString());
+    console.log("fecha: ", typeof fecha);
+  } */
+
+  private obtenerProductos() {
+    this._productoService.getProductos('').subscribe(
+      response => {
+        this.productos = response;
+      },
+      error => {
+
+      }
+    );
+  }
 }
