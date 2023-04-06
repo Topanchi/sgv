@@ -96,7 +96,52 @@ exports.findOne = (req, res) => {
 
 // Update a Venta by the id in the request
 exports.update = (req, res) => {
-  
+    if (!req.body) {
+        return res.status(400).send({
+          message: "Data to update can not be empty!"
+        });
+    }
+
+    const id = req.params.id;
+ 
+    Venta.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .then(data => {
+        if (!data) {
+            res.status(404).send({
+                message: `Cannot update Venta with id=${id}. Maybe Venta was not found!`
+            });
+        } else res.send({ message: "Venta was updated successfully." });
+
+
+        if(data){
+            console.log(data);
+            let detalles = req.body.detalles;
+
+            detalles.forEach((element, index) => {
+                var detalleVenta = new DetalleVenta();
+                detalleVenta.idProducto = element.idproducto;
+                detalleVenta.cantidad = +element.cantidad;
+                detalleVenta.venta = data._id;
+
+                detalleVenta.findByIdAndUpdate(id, detalleVenta, { useFindAndModify: false }).then(resp => {
+                    console.log("--- ok ---");
+                    res.end();
+                }).catch(err => {
+                    res.status(500).send({
+                        message:
+                            err.message || "Some error occurred while creating the Detalle Venta."
+                    });
+                });
+                
+            });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error updating Producto with id=" + id
+        });
+    });
+    
 };
 
 // Delete a Venta with the specified id in the request
