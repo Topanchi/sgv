@@ -108,3 +108,18 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   
 };
+
+// Delete all Ventas from the database.
+exports.countByMonths = (req, res) => {
+    console.log("--- Entrnado :  ", req.body);
+
+  
+    Venta.find(condition).countDocuments({"mes" : +req.body}).then(data => {
+        res.send(data);
+    }).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+};
