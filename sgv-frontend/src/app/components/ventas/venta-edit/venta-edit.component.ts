@@ -195,7 +195,17 @@ export class VentaEditComponent implements OnInit {
     
             console.log("Data final: ", data);
     
-            this._ventaService.actualizarVenta({data}).subscribe(
+            this._ventaService.actualizarVenta({
+              _id: this.id,
+              descripcion_venta: ventaForm.value.descripcion_venta,
+              nombre_cliente: ventaForm.value.nombre_cliente,
+              iduser: this.identity.id,
+              fecha_venta: fechaPicker,
+              mes: +fecha2Final[1],
+              anio: +fecha2Final[2],
+              valor_venta: this.total,
+              detalles: this.data_detalle
+            }).subscribe(
               response => {
                 Swal.fire({
                   position: 'top-end',
