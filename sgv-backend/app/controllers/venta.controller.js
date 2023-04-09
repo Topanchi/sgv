@@ -116,15 +116,20 @@ exports.update = (req, res) => {
         if(data){
             console.log(data);
             let detalles = req.body.detalles;
-
+            /**TODO: borrar detalle por id y volverlo a crear */
             detalles.forEach((element, index) => {
                 var detalleVenta = new DetalleVenta();
                 detalleVenta.idProducto = element.idproducto;
                 detalleVenta.cantidad = +element.cantidad;
-                detalleVenta.venta = data._id;
+                detalleVenta.venta = id;
+                detalleVenta._id = element._id;
 
-                detalleVenta.findByIdAndUpdate(id, detalleVenta, { useFindAndModify: false }).then(resp => {
+                detalleVenta.findByIdAndDelete(element._id, detalleVenta, { useFindAndModify: false }).then(resp => {
                     console.log("--- ok ---");
+                    res.end();
+                });
+    
+                detalleVenta.save(detalleVenta).then(resp => {
                     res.end();
                 }).catch(err => {
                     res.status(500).send({
@@ -132,6 +137,7 @@ exports.update = (req, res) => {
                             err.message || "Some error occurred while creating the Detalle Venta."
                     });
                 });
+         
                 
             });
         }
