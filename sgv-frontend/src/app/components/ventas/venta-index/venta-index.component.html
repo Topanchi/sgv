@@ -117,7 +117,7 @@
                                             <button type="submit" class="input-group-test btn btn-warning" ngbTooltip="Editar venta"> <!--[routerLink]="['/venta/editar/',item._id]"-->
                                                 <i class="fa fa-edit"></i>
                                             </button> &nbsp;
-                                            <button type="submit" class="input-group-test btn btn-danger" ngbTooltip="Eliminar producto" > <!--(click)="eliminarVenta(item._id)"-->
+                                            <button type="submit" class="input-group-test btn btn-danger" ngbTooltip="Eliminar producto" (click)="eliminarVenta(item._id)">
                                                 <i class="fa fa-trash"></i>
                                             </button> 
                                         </td>
