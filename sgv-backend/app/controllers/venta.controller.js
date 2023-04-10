@@ -1,6 +1,7 @@
 const db = require("../models");
 const Venta = db.venta;
 const DetalleVenta = db.detalleventa;
+var detalle = new Array(DetalleVenta());
 
 // Create and Save a new Venta
 exports.create = (req, res) => {
@@ -80,6 +81,7 @@ exports.findOne = (req, res) => {
         }else{
             DetalleVenta.find({venta:id}).populate('idProducto').then(data_detalle => {
                 if(data_detalle){
+                    console.log(data_detalle);
                     res.status(200).send({
                         venta: data,
                         detalles: data_detalle
@@ -101,10 +103,79 @@ exports.update = (req, res) => {
 
 // Delete a Venta with the specified id in the request
 exports.delete = (req, res) => {
-  
+    const id = req.params.id;
+
+    /** Busco el id del detalle */
+    DetalleVenta.find({venta:id}).then(data_detalle => {
+        if(data_detalle){
+            console.log("---->> ENCONTRÉ DETALLES");
+            detalle = data_detalle;
+            console.log(detalle);
+            /** Borro el detalle */
+            DetalleVenta.findByIdAndRemove(detalle[0]._id, { useFindAndModify: false }).then(data_detalle_borrar => {
+                if (!data_detalle_borrar) {
+                    console.log("---> No encontré el detalle")
+                } else {
+                    console.log("---> Encontré el detalle y lo borro")
+                }
+            }).catch(err => {
+                res.status(500).send({ message: "Error retrieving Detalle with id=" + id });
+            });
+        }
+    }).catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while searching the Venta."
+        });
+    });
+
+    /** Borro la venta */
+    Venta.findByIdAndRemove(id, { useFindAndModify: false }).then(data => {
+        if (!data){
+            res.status(404).send({ message: "Not found Venta with id " + id });
+        }else{
+            res.status(200).send({
+                message: "Venta was deleted successfully!"
+            });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({ message: "Error retrieving Venta with id=" + id });
+    }); 
+/**/
 };
 
 // Delete all Ventas from the database.
 exports.deleteAll = (req, res) => {
   
 };
+
+
+/* DetalleVenta.findByIdAndRemove({detalles:_id}).then(data_detalle_borrar => {
+                if (!data_detalle_borrar) {
+                    console.log("---> No encontré el detalle")
+                    res.status(404).send({
+                        message: `Cannot delete Venta with id=${id}. Maybe Venta was not found!`
+                    });
+                } else {
+                    console.log("---> Encontré el detalle y lo borro")
+                   
+                    Venta.findByIdAndRemove(id, { useFindAndModify: false }).then(data_borrar => {
+                        if (!data_borrar) {
+                            console.log("---> No encontré la venta")
+                            res.status(404).send({
+                                message: `Cannot delete Venta with id=${id}. Maybe Venta was not found!`
+                            });
+                        } else {
+                            res.send({
+                                message: "Venta was deleted successfully!"
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        res.status(500).send({
+                            message: "Could not delete Venta with id=" + id
+                        });
+                    }); 
+                }
+            }); */
