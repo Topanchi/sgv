@@ -27,6 +27,7 @@ import { VentaIndexComponent } from './components/ventas/venta-index/venta-index
 import { VentaCreateComponent } from './components/ventas/venta-create/venta-create.component';
 import { VentaDetalleComponent } from './components/ventas/venta-detalle/venta-detalle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TopbarComponent } from './components/topbar/topbar.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UserIndexComponent,
     VentaIndexComponent,
     VentaCreateComponent,
-    VentaDetalleComponent
+    VentaDetalleComponent,
+    TopbarComponent
   ],
   imports: [
     BrowserModule,
