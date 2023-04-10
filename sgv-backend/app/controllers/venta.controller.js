@@ -1,6 +1,7 @@
 const db = require("../models");
 const Venta = db.venta;
 const DetalleVenta = db.detalleventa;
+var detalle = new Array(DetalleVenta());
 
 // Create and Save a new Venta
 exports.create = (req, res) => {
@@ -104,18 +105,31 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-
-    DetalleVenta.findByIdAndRemove({venta:id}, { useFindAndModify: false }).then(data_detalle_borrar => {
-        if (!data_detalle_borrar) {
-            console.log("---> No encontré el detalle")
-            
-        } else {
-            console.log("---> Encontré el detalle y lo borro")
-            
+    /** Busco el id del detalle */
+    DetalleVenta.find({venta:id}).then(data_detalle => {
+        if(data_detalle){
+            console.log("---->> ENCONTRÉ DETALLES");
+            detalle = data_detalle;
+            console.log(detalle);
+            /** Borro el detalle */
+            DetalleVenta.findByIdAndRemove(detalle[0]._id, { useFindAndModify: false }).then(data_detalle_borrar => {
+                if (!data_detalle_borrar) {
+                    console.log("---> No encontré el detalle")
+                } else {
+                    console.log("---> Encontré el detalle y lo borro")
+                }
+            }).catch(err => {
+                res.status(500).send({ message: "Error retrieving Detalle with id=" + id });
+            });
         }
+    }).catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while searching the Venta."
+        });
     });
 
-
+    /** Borro la venta */
     Venta.findByIdAndRemove(id, { useFindAndModify: false }).then(data => {
         if (!data){
             res.status(404).send({ message: "Not found Venta with id " + id });
@@ -128,6 +142,7 @@ exports.delete = (req, res) => {
     .catch(err => {
         res.status(500).send({ message: "Error retrieving Venta with id=" + id });
     }); 
+/**/
 };
 
 // Delete all Ventas from the database.
