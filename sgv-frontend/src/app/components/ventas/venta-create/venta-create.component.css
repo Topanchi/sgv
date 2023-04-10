@@ -8,4 +8,8 @@ button.example-custom-date-class {
     background: orange;
     border-radius: 100%;
 }
-  
+
+.breadcrumb-item a {
+    color: #dee2e6;
+    font-weight: 400
+}
