@@ -105,6 +105,17 @@ exports.delete = (req, res) => {
     const id = req.params.id;
 
 
+    DetalleVenta.findByIdAndRemove({venta:id}, { useFindAndModify: false }).then(data_detalle_borrar => {
+        if (!data_detalle_borrar) {
+            console.log("---> No encontré el detalle")
+            
+        } else {
+            console.log("---> Encontré el detalle y lo borro")
+            
+        }
+    });
+
+
     Venta.findByIdAndRemove(id, { useFindAndModify: false }).then(data => {
         if (!data){
             res.status(404).send({ message: "Not found Venta with id " + id });
