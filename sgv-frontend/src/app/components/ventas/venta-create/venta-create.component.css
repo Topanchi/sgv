@@ -13,3 +13,8 @@ button.example-custom-date-class {
     color: #dee2e6;
     font-weight: 400
 }
+
+.header-title {
+    font-size: 1.64062rem;
+    color: #020202
+}
