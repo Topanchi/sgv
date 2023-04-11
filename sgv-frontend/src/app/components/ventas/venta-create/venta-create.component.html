@@ -2,12 +2,7 @@
     <app-sidebar style="background: white !important;"></app-sidebar>
 
     <div class="main">
-        <nav class="navbar navbar-expand navbar-theme"  style="background:#153d77 !important">
-            <a class="sidebar-toggle d-flex mr-2">
-                <i class="hamburger align-self-center"></i>
-            </a>
-            
-        </nav>
+        <app-topbar></app-topbar>
         <main class="content">
             <div class="container-fluid">
                 <div class="header">
@@ -33,7 +28,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">Datos de la venta</h5>
+                                <h2 class="card-title">Datos de la venta</h2>
                             </div>
                             <div class="card-body">
                                 <form #ventaForm="ngForm" (ngSubmit)="onSubmitVenta(ventaForm)">
@@ -56,12 +51,12 @@
                                             </div>
                                             <div class="col-lg-4 form-group">
                                                 <label><b>Descripción de la venta</b></label>
-                                                <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta" placeholder="Pequeña deescripción de la venta">
+                                                <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta" placeholder="Pequeña deescripción de la venta" autocomplete="off">
                                             </div>
                                             <div class="col-lg-4 form-group">
                                                 <label><b>Fecha venta</b></label>
                                                 <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" placeholder="Ejemplo 05/06/1999"> -->
-                                                <input type="text" class="form-control" id="fecha_venta" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta">
+                                                <input type="text" class="form-control" id="fecha_venta" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" autocomplete="off">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         
@@ -91,7 +86,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">Detalles de la venta</h5>
+                                <h2 class="card-title">Detalles de la venta</h2>
                             </div>
                             <div class="card-body">
                                 <form #detalleForm="ngForm" (ngSubmit)="onSubmitDetalle(detalleForm)">
@@ -125,7 +120,7 @@
                     <div class="col-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">Productos</h5>
+                                <h2 class="card-title">Productos</h2>
                             </div>
                             <div class="card-body">
                                 <table class="table table-striped table-hover table-sm">
