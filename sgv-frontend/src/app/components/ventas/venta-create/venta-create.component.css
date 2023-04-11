@@ -10,11 +10,16 @@ button.example-custom-date-class {
 }
 
 .breadcrumb-item a {
-    color: #dee2e6;
+    color: #020202;
     font-weight: 400
 }
 
 .header-title {
     font-size: 1.64062rem;
     color: #020202
+}
+
+.header-subtitle {
+    font-size: .9375rem;
+    color: #020202;
 }

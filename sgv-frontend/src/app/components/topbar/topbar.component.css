@@ -1,3 +1,7 @@
 a {
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: "Roboto", "Helvetica Neue", sans-serif;
+}
+
+.navbar-theme .navbar-nav .nav-link {
+    color: hsl(0deg 0.43% 3.92% / 75%);
 }
