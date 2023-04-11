@@ -48,6 +48,53 @@ export class VentaIndexComponent implements OnInit {
     );
   }
 
+  public eliminarVenta(id:any) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    Swal.fire({
+      title: '¿Está seguro de eliminar?',
+      text: "No se puede volver atrás luego de esta operación!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Venta eliminada!',
+          'Se eliminó correctamente.',
+          'success'
+        )
+
+        this._ventaService.eliminarVenta(id).subscribe(
+          response => {
+            this.obtenerVentas();
+          },
+          error => {
+
+          }
+        );
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire(
+          'Cancelado',
+          'Se canceló la solicitud',
+          'error'
+        )
+      }
+    })
+
+  }
+
   private obtenerVentas() {
     this._ventaService.getVentas('').subscribe(
       response => {
