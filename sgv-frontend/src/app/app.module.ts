@@ -44,7 +44,7 @@ import { TopbarComponent } from './components/topbar/topbar.component';
     VentaIndexComponent,
     VentaCreateComponent,
     VentaDetalleComponent,
-    VentaEditComponent
+    VentaEditComponent,
     TopbarComponent
   ],
   imports: [
