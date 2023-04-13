@@ -16,7 +16,7 @@ module.exports = app => {
     router.put("/:id", ventas.update);
   
     // Delete a Venta with id
-    router.delete("/:id", ventas.delete);
+    router.delete("/borrar/:id", ventas.delete);
   
     // Create a new Venta
     router.delete("/borrar", ventas.deleteAll);

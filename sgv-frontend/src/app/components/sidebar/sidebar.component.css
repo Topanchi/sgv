@@ -1,0 +1,10 @@
+.sidebar-brand, .sidebar-brand:hover {
+    padding: 1rem;
+    background: #e0754e;
+    font-size: 1.175rem;
+    font-weight: 500;
+    color: hsl(0deg 0.43% 3.92% / 75%);
+    width: 100%;
+    display: block;
+    text-decoration: none;
+}

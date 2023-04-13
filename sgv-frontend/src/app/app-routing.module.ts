@@ -9,6 +9,7 @@ import { UserIndexComponent } from './components/users/user-index/user-index.com
 import { VentaIndexComponent } from './components/ventas/venta-index/venta-index.component';
 import { VentaCreateComponent } from './components/ventas/venta-create/venta-create.component';
 import { VentaDetalleComponent } from './components/ventas/venta-detalle/venta-detalle.component';
+import { VentaEditComponent } from './components/ventas/venta-edit/venta-edit.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'ventas', component: VentaIndexComponent },
   { path: 'venta/registrar', component: VentaCreateComponent },
   { path: 'venta/:id', component: VentaDetalleComponent },
+  { path: 'venta/editar/:id', component: VentaEditComponent },
 ];
 
 @NgModule({

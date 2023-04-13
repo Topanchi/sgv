@@ -1,6 +1,7 @@
 const db = require("../models");
 const Venta = db.venta;
 const DetalleVenta = db.detalleventa;
+var detalle = new Array(DetalleVenta());
 
 // Create and Save a new Venta
 exports.create = (req, res) => {
@@ -80,6 +81,7 @@ exports.findOne = (req, res) => {
         }else{
             DetalleVenta.find({venta:id}).populate('idProducto').then(data_detalle => {
                 if(data_detalle){
+                    console.log(data_detalle);
                     res.status(200).send({
                         venta: data,
                         detalles: data_detalle
@@ -95,13 +97,55 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Venta by the id in the request
-exports.update = (req, res) => {
-  
+exports.update = async (req, res) => {
+    if (!req.body) {
+        return res.status(400).send({
+          message: "Data to update can not be empty!"
+        });
+    }
+
+    const id = req.params.id;
+    const ventaActualizada = await Venta.findByIdAndUpdate(id,req.body, { useFindAndModify: false });
+
+    // Elimina los detalles de venta que no estén incluidos en la petición
+    const detallesIds = req.body.detalles.map((detalle) => detalle._id).filter(Boolean);
+    await DetalleVenta.deleteMany({ venta: ventaActualizada._id, _id: { $nin: detallesIds } }); 
+
+    // Itera sobre los detalles de venta recibidos en la petición
+    for (const detalle of req.body.detalles) {
+        // Si el detalle ya existe, actualiza su cantidad
+        if (detalle._id) {
+            await DetalleVenta.findByIdAndUpdate(detalle._id, { cantidad: detalle.cantidad });
+        }
+        // Si el detalle es nuevo, crea un nuevo documento y lo agrega a la venta
+        else {
+            const nuevoDetalle = new DetalleVenta({
+                cantidad: detalle.cantidad,
+                idProducto: detalle.idproducto,
+                venta: ventaActualizada._id
+            });
+
+            await nuevoDetalle.save();
+        }
+    }
+
+    res.status(200).json({ message: 'Venta actualizada con éxito' });
 };
 
 // Delete a Venta with the specified id in the request
-exports.delete = (req, res) => {
-  
+exports.delete = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        // Busca la venta por su ID y elimina sus detalles de venta
+        await DetalleVenta.deleteMany({ venta: id });
+        await Venta.findByIdAndDelete(id);
+        
+        res.status(200).json({ message: 'Venta eliminada con éxito' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al eliminar la venta' });
+    }
 };
 
 // Delete all Ventas from the database.

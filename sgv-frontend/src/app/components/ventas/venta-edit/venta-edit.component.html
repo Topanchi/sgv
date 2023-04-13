@@ -7,14 +7,15 @@
             <div class="container-fluid">
                 <div class="header">
                     <h1 class="header-title">
-                        Registrar venta
+                        Editar venta
                     </h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a [routerLink]="['/dasboard']">Dasboard</a></li>
-                            <li class="breadcrumb-item" style="color:#f5f5f5 !important"><a>Registrar</a></li>
+                            <li class="breadcrumb-item"><a>Editar</a></li>
                         </ol>
                     </nav>
+                    <p class="header-subtitle">Modifique los campos necesarios...</p>
                 </div>
                 <div class="row">
                     <div class="col-12 col-xl-12 form-group">
@@ -28,7 +29,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <h2 class="card-title">Datos de la venta</h2>
+                                <h5 class="card-title">Datos de la venta</h5>
                             </div>
                             <div class="card-body">
                                 <form #ventaForm="ngForm" (ngSubmit)="onSubmitVenta(ventaForm)">
@@ -45,28 +46,23 @@
                                     </div>
                                     <div class="row">
                                        
-                                            <div class="col-lg-4 form-group">
-                                                <label><b>Nombre del Cliente</b></label>
-                                                <input type="text" class="form-control" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="venta.nombre_cliente">
-                                            </div>
-                                            <div class="col-lg-4 form-group">
-                                                <label><b>Descripción de la venta</b></label>
-                                                <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta" placeholder="Pequeña deescripción de la venta" autocomplete="off">
-                                            </div>
-                                            <div class="col-lg-4 form-group">
-                                                <label><b>Fecha venta</b></label>
-                                                <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" placeholder="Ejemplo 05/06/1999"> -->
-                                                <input type="text" class="form-control" id="fecha_venta" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" autocomplete="off">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        
-                                                    </div>
-                                                </div> 
-                                            </div>
+                                        <div class="col-lg-4 form-group">
+                                            <label><b>Nombre del Cliente</b></label>
+                                            <input type="text" class="form-control" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="venta.nombre_cliente">
+                                        </div>
+                                        <div class="col-lg-4 form-group">
+                                            <label><b>Descripción de la venta</b></label>
+                                            <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="venta.descripcion_venta" placeholder="Pequeña deescripción de la venta">
+                                        </div>
+                                        <div class="col-lg-4 form-group">
+                                            <label><b>Fecha venta</b></label>
+                                            <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" placeholder="Ejemplo 05/06/1999"> -->
+                                            <input type="text" class="form-control" id="fecha_venta" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta">
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12 col-lg-12 col-xl-12 form-group">
-                                            <button type="submit" class="btn btn-success btn-block">Registrar venta</button>
+                                            <button type="submit" class="btn btn-success btn-block">Actualizar venta</button>
                                         </div>
                                     </div>
                                 </form>
@@ -85,7 +81,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <h2 class="card-title">Detalles de la venta</h2>
+                                <h5 class="card-title">Detalles de la venta</h5>
                             </div>
                             <div class="card-body">
                                 <form #detalleForm="ngForm" (ngSubmit)="onSubmitDetalle(detalleForm)">
@@ -119,7 +115,7 @@
                     <div class="col-12 col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h2 class="card-title">Productos</h2>
+                                <h5 class="card-title">Productos</h5>
                             </div>
                             <div class="card-body">
                                 <table class="table table-striped table-hover table-sm">
