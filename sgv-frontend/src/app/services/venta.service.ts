@@ -36,4 +36,9 @@ export class VentaService {
     return this._http.delete(this.url + 'ventas/borrar/' + id);
   }
 
+
+  public actualizarVenta(data: any) {
+    console.log("service: ", data)
+    return this._http.put(this.url + 'ventas/'+ data._id, data);
+  }
 }

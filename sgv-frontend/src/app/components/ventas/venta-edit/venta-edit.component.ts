@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { VentaService } from '../../../services/venta.service';
@@ -17,12 +17,12 @@ datepickerFactory($);
 datepickerJAFactory($);
 
 @Component({
-  selector: 'app-venta-create',
-  templateUrl: './venta-create.component.html',
-  styleUrls: ['./venta-create.component.css'],
+  selector: 'app-venta-edit',
+  templateUrl: './venta-edit.component.html',
+  styleUrls: ['./venta-edit.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class VentaCreateComponent implements OnInit {
+export class VentaEditComponent implements OnInit {
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
     // Only highligh dates inside the month view.
@@ -37,6 +37,7 @@ export class VentaCreateComponent implements OnInit {
   };
 
   public identity: any;
+  public id: any;
   public venta: any = {
     descripcion_venta : '',
   };
@@ -64,6 +65,7 @@ export class VentaCreateComponent implements OnInit {
     private _productoService: ProductoService,
     private _ventaService: VentaService,
     private _router: Router,
+    private _route: ActivatedRoute
   ) {
     this.identity = this._userService.getIdentity();
     $(function() {
@@ -93,6 +95,30 @@ export class VentaCreateComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.identity){
+      this._route.params.subscribe(params => {
+        this.id = params['id'];
+        this._ventaService.getVentaPorId(this.id).subscribe(
+          (response) => {
+            this.venta = response.venta;
+            console.log("obj:::::::::::: ", response);
+            response.detalles.forEach((element, index) => {
+              console.log(element,index);
+              this.data_detalle.push({
+                idproducto: element.idProducto._id,
+                cantidad: +element.cantidad,
+                valor_producto: element.idProducto.valor_producto,
+                producto: element.idProducto.descripcion
+              });
+              this.total = this.total + ((parseInt(element.idProducto.valor_producto)) * (parseInt(element.cantidad)));
+            });            
+            console.log("venta editar::: ", this.venta);
+            console.log("detalle editar: ", this.data_detalle);
+            
+          },
+          error => {}
+        );
+        
+      });
       this.obtenerProductos();
     }else{
       this._router.navigate(['']);
@@ -112,7 +138,7 @@ export class VentaCreateComponent implements OnInit {
           valor_producto: this.producto.valor_producto,
           producto: this.producto.descripcion
         });
-
+        console.log("this.data_detalle.push:", this.data_detalle);
         this.total = this.total + ((parseInt(this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
 
         this.detalle = new DetalleVenta('','','','');
@@ -141,7 +167,7 @@ export class VentaCreateComponent implements OnInit {
       if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
 
         Swal.fire({
-          title: '¿Desea registrar la venta?',
+          title: '¿Desea actualizar la venta?',
           text: "Puede editar la venta mas adelante!",
           icon: 'warning',
           showCancelButton: true,
@@ -152,6 +178,7 @@ export class VentaCreateComponent implements OnInit {
           if (result.isConfirmed) {
 
             let data = {
+              _id: this.id,
               descripcion_venta: ventaForm.value.descripcion_venta,
               nombre_cliente: ventaForm.value.nombre_cliente,
               iduser: this.identity.id,
@@ -163,13 +190,23 @@ export class VentaCreateComponent implements OnInit {
             }
     
             console.log("Data final: ", data);
-    
-            this._ventaService.guardarVenta(data).subscribe(
+
+            this._ventaService.actualizarVenta({
+              _id: this.id,
+              descripcion_venta: ventaForm.value.descripcion_venta,
+              nombre_cliente: ventaForm.value.nombre_cliente,
+              iduser: this.identity.id,
+              fecha_venta: fechaPicker,
+              mes: +fecha2Final[1],
+              anio: +fecha2Final[2],
+              valor_venta: this.total,
+              detalles: this.data_detalle
+            }).subscribe(
               response => {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'Venta registrada!',
+                  title: 'Venta actualizada!',
                   showConfirmButton: false,
                   timer: 1500
                 })
@@ -178,8 +215,7 @@ export class VentaCreateComponent implements OnInit {
               error => {
                 console.log("Error: ", error);
               }
-            ); 
-            
+            );
           }
         })
 

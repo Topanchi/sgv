@@ -1,0 +1,26 @@
+tfoot {
+    background-color: #8a8a8a;
+    color: #fafafa;
+    font-size: 100%;
+}
+
+button.example-custom-date-class {
+    background: orange;
+    border-radius: 100%;
+}
+
+.breadcrumb-item a {
+    color: #020202;
+    font-weight: 400
+}
+
+.header-title {
+    font-size: 1.64062rem;
+    color: #020202
+}
+
+.header-subtitle {
+    font-size: .9375rem;
+    color: #020202;
+}
+  

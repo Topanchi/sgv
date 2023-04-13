@@ -27,6 +27,7 @@ import { VentaIndexComponent } from './components/ventas/venta-index/venta-index
 import { VentaCreateComponent } from './components/ventas/venta-create/venta-create.component';
 import { VentaDetalleComponent } from './components/ventas/venta-detalle/venta-detalle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { VentaEditComponent } from './components/ventas/venta-edit/venta-edit.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 
 
@@ -43,6 +44,7 @@ import { TopbarComponent } from './components/topbar/topbar.component';
     VentaIndexComponent,
     VentaCreateComponent,
     VentaDetalleComponent,
+    VentaEditComponent,
     TopbarComponent
   ],
   imports: [
