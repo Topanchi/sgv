@@ -9,10 +9,6 @@ import { DetalleVenta } from '../../../models/detalleventa';
 import { Venta } from '../../../models/venta';
 import { User } from 'src/app/models/user';
 
-import * as Moment from "moment";
-import {extendMoment} from 'moment-range';
-const moment = extendMoment(Moment);
-
 import datepickerFactory from 'jquery-datepicker';
 import datepickerJAFactory from 'jquery-datepicker/i18n/jquery.ui.datepicker-en-GB';
 
