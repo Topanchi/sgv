@@ -190,7 +190,7 @@ export class VentaEditComponent implements OnInit {
             }
     
             console.log("Data final: ", data);
-    
+
             this._ventaService.actualizarVenta({
               _id: this.id,
               descripcion_venta: ventaForm.value.descripcion_venta,
@@ -215,7 +215,7 @@ export class VentaEditComponent implements OnInit {
               error => {
                 console.log("Error: ", error);
               }
-            ); 
+            );
           }
         })
 

@@ -97,7 +97,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Venta by the id in the request
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     if (!req.body) {
         return res.status(400).send({
           message: "Data to update can not be empty!"
@@ -105,128 +105,50 @@ exports.update = (req, res) => {
     }
 
     const id = req.params.id;
- 
-    Venta.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then(data => {
-        if (!data) {
-            res.status(404).send({
-                message: `Cannot update Venta with id=${id}. Maybe Venta was not found!`
-            });
-        } else res.send({ message: "Venta was updated successfully." });
+    const ventaActualizada = await Venta.findByIdAndUpdate(id,req.body, { useFindAndModify: false });
 
+    // Elimina los detalles de venta que no estén incluidos en la petición
+    const detallesIds = req.body.detalles.map((detalle) => detalle._id).filter(Boolean);
+    await DetalleVenta.deleteMany({ venta: ventaActualizada._id, _id: { $nin: detallesIds } }); 
 
-        if(data){
-            console.log(data);
-            let detalles = req.body.detalles;
-            /**TODO: borrar detalle por id y volverlo a crear */
-            detalles.forEach((element, index) => {
-                var detalleVenta = new DetalleVenta();
-                detalleVenta.idProducto = element.idproducto;
-                detalleVenta.cantidad = +element.cantidad;
-                detalleVenta.venta = id;
-                detalleVenta._id = element._id;
-
-                detalleVenta.findByIdAndDelete(element._id, detalleVenta, { useFindAndModify: false }).then(resp => {
-                    console.log("--- ok ---");
-                    res.end();
-                });
-    
-                detalleVenta.save(detalleVenta).then(resp => {
-                    res.end();
-                }).catch(err => {
-                    res.status(500).send({
-                        message:
-                            err.message || "Some error occurred while creating the Detalle Venta."
-                    });
-                });
-         
-                
-            });
+    // Itera sobre los detalles de venta recibidos en la petición
+    for (const detalle of req.body.detalles) {
+        // Si el detalle ya existe, actualiza su cantidad
+        if (detalle._id) {
+            await DetalleVenta.findByIdAndUpdate(detalle._id, { cantidad: detalle.cantidad });
         }
-    })
-    .catch(err => {
-        res.status(500).send({
-            message: "Error updating Producto with id=" + id
-        });
-    });
-    
+        // Si el detalle es nuevo, crea un nuevo documento y lo agrega a la venta
+        else {
+            const nuevoDetalle = new DetalleVenta({
+                cantidad: detalle.cantidad,
+                idProducto: detalle.idproducto,
+                venta: ventaActualizada._id
+            });
+
+            await nuevoDetalle.save();
+        }
+    }
+
+    res.status(200).json({ message: 'Venta actualizada con éxito' });
 };
 
 // Delete a Venta with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
     const id = req.params.id;
 
-    /** Busco el id del detalle */
-    DetalleVenta.find({venta:id}).then(data_detalle => {
-        if(data_detalle){
-            console.log("---->> ENCONTRÉ DETALLES");
-            detalle = data_detalle;
-            console.log(detalle);
-            /** Borro el detalle */
-            DetalleVenta.findByIdAndRemove(detalle[0]._id, { useFindAndModify: false }).then(data_detalle_borrar => {
-                if (!data_detalle_borrar) {
-                    console.log("---> No encontré el detalle")
-                } else {
-                    console.log("---> Encontré el detalle y lo borro")
-                }
-            }).catch(err => {
-                res.status(500).send({ message: "Error retrieving Detalle with id=" + id });
-            });
-        }
-    }).catch(err => {
-        res.status(500).send({
-            message:
-                err.message || "Some error occurred while searching the Venta."
-        });
-    });
-
-    /** Borro la venta */
-    Venta.findByIdAndRemove(id, { useFindAndModify: false }).then(data => {
-        if (!data){
-            res.status(404).send({ message: "Not found Venta with id " + id });
-        }else{
-            res.status(200).send({
-                message: "Venta was deleted successfully!"
-            });
-        }
-    })
-    .catch(err => {
-        res.status(500).send({ message: "Error retrieving Venta with id=" + id });
-    }); 
-/**/
+    try {
+        // Busca la venta por su ID y elimina sus detalles de venta
+        await DetalleVenta.deleteMany({ venta: id });
+        await Venta.findByIdAndDelete(id);
+        
+        res.status(200).json({ message: 'Venta eliminada con éxito' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al eliminar la venta' });
+    }
 };
 
 // Delete all Ventas from the database.
 exports.deleteAll = (req, res) => {
   
 };
-
-
-/* DetalleVenta.findByIdAndRemove({detalles:_id}).then(data_detalle_borrar => {
-                if (!data_detalle_borrar) {
-                    console.log("---> No encontré el detalle")
-                    res.status(404).send({
-                        message: `Cannot delete Venta with id=${id}. Maybe Venta was not found!`
-                    });
-                } else {
-                    console.log("---> Encontré el detalle y lo borro")
-                   
-                    Venta.findByIdAndRemove(id, { useFindAndModify: false }).then(data_borrar => {
-                        if (!data_borrar) {
-                            console.log("---> No encontré la venta")
-                            res.status(404).send({
-                                message: `Cannot delete Venta with id=${id}. Maybe Venta was not found!`
-                            });
-                        } else {
-                            res.send({
-                                message: "Venta was deleted successfully!"
-                            });
-                        }
-                    })
-                    .catch(err => {
-                        res.status(500).send({
-                            message: "Could not delete Venta with id=" + id
-                        });
-                    }); 
-                }
-            }); */
