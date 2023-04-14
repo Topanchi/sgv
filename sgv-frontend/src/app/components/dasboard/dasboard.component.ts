@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VentaService } from '../../services/venta.service';
+import { ConstantesFecha } from '../../utils/constantes-fecha';
 
 @Component({
   selector: 'app-dasboard',
@@ -19,6 +20,9 @@ export class DasboardComponent implements OnInit {
   public totalSemestreSegundo:any = 0;
   public totalAnioActual:any = 0;
   public ventasMesActual:any = 0;
+  public ventasUltimoTrimestre:any = 0;
+  public ventasUltimoSemestre:any = 0;
+  public ventasAnioActual:any = 0;
 
   constructor(
     private _ventaService: VentaService,
@@ -38,6 +42,7 @@ export class DasboardComponent implements OnInit {
         this.data_ventas.forEach(venta => {
           /* INICIO lógica de total año actual */
           if(venta.anio == (fecha.getFullYear())){
+            this.ventasAnioActual++;
             this.totalAnioActual = this.totalAnioActual + venta.valor_venta; /* Total en ventas en mes actual */
           }
           /* FIN lógica de de total año actual */
@@ -52,12 +57,14 @@ export class DasboardComponent implements OnInit {
 
           /* INICIO lógica de último trimestre */
           if((venta.mes == (fecha.getMonth())) || (venta.mes == (fecha.getMonth()+1) || (venta.mes == (fecha.getMonth()+2)))){
+            this.ventasUltimoTrimestre++;
             this.totalTrimestre = this.totalTrimestre + venta.valor_venta; /* Total en ventas en mes actual */
           }
           /* FIN lógica de último trimestre */
 
           /* INICIO lógica de último semestre */
           if((venta.mes == (fecha.getMonth()-2)) || (venta.mes == (fecha.getMonth()-1) || (venta.mes == (fecha.getMonth()) || (venta.mes == (fecha.getMonth()+1)|| (venta.mes == (fecha.getMonth()+2) || (venta.mes == (fecha.getMonth()+3))))))){
+            this.ventasAnioActual++;
             this.totalSemestrePrimer = this.totalSemestrePrimer + venta.valor_venta; /* Total en ventas en mes actual */
           }
           /* FIN lógica de último semestre */
