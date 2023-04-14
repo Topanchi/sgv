@@ -30,16 +30,11 @@ export class DasboardComponent implements OnInit {
 
   public obtenerVentas() {
     const fecha = new Date();
-    console.log(fecha.toLocaleDateString());
-    console.log(fecha.getMonth()-2);
-    console.log(fecha.getMonth()-1);
-    console.log(fecha.getMonth());
-    console.log(fecha.getMonth()+1);
-    console.log(fecha.getMonth()+2);
+
     this._ventaService.getVentas('').subscribe(
       response => {
         this.data_ventas = (response);
-        console.log(this.data_ventas);
+
         this.data_ventas.forEach(venta => {
           /* INICIO lógica de total año actual */
           if(venta.anio == (fecha.getFullYear())){
