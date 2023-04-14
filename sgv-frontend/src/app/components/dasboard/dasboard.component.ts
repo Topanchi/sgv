@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VentaService } from '../../services/venta.service';
-import { ConstantesFecha } from '../../utils/constantes-fecha';
+import { ConstantesCategorias } from '../../utils/constantes-categorias';
 
 @Component({
   selector: 'app-dasboard',
@@ -14,6 +14,7 @@ export class DasboardComponent implements OnInit {
   };
 
   public data_ventas: Array<any> = [];
+  public data_detalles : Array<any> = [];
   public totalMesActual:any = 0;
   public totalTrimestre:any = 0;
   public totalSemestrePrimer:any = 0;
@@ -23,6 +24,23 @@ export class DasboardComponent implements OnInit {
   public ventasUltimoTrimestre:any = 0;
   public ventasUltimoSemestre:any = 0;
   public ventasAnioActual:any = 0;
+
+  public cantidadMesActualTortaBiscocho15Redonda:any = 0;
+  public cantidadMesActualTortaBiscocho20Redonda:any = 0;
+  public cantidadMesActualTortaBiscocho30Redonda:any = 0;
+  public cantidadMesActualTortaBiscocho40Redonda:any = 0;
+  public cantidadMesActualTortaBiscocho50Redonda:any = 0;
+
+  public cantidadMesActualTortaBiscocho15Rectangular:any = 0;
+  public cantidadMesActualTortaBiscocho30Rectangular:any = 0;
+  public cantidadMesActualTortaBiscocho40Rectangular:any = 0;
+  public cantidadMesActualTortaBiscocho60Rectangular:any = 0;
+
+
+  public cantidadTrimestre:any = 0;
+  public cantidadSemestrePrimer:any = 0;
+  public cantidadSemestreSegundo:any = 0;
+  public cantidadAnioActual:any = 0;
 
   constructor(
     private _ventaService: VentaService,
@@ -38,8 +56,50 @@ export class DasboardComponent implements OnInit {
     this._ventaService.getVentas('').subscribe(
       response => {
         this.data_ventas = (response);
+        console.log(this.data_ventas);
+        this.data_ventas.forEach((venta,index) => {
+          let id = venta._id;
 
-        this.data_ventas.forEach(venta => {
+          this._ventaService.getVentaPorId(id).subscribe(
+            response => {
+              console.log("Venta: ", index, response.detalles)
+              this.data_detalles = response.detalles; 
+
+              this.data_detalles.forEach((detalle, pos)=>{
+                if(venta.mes == (fecha.getMonth()+1)){
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA){
+                    this.cantidadMesActualTortaBiscocho15Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_20_REDONDA){
+                    this.cantidadMesActualTortaBiscocho20Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_30_REDONDA){
+                    this.cantidadMesActualTortaBiscocho30Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_40_REDONDA){
+                    this.cantidadMesActualTortaBiscocho40Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_50_REDONDA){
+                    this.cantidadMesActualTortaBiscocho50Redonda++;
+                  }
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REECTANGULAR){
+                    this.cantidadMesActualTortaBiscocho15Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_30_REECTANGULAR){
+                    this.cantidadMesActualTortaBiscocho30Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_40_REECTANGULAR){
+                    this.cantidadMesActualTortaBiscocho40Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_60_REECTANGULAR){
+                    this.cantidadMesActualTortaBiscocho60Rectangular++;
+                  } 
+                  
+                }
+                 
+              });
+            }
+          ); 
           /* INICIO lógica de total año actual */
           if(venta.anio == (fecha.getFullYear())){
             this.ventasAnioActual++;
@@ -71,6 +131,7 @@ export class DasboardComponent implements OnInit {
         });
       }
     );
+
   }
 
 }
