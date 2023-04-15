@@ -30,12 +30,40 @@ export class DasboardComponent implements OnInit {
   public cantidadMesActualTortaBiscocho30Redonda:any = 0;
   public cantidadMesActualTortaBiscocho40Redonda:any = 0;
   public cantidadMesActualTortaBiscocho50Redonda:any = 0;
-
   public cantidadMesActualTortaBiscocho15Rectangular:any = 0;
   public cantidadMesActualTortaBiscocho30Rectangular:any = 0;
   public cantidadMesActualTortaBiscocho40Rectangular:any = 0;
   public cantidadMesActualTortaBiscocho60Rectangular:any = 0;
 
+  public cantidadUltimosTresTortaBiscocho15Redonda:any = 0;
+  public cantidadUltimosTresTortaBiscocho20Redonda:any = 0;
+  public cantidadUltimosTresTortaBiscocho30Redonda:any = 0;
+  public cantidadUltimosTresTortaBiscocho40Redonda:any = 0;
+  public cantidadUltimosTresTortaBiscocho50Redonda:any = 0;
+  public cantidaUltimosTresTortaBiscocho15Rectangular:any = 0;
+  public cantidadUltimosTresTortaBiscocho30Rectangular:any = 0;
+  public cantidadUltimosTresTortaBiscocho40Rectangular:any = 0;
+  public cantidadUltimosTresTortaBiscocho60Rectangular:any = 0;
+
+  public cantidadUltimosSeisTortaBiscocho15Redonda:any = 0;
+  public cantidadUltimosSeisTortaBiscocho20Redonda:any = 0;
+  public cantidadUltimosSeisTortaBiscocho30Redonda:any = 0;
+  public cantidadUltimosSeisTortaBiscocho40Redonda:any = 0;
+  public cantidadUltimosSeisTortaBiscocho50Redonda:any = 0;
+  public cantidaUltimosSeisTortaBiscocho15Rectangular:any = 0;
+  public cantidadUltimosSeisTortaBiscocho30Rectangular:any = 0;
+  public cantidadUltimosSeisTortaBiscocho40Rectangular:any = 0;
+  public cantidadUltimosSeisTortaBiscocho60Rectangular:any = 0;
+
+  public cantidadAnioActualTortaBiscocho15Redonda:any = 0;
+  public cantidadAnioActualTortaBiscocho20Redonda:any = 0;
+  public cantidadAnioActualTortaBiscocho30Redonda:any = 0;
+  public cantidadAnioActualTortaBiscocho40Redonda:any = 0;
+  public cantidadAnioActualTortaBiscocho50Redonda:any = 0;
+  public cantidaAnioActualTortaBiscocho15Rectangular:any = 0;
+  public cantidadAnioActualTortaBiscocho30Rectangular:any = 0;
+  public cantidadAnioActualTortaBiscocho40Rectangular:any = 0;
+  public cantidadAnioActualTortaBiscocho60Rectangular:any = 0;
 
   public cantidadTrimestre:any = 0;
   public cantidadSemestrePrimer:any = 0;
@@ -66,6 +94,7 @@ export class DasboardComponent implements OnInit {
               this.data_detalles = response.detalles; 
 
               this.data_detalles.forEach((detalle, pos)=>{
+                /* Mes actual */
                 if(venta.mes == (fecha.getMonth()+1)){
                   if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA){
                     this.cantidadMesActualTortaBiscocho15Redonda++;
@@ -95,6 +124,99 @@ export class DasboardComponent implements OnInit {
                     this.cantidadMesActualTortaBiscocho60Rectangular++;
                   } 
                   
+                }
+      
+                /* Últimos tres meses */
+                if((venta.mes == (fecha.getMonth())) || (venta.mes == (fecha.getMonth()+1) || (venta.mes == (fecha.getMonth()+2)))){
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA){
+                    this.cantidadUltimosTresTortaBiscocho15Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_20_REDONDA){
+                    this.cantidadUltimosTresTortaBiscocho20Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_30_REDONDA){
+                    this.cantidadUltimosTresTortaBiscocho30Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_40_REDONDA){
+                    this.cantidadUltimosTresTortaBiscocho40Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_50_REDONDA){
+                    this.cantidadUltimosTresTortaBiscocho50Redonda++;
+                  }
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REECTANGULAR){
+                    this.cantidaUltimosTresTortaBiscocho15Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_30_REECTANGULAR){
+                    this.cantidadUltimosTresTortaBiscocho30Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_40_REECTANGULAR){
+                    this.cantidadUltimosTresTortaBiscocho40Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_60_REECTANGULAR){
+                    this.cantidadUltimosTresTortaBiscocho60Rectangular++;
+                  } 
+                }
+
+                /* Últimos seis meses*/
+                if((venta.mes == (fecha.getMonth()-2)) || (venta.mes == (fecha.getMonth()-1) || (venta.mes == (fecha.getMonth()) || (venta.mes == (fecha.getMonth()+1)|| (venta.mes == (fecha.getMonth()+2) || (venta.mes == (fecha.getMonth()+3))))))){
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA){
+                    this.cantidadUltimosSeisTortaBiscocho15Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_20_REDONDA){
+                    this.cantidadUltimosSeisTortaBiscocho20Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_30_REDONDA){
+                    this.cantidadUltimosSeisTortaBiscocho30Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_40_REDONDA){
+                    this.cantidadUltimosSeisTortaBiscocho40Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_50_REDONDA){
+                    this.cantidadUltimosSeisTortaBiscocho50Redonda++;
+                  }
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REECTANGULAR){
+                    this.cantidaUltimosSeisTortaBiscocho15Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_30_REECTANGULAR){
+                    this.cantidadUltimosSeisTortaBiscocho30Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_40_REECTANGULAR){
+                    this.cantidadUltimosSeisTortaBiscocho40Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_60_REECTANGULAR){
+                    this.cantidadUltimosSeisTortaBiscocho60Rectangular++;
+                  } 
+                }
+
+                /* Total anual */
+                if(venta.anio == (fecha.getFullYear())){
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA){
+                    this.cantidadAnioActualTortaBiscocho15Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_20_REDONDA){
+                    this.cantidadAnioActualTortaBiscocho20Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_30_REDONDA){
+                    this.cantidadAnioActualTortaBiscocho30Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_40_REDONDA){
+                    this.cantidadAnioActualTortaBiscocho40Redonda++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_50_REDONDA){
+                    this.cantidadAnioActualTortaBiscocho50Redonda++;
+                  }
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REECTANGULAR){
+                    this.cantidaAnioActualTortaBiscocho15Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_30_REECTANGULAR){
+                    this.cantidadAnioActualTortaBiscocho30Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_40_REECTANGULAR){
+                    this.cantidadAnioActualTortaBiscocho40Rectangular++;
+                  } 
+                  if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_60_REECTANGULAR){
+                    this.cantidadAnioActualTortaBiscocho60Rectangular++;
+                  }   
                 }
                  
               });
