@@ -20,68 +20,43 @@
                     <div class="col-12 col-xl-3">
                         <div class="card" style="background:#943527 !important">
                             <div class="card-header">
-                                
-                                <h5 class="card-title" style="color:#ffffff !important">Indicador 1</h5>
-                                <div class="row">
-                            
-                                </div>
+                                <h5 class="card-title titulo-montos">Total mes actual</h5>
                             </div>
                             <div class="card-body">
-                                
+                                <h2 class="titulo-montos">${{this.totalMesActual}}</h2>
                             </div>
-                        
                         </div>
                     </div>
                     <div class="col-12 col-xl-3">
                         <div class="card" style="background:#5a2794 !important">
                             <div class="card-header">
-                                
-                                <h5 class="card-title" style="color:#ffffff !important">Indicador 2</h5>
-                                <div class="row">
-                            
-                                </div>
+                                <h5 class="card-title titulo-montos">Total en el último trimestre</h5>
                             </div>
                             <div class="card-body">
-                                
+                                <h2 class="titulo-montos">${{this.totalTrimestre}}</h2>
                             </div>
-                        
                         </div>
                     </div>
                     <div class="col-12 col-xl-3">
                         <div class="card" style="background:#942767 !important">
-                            <div class="card-header">
-                                
-                                <h5 class="card-title" style="color:#ffffff !important">Indicador 3</h5>
-                                <div class="row">
-                            
-                                </div>
+                            <div class="card-header">                               
+                                <h5 class="card-title titulo-montos">Total en el último semestre</h5>
                             </div>
                             <div class="card-body">
-                                
+                                <h2 class="titulo-montos">${{this.totalSemestrePrimer}}</h2>
                             </div>
-                        
                         </div>
                     </div>
                     <div class="col-12 col-xl-3">
-                        <div class="card">
+                        <div class="card" style="background:#0e4810 !important">
                             <div class="card-header">
-                                
-                                <h5 class="card-title">Indicador 4</h5>
-                                <div class="row">
-                            
-                                </div>
+                                <h5 class="card-title titulo-montos">Total en el año</h5>
                             </div>
                             <div class="card-body">
-                                
+                                <h2 class="titulo-montos">${{this.totalAnioActual}}</h2>
                             </div>
-                        
                         </div>
                     </div>
-
-                   
-
-                 
-
                 </div>
 
                 <div class="row">
@@ -89,13 +64,24 @@
                         <div class="card">
                             <div class="card-header">
                                 
-                                <h5 class="card-title">Indicador 1</h5>
+                                <h5 class="card-title">¿Qué se ha vendido en este mes?</h5>
                                 <div class="row">
                             
                                 </div>
                             </div>
                             <div class="card-body">
-                                
+                                <h2 style="color:#0f0e0e !important">Aquí va un gráfico de torta</h2>
+                                <ol>
+                                    <li>Torta biscocho 15 redonda: {{this.cantidadMesActualTortaBiscocho15Redonda}}</li>
+                                    <li>Torta biscocho 20 redonda: {{this.cantidadMesActualTortaBiscocho20Redonda}}</li>
+                                    <li>Torta biscocho 30 redonda: {{this.cantidadMesActualTortaBiscocho30Redonda}}</li>
+                                    <li>Torta biscocho 40 redonda: {{this.cantidadMesActualTortaBiscocho40Redonda}}</li>
+                                    <li>Torta biscocho 50 redonda: {{this.cantidadMesActualTortaBiscocho50Redonda}}</li>
+                                    <li>Torta biscocho 15 rectangular: {{this.cantidadMesActualTortaBiscocho15Rectangular}}</li>
+                                    <li>Torta biscocho 30 rectangular: {{this.cantidadMesActualTortaBiscocho30Rectangular}}</li>
+                                    <li>Torta biscocho 40 rectangular: {{this.cantidadMesActualTortaBiscocho40Rectangular}}</li>
+                                    <li>Torta biscocho 60 rectangular: {{this.cantidadMesActualTortaBiscocho60Rectangular}}</li>
+                                </ol>
                             </div>
                         
                         </div>
@@ -104,13 +90,24 @@
                         <div class="card">
                             <div class="card-header">
                                 
-                                <h5 class="card-title">Indicador 2</h5>
+                                <h5 class="card-title">¿Qué se ha vendido en los últimos 3 meses?</h5>
                                 <div class="row">
                             
                                 </div>
                             </div>
                             <div class="card-body">
-                                
+                                <h2 style="color:#0f0e0e !important">Aquí va un gráfico de barras</h2>
+                                <ol>
+                                    <li>Torta biscocho 15 redonda: {{this.cantidadUltimosTresTortaBiscocho15Redonda}}</li>
+                                    <li>Torta biscocho 20 redonda: {{this.cantidadUltimosTresTortaBiscocho20Redonda}}</li>
+                                    <li>Torta biscocho 30 redonda: {{this.cantidadUltimosTresTortaBiscocho30Redonda}}</li>
+                                    <li>Torta biscocho 40 redonda: {{this.cantidadUltimosTresTortaBiscocho40Redonda}}</li>
+                                    <li>Torta biscocho 50 redonda: {{this.cantidadUltimosTresTortaBiscocho50Redonda}}</li>
+                                    <li>Torta biscocho 15 rectangular: {{this.cantidaUltimosTresTortaBiscocho15Rectangular}}</li>
+                                    <li>Torta biscocho 30 rectangular: {{this.cantidadUltimosTresTortaBiscocho30Rectangular}}</li>
+                                    <li>Torta biscocho 40 rectangular: {{this.cantidadUltimosTresTortaBiscocho40Rectangular}}</li>
+                                    <li>Torta biscocho 60 rectangular: {{this.cantidadUltimosTresTortaBiscocho60Rectangular}}</li>
+                                </ol>
                             </div>
                         
                         </div>
@@ -123,13 +120,24 @@
                         <div class="card">
                             <div class="card-header">
                                 
-                                <h5 class="card-title">Indicador 1</h5>
+                                <h5 class="card-title">¿Qué se ha vendido en los últimos 6 meses?</h5>
                                 <div class="row">
                             
                                 </div>
                             </div>
                             <div class="card-body">
-                                
+                                <h2 style="color:#0f0e0e !important">Aquí va un gráfico de barras</h2>
+                                <ol>
+                                    <li>Torta biscocho 15 redonda: {{this.cantidadUltimosSeisTortaBiscocho15Redonda}}</li>
+                                    <li>Torta biscocho 20 redonda: {{this.cantidadUltimosSeisTortaBiscocho20Redonda}}</li>
+                                    <li>Torta biscocho 30 redonda: {{this.cantidadUltimosSeisTortaBiscocho30Redonda}}</li>
+                                    <li>Torta biscocho 40 redonda: {{this.cantidadUltimosSeisTortaBiscocho40Redonda}}</li>
+                                    <li>Torta biscocho 50 redonda: {{this.cantidadUltimosSeisTortaBiscocho50Redonda}}</li>
+                                    <li>Torta biscocho 15 rectangular: {{this.cantidaUltimosSeisTortaBiscocho15Rectangular}}</li>
+                                    <li>Torta biscocho 30 rectangular: {{this.cantidadUltimosSeisTortaBiscocho30Rectangular}}</li>
+                                    <li>Torta biscocho 40 rectangular: {{this.cantidadUltimosSeisTortaBiscocho40Rectangular}}</li>
+                                    <li>Torta biscocho 60 rectangular: {{this.cantidadUltimosSeisTortaBiscocho60Rectangular}}</li>
+                                </ol>
                             </div>
                         
                         </div>
@@ -138,13 +146,24 @@
                         <div class="card">
                             <div class="card-header">
                                 
-                                <h5 class="card-title">Indicador 2</h5>
+                                <h5 class="card-title">¿Qué se ha vendido durante este año?</h5>
                                 <div class="row">
                             
                                 </div>
                             </div>
                             <div class="card-body">
-                                
+                                <h2 style="color:#0f0e0e !important">Aquí va un gráfico de torta</h2>
+                                <ol>
+                                    <li>Torta biscocho 15 redonda: {{this.cantidadAnioActualTortaBiscocho15Redonda}}</li>
+                                    <li>Torta biscocho 20 redonda: {{this.cantidadAnioActualTortaBiscocho20Redonda}}</li>
+                                    <li>Torta biscocho 30 redonda: {{this.cantidadAnioActualTortaBiscocho30Redonda}}</li>
+                                    <li>Torta biscocho 40 redonda: {{this.cantidadAnioActualTortaBiscocho40Redonda}}</li>
+                                    <li>Torta biscocho 50 redonda: {{this.cantidadAnioActualTortaBiscocho50Redonda}}</li>
+                                    <li>Torta biscocho 15 rectangular: {{this.cantidaAnioActualTortaBiscocho15Rectangular}}</li>
+                                    <li>Torta biscocho 30 rectangular: {{this.cantidadAnioActualTortaBiscocho30Rectangular}}</li>
+                                    <li>Torta biscocho 40 rectangular: {{this.cantidadAnioActualTortaBiscocho40Rectangular}}</li>
+                                    <li>Torta biscocho 60 rectangular: {{this.cantidadAnioActualTortaBiscocho60Rectangular}}</li>
+                                </ol>
                             </div>
                         
                         </div>
