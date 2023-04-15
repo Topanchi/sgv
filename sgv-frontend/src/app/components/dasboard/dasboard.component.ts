@@ -127,7 +127,7 @@ export class DasboardComponent implements OnInit {
                 }
       
                 /* Últimos tres meses */
-                if((venta.mes == (fecha.getMonth())) || (venta.mes == (fecha.getMonth()+1) || (venta.mes == (fecha.getMonth()+2)))){
+                if((venta.mes == (fecha.getMonth()-1)) || (venta.mes == (fecha.getMonth()) || (venta.mes == (fecha.getMonth()+1)))){
                   if(detalle.idProducto.descripcion == ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA){
                     this.cantidadUltimosTresTortaBiscocho15Redonda++;
                   } 
@@ -238,7 +238,7 @@ export class DasboardComponent implements OnInit {
           /* FIN lógica de mes actual */
 
           /* INICIO lógica de último trimestre */
-          if((venta.mes == (fecha.getMonth())) || (venta.mes == (fecha.getMonth()+1) || (venta.mes == (fecha.getMonth()+2)))){
+          if((venta.mes == (fecha.getMonth()-1)) || (venta.mes == (fecha.getMonth()) || (venta.mes == (fecha.getMonth()+1)))){
             this.ventasUltimoTrimestre++;
             this.totalTrimestre = this.totalTrimestre + venta.valor_venta; /* Total en ventas en mes actual */
           }
