@@ -22,7 +22,7 @@ module.exports = app => {
     router.delete("/borrar", ventas.deleteAll);
 
     // Create a new Venta
-    router.post("/buscar", ventas.countByMonths);
+    router.get("/buscar-ventas/:mes", ventas.countByMonths);
   
     app.use("/api/ventas", router);
 };

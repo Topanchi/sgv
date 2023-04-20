@@ -8,6 +8,7 @@ module.exports = function(app) {
             "x-access-token, Origin, Content-Type, Accept"
         );
         console.log("*** req.body: ", req.body);
+        console.log("*** req.params: ", req.params);
         next();
     });
 

@@ -154,16 +154,21 @@ exports.deleteAll = (req, res) => {
 };
 
 // Delete all Ventas from the database.
-exports.countByMonths = (req, res) => {
-    console.log("--- Entrnado :  ", req.body);
+exports.countByMonths = async (req, res) => {
+    console.log("--- Entrada", req.params.mes);
 
-  
-    Venta.find(condition).countDocuments({"mes" : +req.body}).then(data => {
-        res.send(data);
-    }).catch(err => {
+    const cantidadVentas = await Venta.countDocuments({ "mes": req.params.mes }).catch(err => {
         res.status(500).send({
             message:
             err.message || "Some error occurred while retrieving ventas."
         });
     });
+
+    console.log("--- Salida :  ", cantidadVentas);
+
+    res.status(200).send({
+        mumero: cantidadVentas
+    });
+
+
 };
