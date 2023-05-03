@@ -5,6 +5,7 @@ import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { VentaService } from '../../../services/venta.service';
 import { ProductoService } from '../../../services/producto.service';
 import { UserService } from '../../../services/user.service';
+import { ConstantesCategorias } from '../../../utils/constantes-categorias';
 import { DetalleVenta } from '../../../models/detalleventa';
 import { Venta } from '../../../models/venta';
 import { User } from 'src/app/models/user';
@@ -57,8 +58,23 @@ export class VentaEditComponent implements OnInit {
   };
 
   public total: number = 0;
-
   public model:any;
+
+  public pivote_torta_bizcocho_15_redonda: number = 0;
+  public pivote_torta_bizcocho_20_redonda: number = 0;
+  public pivote_torta_bizcocho_30_redonda: number = 0;
+  public pivote_torta_bizcocho_40_redonda: number = 0;
+  public pivote_torta_bizcocho_50_redonda: number = 0;
+  public pivote_torta_bizcocho_15_rectangular: number = 0;
+  public pivote_torta_bizcocho_30_rectangular: number = 0;
+  public pivote_torta_bizcocho_40_rectangular: number = 0;
+  public pivote_torta_bizcocho_60_rectangular: number = 0;
+  public pivote_torta_especial_12_panqueque: number = 0;
+  public pivote_torta_especial_20_panqueque: number = 0;
+  public pivote_torta_especial_30_panqueque: number = 0;
+  public pivote_torta_especial_15_hojarasca_milhoja: number = 0;
+  public pivote_torta_especial_20_hojarasca_milhoja: number = 0;
+  public pivote_torta_especial_30_hojarasca_milhoja: number = 0;
 
   constructor(
     private _userService: UserService,
@@ -164,6 +180,8 @@ export class VentaEditComponent implements OnInit {
       console.log(fechaFinal)
       let fecha2Final = fechaFinal.split('/');
 
+      this.seteoCantidadDeProductos(this.data_detalle);
+
       if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
 
         Swal.fire({
@@ -186,6 +204,7 @@ export class VentaEditComponent implements OnInit {
               mes: +fecha2Final[1],
               anio: +fecha2Final[2],
               valor_venta: this.total,
+              tipo_producto: ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA,
               detalles: this.data_detalle
             }
     
@@ -200,7 +219,22 @@ export class VentaEditComponent implements OnInit {
               mes: +fecha2Final[1],
               anio: +fecha2Final[2],
               valor_venta: this.total,
-              detalles: this.data_detalle
+              detalles: this.data_detalle,
+              torta_bizcocho_15_redonda: this.pivote_torta_bizcocho_15_redonda,
+              torta_bizcocho_20_redonda: this.pivote_torta_bizcocho_20_redonda,
+              torta_bizcocho_30_redonda: this.pivote_torta_bizcocho_30_redonda,
+              torta_bizcocho_40_redonda: this.pivote_torta_bizcocho_40_redonda,
+              torta_bizcocho_50_redonda: this.pivote_torta_bizcocho_50_redonda,
+              torta_bizcocho_15_rectangular: this.pivote_torta_bizcocho_15_rectangular,
+              torta_bizcocho_30_rectangular: this.pivote_torta_bizcocho_30_rectangular,
+              torta_bizcocho_40_rectangular: this.pivote_torta_bizcocho_40_rectangular,
+              torta_bizcocho_60_rectangular: this.pivote_torta_bizcocho_60_rectangular,
+              torta_especial_12_panqueque: this.pivote_torta_especial_12_panqueque,
+              torta_especial_20_panqueque: this.pivote_torta_especial_20_panqueque,
+              torta_especial_30_panqueque: this.pivote_torta_especial_30_panqueque,
+              torta_especial_15_hojarasca_milhoja: this.pivote_torta_especial_15_hojarasca_milhoja,
+              torta_especial_20_hojarasca_milhoja: this.pivote_torta_especial_20_hojarasca_milhoja,
+              torta_especial_30_hojarasca_milhoja: this.pivote_torta_especial_30_hojarasca_milhoja
             }).subscribe(
               response => {
                 Swal.fire({
@@ -276,5 +310,58 @@ export class VentaEditComponent implements OnInit {
 
       }
     );
+  }
+
+  private seteoCantidadDeProductos(data_detalle: any[]) {
+    data_detalle.forEach(detalle => {
+      /* TORTAS BIZCOCHO REDONDAS */
+      if(detalle.producto == ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA){
+        this.pivote_torta_bizcocho_15_redonda = this.pivote_torta_bizcocho_15_redonda + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_BISCOCHO_20_REDONDA){
+        this.pivote_torta_bizcocho_20_redonda = this.pivote_torta_bizcocho_20_redonda + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_BISCOCHO_30_REDONDA){
+        this.pivote_torta_bizcocho_30_redonda = this.pivote_torta_bizcocho_30_redonda + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_BISCOCHO_40_REDONDA){
+        this.pivote_torta_bizcocho_40_redonda = this.pivote_torta_bizcocho_40_redonda + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_BISCOCHO_50_REDONDA){
+        this.pivote_torta_bizcocho_50_redonda = this.pivote_torta_bizcocho_50_redonda + detalle.cantidad;
+      }
+      /* TORTAS BIZCOCHO RECTANGULAR */
+      if(detalle.producto == ConstantesCategorias.TORTA_BISCOCHO_15_REECTANGULAR){
+        this.pivote_torta_bizcocho_15_rectangular = this.pivote_torta_bizcocho_15_rectangular + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_BISCOCHO_30_REECTANGULAR){
+        this.pivote_torta_bizcocho_30_rectangular = this.pivote_torta_bizcocho_30_rectangular + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_BISCOCHO_40_REECTANGULAR){
+        this.pivote_torta_bizcocho_40_rectangular = this.pivote_torta_bizcocho_40_rectangular + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_BISCOCHO_60_REECTANGULAR){
+        this.pivote_torta_bizcocho_60_rectangular = this.pivote_torta_bizcocho_60_rectangular + detalle.cantidad;
+      }
+      /* TORTAS ESPECIALES */
+      if(detalle.producto == ConstantesCategorias.TORTA_ESPECIAL_12_PANQUEQUE){
+        this.pivote_torta_especial_12_panqueque = this.pivote_torta_especial_12_panqueque + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_ESPECIAL_20_PANQUEQUE){
+        this.pivote_torta_especial_20_panqueque = this.pivote_torta_especial_20_panqueque + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_ESPECIAL_30_PANQUEQUE){
+        this.pivote_torta_especial_30_panqueque = this.pivote_torta_especial_30_panqueque + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_ESPECIAL_15_HOJARASCA_MILHOJA){
+        this.pivote_torta_especial_15_hojarasca_milhoja = this.pivote_torta_especial_15_hojarasca_milhoja + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_ESPECIAL_20_HOJARASCA_MILHOJA){
+        this.pivote_torta_especial_20_hojarasca_milhoja = this.pivote_torta_especial_20_hojarasca_milhoja + detalle.cantidad;
+      }
+      if(detalle.producto == ConstantesCategorias.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA){
+        this.pivote_torta_especial_30_hojarasca_milhoja = this.pivote_torta_especial_30_hojarasca_milhoja + detalle.cantidad;
+      }
+    });
   }
 }
