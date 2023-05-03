@@ -11,7 +11,12 @@ export class ConstantesCategorias {
     public static TORTA_BISCOCHO_40_REECTANGULAR = "Torta biscocho para 40 personas rectangular";
     public static TORTA_BISCOCHO_60_REECTANGULAR = "Torta biscocho para 60 personas rectangular";
     /* Tortas especiales */
-
+    public static TORTA_ESPECIAL_12_PANQUEQUE = "Torta especial para 12 personas panqueque";
+    public static TORTA_ESPECIAL_20_PANQUEQUE = "Torta especial para 20 personas panqueque";
+    public static TORTA_ESPECIAL_30_PANQUEQUE = "Torta especial para 30 personas panqueque";
+    public static TORTA_ESPECIAL_15_HOJARASCA_MILHOJA = "Torta especial para 15 personas hojarasca/milhoja";
+    public static TORTA_ESPECIAL_20_HOJARASCA_MILHOJA = "Torta especial para 20 personas hojarasca/milhoja";
+    public static TORTA_ESPECIAL_30_HOJARASCA_MILHOJA = "Torta especial para 30 personas hojarasca/milhoja";
     /* adicionales */
 
 }
