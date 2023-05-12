@@ -1,5 +1,6 @@
 const db = require("../models");
 const Venta = db.venta;
+const VentaContador = db.ventacontador;
 const DetalleVenta = db.detalleventa;
 var detalle = new Array(DetalleVenta());
 
@@ -169,11 +170,46 @@ exports.deleteAll = (req, res) => {
   
 };
 
+
+// Create and Save a new Venta Contador
+exports.createVentaContador = (req, res) => {
+    // Validate request
+    if (!req.body) {
+        res.status(400).send({ message: "Content can not be empty!" });
+        return;
+    }
+
+    // Create a Venta
+    const ventaContador = new VentaContador({
+        fecha_venta: req.body.fecha_venta,
+        mes: req.body.mes,
+        anio: req.body.anio,
+        producto_vendido: req.body.producto_vendido,
+    });
+
+    ventaContador.save(ventaContador).then((data) => {
+        if(data){
+            res.status(200).send({
+                message:
+                    err.message || "Venta Contador guardado con éxito."
+            });
+        }
+        
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while creating the Venta."
+        });
+    });
+  
+};
+
 // Delete all Ventas from the database.
 exports.countByMonths = async (req, res) => {
-    console.log("--- Entrada", req.params.mes);
+    console.log("--- Entrada", req.body);
 
-    const cantidadVentas = await Venta.countDocuments({ "mes": req.params.mes }).catch(err => {
+    const cantidadVentas = await VentaContador.countDocuments({ "mes": req.body.mes , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
         res.status(500).send({
             message:
             err.message || "Some error occurred while retrieving ventas."
@@ -183,7 +219,7 @@ exports.countByMonths = async (req, res) => {
     console.log("--- Salida :  ", cantidadVentas);
 
     res.status(200).send({
-        mumero: cantidadVentas
+        cantidadVentas
     });
 
 

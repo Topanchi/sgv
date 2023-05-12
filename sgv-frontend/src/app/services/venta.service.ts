@@ -27,18 +27,23 @@ export class VentaService {
   }
 
   public guardarVenta(data: any): Observable<any>{
-    console.log("service: ", data)
     return this._http.post(this.url + 'ventas/crear', data);
   }
 
   public eliminarVenta(id: any) {
-    console.log("service: ", id);
     return this._http.delete(this.url + 'ventas/borrar/' + id);
   }
 
 
   public actualizarVenta(data: any) {
-    console.log("service: ", data)
     return this._http.put(this.url + 'ventas/'+ data._id, data);
+  }
+
+  public guardarVentaContador(data: any): Observable<any>{
+    return this._http.post(this.url + 'ventas/guardar-venta-contador', data);
+  }
+
+  public contadorProductoPorMeses(data: any): Observable<any>{
+    return this._http.post(this.url + 'ventas/buscar-ventas', data);
   }
 }

@@ -9,6 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core/';
 import { MatInputModule } from '@angular/material/input';
+//import { ChartsModule } from 'ng2-charts';
 
 /* import {  MatDatepickerToggle } from '@angular/material/datepicker/datepicker-toggle'; */
 
@@ -61,6 +62,8 @@ import { TopbarComponent } from './components/topbar/topbar.component';
     MatNativeDateModule,
     MatInputModule,
     /*MatDatepickerToggle */
+    //ChartsModule
+    
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent]
