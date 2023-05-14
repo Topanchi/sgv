@@ -63,44 +63,17 @@
                     <div class="col-12 col-xl-4">
                         <div class="card">
                             <div class="card-header">
-                                
                                 <h5 class="card-title">¿Qué se ha vendido en este mes?</h5>
-                                <div class="row">
-                            
-                                </div>
                             </div>
                             <div class="card-body">
                                 <!-- <h2 style="color:#0f0e0e !important">Aquí va un gráfico de torta</h2> -->
-                                <ol>
-                                    <li *ngIf="this.cantidadMesActualTortaBiscocho15Redonda !== 0">Torta biscocho 15 redonda: {{this.cantidadMesActualTortaBiscocho15Redonda}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaBiscocho20Redonda !== 0">Torta biscocho 20 redonda: {{this.cantidadMesActualTortaBiscocho20Redonda}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaBiscocho30Redonda !== 0">Torta biscocho 30 redonda: {{this.cantidadMesActualTortaBiscocho30Redonda}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaBiscocho40Redonda !== 0">Torta biscocho 40 redonda: {{this.cantidadMesActualTortaBiscocho40Redonda}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaBiscocho50Redonda !== 0">Torta biscocho 50 redonda: {{this.cantidadMesActualTortaBiscocho50Redonda}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaBiscocho15Rectangular !== 0">Torta biscocho 15 rectangular: {{this.cantidadMesActualTortaBiscocho15Rectangular}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaBiscocho30Rectangular !== 0">Torta biscocho 30 rectangular: {{this.cantidadMesActualTortaBiscocho30Rectangular}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaBiscocho40Rectangular !== 0">Torta biscocho 40 rectangular: {{this.cantidadMesActualTortaBiscocho40Rectangular}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaBiscocho60Rectangular !== 0">Torta biscocho 60 rectangular: {{this.cantidadMesActualTortaBiscocho60Rectangular}}</li>
-
-                                    <li *ngIf="this.cantidadMesActualTortaEspecial12Panqueue !== 0">Torta especial 12 panqueque: {{this.cantidadMesActualTortaEspecial12Panqueue}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaEspecial20Panqueue !== 0">Torta especial 20 panqueque: {{this.cantidadMesActualTortaEspecial20Panqueue}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaEspecial30Panqueue !== 0">Torta especial 30 panqueque: {{this.cantidadMesActualTortaEspecial30Panqueue}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaEspecial15HojarascaMilhoja !== 0">Torta especial 15 Hojarasca/milhoja: {{this.cantidadMesActualTortaEspecial15HojarascaMilhoja}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaEspecial20HojarascaMilhoja !== 0">Torta especial 20 Hojarasca/milhoja: {{this.cantidadMesActualTortaEspecial20HojarascaMilhoja}}</li>
-                                    <li *ngIf="this.cantidadMesActualTortaEspecial30HojarascaMilhoja !== 0">Torta especial 30 Hojarasca/milhoja: {{this.cantidadMesActualTortaEspecial30HojarascaMilhoja}}</li>
-                                </ol>
-
-                               
                                 <!-- <canvas baseChart 
                                 [chartType]="barChartType" 
                                 [datasets]="barChartData" 
                                 [labels]="barChartLabels">
                                 </canvas> -->
                                 <canvas id="tortaChart" width="300" height="200"></canvas>
-
-                               
                             </div>
-                        
                         </div>
                     </div>
                     <div class="col-12 col-xl-8">
@@ -202,6 +175,15 @@
                                     <li *ngIf="this.cantidadAnioActualTortaEspecial20HojarascaMilhoja !== 0">Torta especial 20 Hojarasca/milhoja: {{this.cantidadAnioActualTortaEspecial20HojarascaMilhoja}}</li>
                                     <li *ngIf="this.cantidadAnioActualTortaEspecial30HojarascaMilhoja !== 0">Torta especial 30 Hojarasca/milhoja: {{this.cantidadAnioActualTortaEspecial30HojarascaMilhoja}}</li>
                                 </ol>
+                                <div class="card-body">
+                                    <!-- <h2 style="color:#0f0e0e !important">Aquí va un gráfico de torta</h2> -->
+                                    <!-- <canvas baseChart 
+                                    [chartType]="barChartType" 
+                                    [datasets]="barChartData" 
+                                    [labels]="barChartLabels">
+                                    </canvas> -->
+                                    <canvas id="barraChartAnioActual" width="300" height="200"></canvas>
+                                </div>
                             </div>
                         
                         </div>

@@ -21,8 +21,11 @@ module.exports = app => {
     // Create a new Venta
     router.delete("/borrar", ventas.deleteAll);
 
-    // Create a new Venta
+    // Search Data by months using year 
     router.post("/buscar-ventas", ventas.countByMonths);
+
+    // Search Data by year 
+    router.post("/buscar-ventas-anio", ventas.countByYears);
 
     // Create a new VentaContador
     router.post("/guardar-venta-contador", ventas.createVentaContador);
