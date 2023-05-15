@@ -146,6 +146,7 @@ export class DasboardComponent implements OnInit {
     //console.log("ültimos seis meses: ", fecha.getMonth()-2, fecha.getMonth()-1, fecha.getMonth(), fecha.getMonth()+1, fecha.getMonth()+2, fecha.getMonth()+3,);
     
     this.obtenerDatosMesActual(fecha);
+    this.obtenerDatosTresMeses(fecha);
     this.obtenerDatosAnioActual(fecha);
 
     this.obtenerVentas();
@@ -191,13 +192,63 @@ export class DasboardComponent implements OnInit {
           dataLabels.push(response.producto);
         }
       });
+      this.setgraficoMesActual(dataLabels, dataResults);
     })
     .catch(error => {
       console.error(error);
     });
 
 
-    this.setgraficoMesActual(dataLabels, dataResults);
+    
+  }
+
+  private obtenerDatosTresMeses(fecha: Date) {
+    const mesActual = fecha.getMonth()+1;
+    const mesAnterior = fecha.getMonth();
+    const mesAnteAnterior = fecha.getMonth()-1;
+    const anioActual = fecha.getFullYear();
+
+    const dataResults = [];
+    const dataLabels = [];
+
+    const llamadasServicio = [
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_BISCOCHO_20_REDONDA),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_BISCOCHO_30_REDONDA),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_BISCOCHO_40_REDONDA),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_BISCOCHO_50_REDONDA),
+
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_BISCOCHO_15_REECTANGULAR),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_BISCOCHO_30_REECTANGULAR),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_BISCOCHO_40_REECTANGULAR),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_BISCOCHO_60_REECTANGULAR),
+
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_ESPECIAL_12_PANQUEQUE),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_ESPECIAL_20_PANQUEQUE),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_ESPECIAL_30_PANQUEQUE),
+
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_ESPECIAL_15_HOJARASCA_MILHOJA),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_ESPECIAL_20_HOJARASCA_MILHOJA),
+      this.obtenerVentasTresMeses(mesAnteAnterior, mesAnterior, mesActual, anioActual, ConstantesCategorias.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA),
+    ];
+
+    // Promesas para cada llamada al servicio
+    const promises = llamadasServicio.map(call => call.toPromise());
+
+    // Esperar a que se resuelvan todas las promesas con Promise.all()
+    Promise.all(promises).then(responses => {
+      // Almacenar los valores en el arreglo de resultados
+      responses.forEach(response => {
+        if(response.cantidadVentas !== 0){
+          dataResults.push(response.cantidadVentas);
+          dataLabels.push(response.producto);
+        }
+      });
+      this.setgraficoTresMeses(dataLabels, dataResults);
+    })
+    .catch(error => {
+      console.error(error);
+    });
   }
 
   private obtenerDatosAnioActual(fecha: Date) {
@@ -239,13 +290,14 @@ export class DasboardComponent implements OnInit {
           dataLabels.push(response.producto);
         }
       });
+      console.log("anio dataResults: ",dataResults);
+      console.log("anio dataLabels:: " ,dataLabels);
+      this.setgraficoAnioActual(dataLabels, dataResults);
     })
     .catch(error => {
       console.error(error);
     });
 
-
-    //this.setgraficoAnioActual(dataLabels, dataResults);
   }
 
   private obtenerVentasMesActual(mesActual: number, anioActual: number, constante: String) {
@@ -256,6 +308,19 @@ export class DasboardComponent implements OnInit {
     }
 
     let valor = this._ventaService.contadorProductoPorMeses(dataMMesActual); 
+    return valor;
+  }
+
+  private obtenerVentasTresMeses(mesAnteAnterior: number, mesAnterior: number, mesActual: number, anioActual: number, constante: string) {
+    let dataTrimestre = {
+      "mes_uno": mesAnteAnterior,
+      "mes_dos": mesAnterior,
+      "mes_tres": mesActual,
+      "anio": anioActual,
+      "producto_vendido": constante
+    }
+
+    let valor = this._ventaService.contadorProductoPorTresMeses(dataTrimestre); 
     return valor;
   }
 
@@ -398,8 +463,6 @@ export class DasboardComponent implements OnInit {
   }
 
   private setgraficoTresMeses(tiposDeTortas: string[], cantidadDeTortas: number[]) {
-    console.log("setgraficoTresMeses tipos de tortas: ", tiposDeTortas);
-    console.log("setgraficoTresMeses cantidad de tortas: ", cantidadDeTortas);
     const canvas: any = document.getElementById('barraChartTresMeses');
     const ctx = canvas.getContext('2d');
     
@@ -415,7 +478,18 @@ export class DasboardComponent implements OnInit {
             'rgba(255, 206, 86, 0.7)',
             'rgba(75, 192, 192, 0.7)',
             'rgba(153, 102, 255, 0.7)',
-            'rgba(255, 159, 64, 0.7)'
+            'rgba(255, 159, 64, 0.7)',
+
+            'rgba(238, 130, 238, 0.7)',
+            'rgba(106, 90, 205, 0.7)',
+            'rgba(89, 89, 16, 0.7)',
+            'rgba(182, 10, 16, 0.7)',
+            'rgba(182, 10, 181, 0.7)',
+            'rgba(89, 10, 181 0.7)',
+
+            'rgba(89, 147, 181, 0.7)',
+            'rgba(89, 147, 255, 0.7)',
+            'rgba(255, 217, 255, 0.7)'
           ]
         }]
       }

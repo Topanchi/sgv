@@ -27,6 +27,9 @@ module.exports = app => {
     // Search Data by year 
     router.post("/buscar-ventas-anio", ventas.countByYears);
 
+    // Search Data by year 
+    router.post("/buscar-ventas-trimestre", ventas.countBythreeMonth);
+
     // Create a new VentaContador
     router.post("/guardar-venta-contador", ventas.createVentaContador);
   
