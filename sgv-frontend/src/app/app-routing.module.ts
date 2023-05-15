@@ -10,9 +10,11 @@ import { VentaIndexComponent } from './components/ventas/venta-index/venta-index
 import { VentaCreateComponent } from './components/ventas/venta-create/venta-create.component';
 import { VentaDetalleComponent } from './components/ventas/venta-detalle/venta-detalle.component';
 import { VentaEditComponent } from './components/ventas/venta-edit/venta-edit.component';
+import { DesgloseComponent } from './components/desglose/desglose.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
+  { path: 'detalle', component: DesgloseComponent },
   { path: 'dasboard', component: DasboardComponent },
   { path: 'productos', component: ProductoIndexComponent },
   { path: 'producto/registrar', component: ProductoCreateComponent },

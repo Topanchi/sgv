@@ -1,0 +1,36 @@
+<div class="wrapper">
+    <app-sidebar style="background:white !important;"></app-sidebar>
+    <div class="main">
+        <app-topbar></app-topbar>
+        <main class="content">
+            <div class="container-fluid">
+                <div class="header">
+                    <h1 class="header-title">
+                        Desglose de ventas
+                    </h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item" style="color:#f5f5f5 !important"><a>Desglose</a></li>
+                        </ol>
+                    </nav>
+                    <p class="header-subtitle">Detalle de ventas realizadas, consultas por año y mes.</p>
+                </div>
+    
+                <div class="row">
+                    <p style="text-align: center;">Si data == null entonces no mostrar datos</p>
+                    <br>
+                    <div class="col">
+                        <p>Aquí va un selector de año</p>
+                    </div>
+                    <div class="col">
+                        <p>Aquí va un selector de mes</p>
+                    </div>
+                </div>
+    
+                <div *ngIf="mostrarDatos !== null" class="row">
+                    
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
