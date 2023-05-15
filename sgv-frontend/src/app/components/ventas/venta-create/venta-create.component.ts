@@ -74,6 +74,7 @@ export class VentaCreateComponent implements OnInit {
   public pivote_torta_especial_15_hojarasca_milhoja: number = 0;
   public pivote_torta_especial_20_hojarasca_milhoja: number = 0;
   public pivote_torta_especial_30_hojarasca_milhoja: number = 0;
+  public pivote_data_detalles: any[];
 
   constructor(
     private _userService: UserService,
@@ -130,7 +131,7 @@ export class VentaCreateComponent implements OnInit {
         });
 
         this.total = this.total + ((parseInt(this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
-        console.log("detalle: ", this.data_detalle);
+        //console.log("detalle: ", this.data_detalle);
         this.detalle = new DetalleVenta('','','','');
         this.producto.valor_producto = '0';
       }
@@ -155,6 +156,8 @@ export class VentaCreateComponent implements OnInit {
       let fecha2Final = fechaFinal.split('/');
 
       this.seteoCantidadDeProductos(this.data_detalle);
+      this.pivote_data_detalles = this.data_detalle;
+      this.envioDataContadores(this.pivote_data_detalles, ventaForm.value, fechaPicker, fecha2Final);
 
       if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
 
@@ -325,5 +328,40 @@ export class VentaCreateComponent implements OnInit {
         this.pivote_torta_especial_30_hojarasca_milhoja = this.pivote_torta_especial_30_hojarasca_milhoja + detalle.cantidad;
       }
     });
+  }
+
+  private envioDataContadores(data_detalle: any[], value: any, fechaPicker: any, fecha2Final: any[]) {
+    var objetosClonados = [];
+    data_detalle.forEach(detalle => {
+      let data = {
+        fecha_venta: fechaPicker,
+        mes: +fecha2Final[1],
+        anio: +fecha2Final[2],
+        producto_vendido: detalle.producto
+      }
+
+      if(detalle.cantidad != 0){
+        for (var i = 0; i < detalle.cantidad; i++) {
+          // Crear una copia del objeto original utilizando JSON.parse() y JSON.stringify()
+          var objetoClonado = JSON.parse(JSON.stringify(data));
+          // Añadir el objeto clonado al array de objetos clonados
+          console.log("objetoClonado: ", objetoClonado)
+          //llamada al servicio que guarda el objeto
+          this._ventaService.guardarVentaContador(objetoClonado).subscribe(
+            response => {
+              console.log("contador guardado con éxito");
+            },
+            error => {
+              console.log("Error: ", error);
+            }
+          );
+
+          objetosClonados.push(objetoClonado);
+        }
+        console.log("producto a irse a contador: ", objetosClonados);
+      }
+    });
+
+    
   }
 }
