@@ -433,3 +433,116 @@ exports.countBythreeMonth = async (req, res) => {
 
 
 };
+
+exports.countBySixMonth = async (req, res) => {
+    let producto = " ";
+
+    let mes_uno = req.body.mes_uno;
+    let mes_dos = req.body.mes_dos;
+    let mes_tres = req.body.mes_tres;
+    let mes_cuatro = req.body.mes_cuatro;
+    let mes_cinco = req.body.mes_cinco;
+    let mes_seis = req.body.mes_seis;
+
+    const cantidadVentas_mes_uno = await VentaContador.countDocuments({ "mes": mes_uno , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+
+    const cantidadVentas_mes_dos = await VentaContador.countDocuments({ "mes": mes_dos , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+
+    const cantidadVentas_mes_tres = await VentaContador.countDocuments({ "mes": mes_tres , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+
+    const cantidadVentas_mes_cuatro = await VentaContador.countDocuments({ "mes": mes_cuatro , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+
+    const cantidadVentas_mes_cinco = await VentaContador.countDocuments({ "mes": mes_cinco , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+
+    const cantidadVentas_mes_seis = await VentaContador.countDocuments({ "mes": mes_seis , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+
+    const cantidadVentas = cantidadVentas_mes_uno + cantidadVentas_mes_dos + cantidadVentas_mes_tres + cantidadVentas_mes_cuatro + cantidadVentas_mes_cinco + cantidadVentas_mes_seis;
+
+    console.log("--- Salida :  ", cantidadVentas);
+
+    switch(req.body.producto_vendido){
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_15_REDONDA:
+            producto = "15 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_20_REDONDA:
+            producto = "20 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_30_REDONDA:
+            producto = "30 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_40_REDONDA:
+            producto = "40 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_50_REDONDA:
+            producto = "50 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_15_REECTANGULAR:
+            producto = "15 rectangular";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_30_REECTANGULAR:
+            producto = "30 rectangular";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_40_REECTANGULAR:
+            producto = "40 rectangular";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_60_REECTANGULAR:
+            producto = "60 rectangular";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_12_PANQUEQUE:
+            producto = "12 panqueque";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_20_PANQUEQUE:
+            producto = "20 panqueque";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_30_PANQUEQUE:
+            producto = "30 panqueque";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_15_HOJARASCA_MILHOJA:
+            producto = "15 milhoja";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_20_HOJARASCA_MILHOJA:
+            producto = "20 milhoja";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA:
+            producto = "30 milhoja";
+            break;
+
+    }
+
+    res.status(200).send({
+        producto,
+        cantidadVentas
+    });
+
+
+};

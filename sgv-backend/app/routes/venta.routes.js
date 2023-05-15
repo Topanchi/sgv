@@ -30,6 +30,9 @@ module.exports = app => {
     // Search Data by year 
     router.post("/buscar-ventas-trimestre", ventas.countBythreeMonth);
 
+     // Search Data by year 
+     router.post("/buscar-ventas-semestre", ventas.countBySixMonth);
+
     // Create a new VentaContador
     router.post("/guardar-venta-contador", ventas.createVentaContador);
   

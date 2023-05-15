@@ -66,7 +66,6 @@
                                 <h5 class="card-title">¿Qué se ha vendido en este mes?</h5>
                             </div>
                             <div class="card-body">
-                                <!-- <h2 style="color:#0f0e0e !important">Aquí va un gráfico de torta</h2> -->
                                 <!-- <canvas baseChart 
                                 [chartType]="barChartType" 
                                 [datasets]="barChartData" 
@@ -97,44 +96,22 @@
                     <div class="col-12 col-xl-8">
                         <div class="card">
                             <div class="card-header">
-                                
                                 <h5 class="card-title">¿Qué se ha vendido en los últimos 6 meses?</h5>
-                                <div class="row">
-                            
-                                </div>
                             </div>
                             <div class="card-body">
-                                <h2 style="color:#0f0e0e !important">Aquí va un gráfico de barras</h2>
-                                <ol>
-                                    <li *ngIf="this.cantidadUltimosSeisTortaBiscocho15Redonda !== 0">Torta biscocho 15 redonda: {{this.cantidadUltimosSeisTortaBiscocho15Redonda}}</li>
-                                    <li *ngIf="this.cantidadUltimosSeisTortaBiscocho20Redonda !== 0">Torta biscocho 20 redonda: {{this.cantidadUltimosSeisTortaBiscocho20Redonda}}</li>
-                                    <li *ngIf="this.cantidadUltimosSeisTortaBiscocho30Redonda !== 0">Torta biscocho 30 redonda: {{this.cantidadUltimosSeisTortaBiscocho30Redonda}}</li>
-                                    <li *ngIf="this.cantidadUltimosSeisTortaBiscocho40Redonda !== 0">Torta biscocho 40 redonda: {{this.cantidadUltimosSeisTortaBiscocho40Redonda}}</li>
-                                    <li *ngIf="this.cantidadUltimosSeisTortaBiscocho50Redonda !== 0">Torta biscocho 50 redonda: {{this.cantidadUltimosSeisTortaBiscocho50Redonda}}</li>
-                                    <li *ngIf="this.cantidaUltimosSeisTortaBiscocho15Rectangular !== 0">Torta biscocho 15 rectangular: {{this.cantidaUltimosSeisTortaBiscocho15Rectangular}}</li>
-                                    <li *ngIf="this.cantidadUltimosSeisTortaBiscocho30Rectangular !== 0">Torta biscocho 30 rectangular: {{this.cantidadUltimosSeisTortaBiscocho30Rectangular}}</li>
-                                    <li *ngIf="this.cantidadUltimosSeisTortaBiscocho40Rectangular !== 0">Torta biscocho 40 rectangular: {{this.cantidadUltimosSeisTortaBiscocho40Rectangular}}</li>
-                                    <li *ngIf="this.cantidadUltimosSeisTortaBiscocho60Rectangular !== 0">Torta biscocho 60 rectangular: {{this.cantidadUltimosSeisTortaBiscocho60Rectangular}}</li>
-
-                                    <li *ngIf="this.cantidadUltimosTresTortaEspecial12Panqueue !== 0">Torta especial 12 panqueque: {{this.cantidadUltimosSeisTortaEspecial12Panqueue}}</li>
-                                    <li *ngIf="this.cantidadUltimosTresTortaEspecial12Panqueue !== 0">Torta especial 20 panqueque: {{this.cantidadUltimosSeisTortaEspecial20Panqueue}}</li>
-                                    <li *ngIf="this.cantidadUltimosTresTortaEspecial12Panqueue !== 0">Torta especial 30 panqueque: {{this.cantidadUltimosSeisTortaEspecial30Panqueue}}</li>
-                                    <li *ngIf="this.cantidadUltimosTresTortaEspecial12Panqueue !== 0">Torta especial 15 Hojarasca/milhoja: {{this.cantidadUltimosSeisTortaEspecial15HojarascaMilhoja}}</li>
-                                    <li *ngIf="this.cantidadUltimosTresTortaEspecial12Panqueue !== 0">Torta especial 20 Hojarasca/milhoja: {{this.cantidadUltimosSeisTortaEspecial20HojarascaMilhoja}}</li>
-                                    <li *ngIf="this.cantidadUltimosTresTortaEspecial12Panqueue !== 0">Torta especial 30 Hojarasca/milhoja: {{this.cantidadUltimosSeisTortaEspecial30HojarascaMilhoja}}</li>
-                                </ol>
+                                <!-- <canvas baseChart 
+                                [chartType]="barChartType" 
+                                [datasets]="barChartData" 
+                                [labels]="barChartLabels">
+                                </canvas> -->
+                                <canvas id="barChartSeisMeses" width="300" height="95"></canvas>
                             </div>
-                        
                         </div>
                     </div>
                     <div class="col-12 col-xl-4">
                         <div class="card">
                             <div class="card-header">
-                                
                                 <h5 class="card-title">¿Qué se ha vendido durante este año?</h5>
-                                <div class="row">
-                            
-                                </div>
                             </div>
                             <div class="card-body">
                                 <!-- <canvas baseChart 
@@ -143,14 +120,10 @@
                                 [labels]="barChartLabels">
                                 </canvas> -->
                                 <canvas id="pieChartAnioActual" width="300" height="200"></canvas>
-
                             </div>
-                        
                         </div>
                     </div>
-                   
                 </div>
-
             </div>
         </main>
     </div>

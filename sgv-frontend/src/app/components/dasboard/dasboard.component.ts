@@ -141,17 +141,16 @@ export class DasboardComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const fecha = new Date();
-    //console.log("Mes actual: ", fecha.getMonth()+1);
-    //console.log("ültimos tres meses: ", fecha.getMonth()-1, fecha.getMonth(), fecha.getMonth()+1);
-    //console.log("ültimos seis meses: ", fecha.getMonth()-2, fecha.getMonth()-1, fecha.getMonth(), fecha.getMonth()+1, fecha.getMonth()+2, fecha.getMonth()+3,);
     
     this.obtenerDatosMesActual(fecha);
     this.obtenerDatosTresMeses(fecha);
+    this.obtenerDatosSeisMeses(fecha);
     this.obtenerDatosAnioActual(fecha);
 
     this.obtenerVentas();
   }
   
+  /* Llamaos a servicio y contrucción de data para gráficos */
   private obtenerDatosMesActual(fecha: Date) {
     const mesActual = fecha.getMonth()+1;
     const anioActual = fecha.getFullYear();
@@ -251,6 +250,58 @@ export class DasboardComponent implements OnInit {
     });
   }
 
+  private obtenerDatosSeisMeses(fecha: Date) {
+    const mesPostPosterior = fecha.getMonth()+3;
+    const mesPosterior = fecha.getMonth()+2;
+    const mesActual = fecha.getMonth()+1;
+    const mesAnterior = fecha.getMonth();
+    const mesAnteAnterior = fecha.getMonth()-1;
+    const mesAnteAnteAnterior = fecha.getMonth()-2;
+    const anioActual = fecha.getFullYear();
+
+    const dataResults = [];
+    const dataLabels = [];
+
+    const llamadasServicio = [
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_BISCOCHO_20_REDONDA),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_BISCOCHO_30_REDONDA),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_BISCOCHO_40_REDONDA),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_BISCOCHO_50_REDONDA),
+
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_BISCOCHO_15_REECTANGULAR),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_BISCOCHO_30_REECTANGULAR),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_BISCOCHO_40_REECTANGULAR),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_BISCOCHO_60_REECTANGULAR),
+
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_ESPECIAL_12_PANQUEQUE),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_ESPECIAL_20_PANQUEQUE),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_ESPECIAL_30_PANQUEQUE),
+
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_ESPECIAL_15_HOJARASCA_MILHOJA),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_ESPECIAL_20_HOJARASCA_MILHOJA),
+      this.obtenerVentasSeisMeses(mesAnteAnteAnterior, mesAnteAnterior, mesAnterior, mesActual, mesPosterior, mesPostPosterior, anioActual, ConstantesCategorias.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA),
+    ];
+
+    // Promesas para cada llamada al servicio
+    const promises = llamadasServicio.map(call => call.toPromise());
+
+    // Esperar a que se resuelvan todas las promesas con Promise.all()
+    Promise.all(promises).then(responses => {
+      // Almacenar los valores en el arreglo de resultados
+      responses.forEach(response => {
+        if(response.cantidadVentas !== 0){
+          dataResults.push(response.cantidadVentas);
+          dataLabels.push(response.producto);
+        }
+      });
+      this.setgraficoSeisMeses(dataLabels, dataResults);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
   private obtenerDatosAnioActual(fecha: Date) {
     const anioActual = fecha.getFullYear();
 
@@ -300,6 +351,7 @@ export class DasboardComponent implements OnInit {
 
   }
 
+  /* Obtención de datos del backend */
   private obtenerVentasMesActual(mesActual: number, anioActual: number, constante: String) {
     let dataMMesActual = {
       "mes": mesActual,
@@ -324,6 +376,22 @@ export class DasboardComponent implements OnInit {
     return valor;
   }
 
+  private obtenerVentasSeisMeses(mesAnteAnteAnterior: number, mesAnteAnterior: number, mesAnterior: number, mesActual: number, mesPosterior: number, mesPostPosterior: number, anioActual: number, constante: string) {
+    let dataSemestre = {
+      "mes_uno": mesAnteAnteAnterior,
+      "mes_dos": mesAnteAnterior,
+      "mes_tres": mesAnterior,
+      "mes_cuatro": mesActual,
+      "mes_cinco": mesPosterior,
+      "mes_seis": mesPostPosterior,
+      "anio": anioActual,
+      "producto_vendido": constante
+    }
+
+    let valor = this._ventaService.contadorProductoPorSeisMeses(dataSemestre); 
+    return valor;
+  }
+
   private obtenerVentasAnioActual(anioActual: number, constante: String) {
     let dataAnioActual = {
       "anio": anioActual,
@@ -333,8 +401,6 @@ export class DasboardComponent implements OnInit {
     let valor = this._ventaService.contadorProductoPorAnio(dataAnioActual); 
     return valor;
   }
-
- 
 
   private obtenerVentas() {
     const fecha = new Date();
@@ -347,57 +413,20 @@ export class DasboardComponent implements OnInit {
         this.data_ventas.forEach((venta,index) => {
           /* INICIO lógica de total año actual */
           if(venta.anio == (fecha.getFullYear())){
-            this.ventasAnioActual++;
             this.totalAnioActual = this.totalAnioActual + venta.valor_venta; /* Total en ventas en mes actual */
-            this.cantidadAnioActualTortaBiscocho15Redonda = this.cantidadAnioActualTortaBiscocho15Redonda + venta.torta_bizcocho_15_redonda;
-            this.cantidadAnioActualTortaBiscocho20Redonda = this.cantidadAnioActualTortaBiscocho20Redonda + venta.torta_bizcocho_20_redonda;
-            this.cantidadAnioActualTortaBiscocho30Redonda = this.cantidadAnioActualTortaBiscocho30Redonda + venta.torta_bizcocho_30_redonda;
-            this.cantidadAnioActualTortaBiscocho40Redonda = this.cantidadAnioActualTortaBiscocho40Redonda + venta.torta_bizcocho_40_redonda;
-            this.cantidadAnioActualTortaBiscocho50Redonda = this.cantidadAnioActualTortaBiscocho50Redonda + venta.torta_bizcocho_50_redonda;
-            this.cantidadAnioActualTortaBiscocho15Rectangular = this.cantidadAnioActualTortaBiscocho15Rectangular + venta.torta_bizcocho_15_rectangular;
-            this.cantidadAnioActualTortaBiscocho30Rectangular = this.cantidadAnioActualTortaBiscocho30Rectangular + venta.torta_bizcocho_30_rectangular;
-            this.cantidadAnioActualTortaBiscocho40Rectangular = this.cantidadAnioActualTortaBiscocho40Rectangular + venta.torta_bizcocho_40_rectangular;
-            this.cantidadAnioActualTortaBiscocho60Rectangular = this.cantidadAnioActualTortaBiscocho60Rectangular + venta.torta_bizcocho_60_rectangular;
-            this.cantidadAnioActualTortaEspecial12Panqueue = this.cantidadAnioActualTortaEspecial12Panqueue + venta.torta_especial_12_panqueque;
-            this.cantidadAnioActualTortaEspecial20Panqueue = this.cantidadAnioActualTortaEspecial20Panqueue + venta.torta_especial_20_panqueque;
-            this.cantidadAnioActualTortaEspecial30Panqueue = this.cantidadAnioActualTortaEspecial30Panqueue + venta.torta_especial_30_panqueque;
-            this.cantidadAnioActualTortaEspecial15HojarascaMilhoja = this.cantidadAnioActualTortaEspecial15HojarascaMilhoja + venta.torta_especial_15_hojarasca_milhoja;
-            this.cantidadAnioActualTortaEspecial20HojarascaMilhoja = this.cantidadAnioActualTortaEspecial15HojarascaMilhoja + venta.torta_especial_20_hojarasca_milhoja;
-            this.cantidadAnioActualTortaEspecial30HojarascaMilhoja = this.cantidadAnioActualTortaEspecial15HojarascaMilhoja + venta.torta_especial_30_hojarasca_milhoja;
           }
           /* FIN lógica de de total año actual */
 
 
           /* INICIO lógica de mes actual */
-          
           if(venta.mes == (fecha.getMonth()+1)){
-            this.contadorMesActual++
-            //console.log("Pasé por acá: ", this.contadorMesActual);
-            //this.ventasMesActual++; /* Cantidad de ventas en mes actual */
             this.totalMesActual = this.totalMesActual + venta.valor_venta; /* Total en ventas en mes actual */
-            //.ventasMesActualArray.push(venta);
           }
           /* FIN lógica de mes actual */
 
           /* INICIO lógica de último trimestre */
           if((venta.mes == (fecha.getMonth()-1)) || (venta.mes == (fecha.getMonth()) || (venta.mes == (fecha.getMonth()+1)))){
-            this.ventasUltimoTrimestre++;
             this.totalTrimestre = this.totalTrimestre + venta.valor_venta; /* Total en ventas en mes actual */
-            this.cantidadUltimosTresTortaBiscocho15Redonda = this.cantidadUltimosTresTortaBiscocho15Redonda + venta.torta_bizcocho_15_redonda;
-            this.cantidadUltimosTresTortaBiscocho20Redonda = this.cantidadUltimosTresTortaBiscocho20Redonda + venta.torta_bizcocho_20_redonda;
-            this.cantidadUltimosTresTortaBiscocho30Redonda = this.cantidadUltimosTresTortaBiscocho30Redonda + venta.torta_bizcocho_30_redonda;
-            this.cantidadUltimosTresTortaBiscocho40Redonda = this.cantidadUltimosTresTortaBiscocho40Redonda + venta.torta_bizcocho_40_redonda;
-            this.cantidadUltimosTresTortaBiscocho50Redonda = this.cantidadUltimosTresTortaBiscocho50Redonda + venta.torta_bizcocho_50_redonda;
-            this.cantidaUltimosTresTortaBiscocho15Rectangular = this.cantidaUltimosTresTortaBiscocho15Rectangular + venta.torta_bizcocho_15_rectangular;
-            this.cantidadUltimosTresTortaBiscocho30Rectangular = this.cantidadUltimosTresTortaBiscocho30Rectangular + venta.torta_bizcocho_30_rectangular;
-            this.cantidadUltimosTresTortaBiscocho40Rectangular = this.cantidadUltimosTresTortaBiscocho40Rectangular + venta.torta_bizcocho_40_rectangular;
-            this.cantidadUltimosTresTortaBiscocho60Rectangular = this.cantidadUltimosTresTortaBiscocho60Rectangular + venta.torta_bizcocho_60_rectangular;
-            this.cantidadUltimosTresTortaEspecial12Panqueue = this.cantidadUltimosTresTortaEspecial12Panqueue + venta.torta_especial_12_panqueque;
-            this.cantidadUltimosTresTortaEspecial20Panqueue = this.cantidadUltimosTresTortaEspecial20Panqueue + venta.torta_especial_20_panqueque;
-            this.cantidadUltimosTresTortaEspecial30Panqueue = this.cantidadUltimosTresTortaEspecial30Panqueue + venta.torta_especial_30_panqueque;
-            this.cantidadUltimosTresTortaEspecial15HojarascaMilhoja = this.cantidadUltimosTresTortaEspecial15HojarascaMilhoja + venta.torta_especial_15_hojarasca_milhoja;
-            this.cantidadUltimosTresTortaEspecial20HojarascaMilhoja = this.cantidadUltimosTresTortaEspecial20HojarascaMilhoja + venta.torta_especial_20_hojarasca_milhoja;
-            this.cantidadUltimosTresTortaEspecial30HojarascaMilhoja = this.cantidadUltimosTresTortaEspecial30HojarascaMilhoja + venta.torta_especial_30_hojarasca_milhoja;
           }
           /* FIN lógica de último trimestre */
 
@@ -428,6 +457,7 @@ export class DasboardComponent implements OnInit {
     );
   }
 
+  /* Generación de gráficos */
   private setgraficoMesActual(tiposDeTortas: string[], cantidadDeTortas: number[]) {
     const canvas: any = document.getElementById('tortaChart');
     const ctx = canvas.getContext('2d');
@@ -499,11 +529,11 @@ export class DasboardComponent implements OnInit {
   private setgraficoSeisMeses(tiposDeTortas: string[], cantidadDeTortas: number[]) {
     console.log("setgraficoSeisMeses tipos de tortas: ", tiposDeTortas);
     console.log("setgraficoSeisMeses cantidad de tortas: ", cantidadDeTortas);
-    const canvas: any = document.getElementById('pieChartSeisMeses');
+    const canvas: any = document.getElementById('barChartSeisMeses');
     const ctx = canvas.getContext('2d');
     
     const chart = new Chart(ctx, {
-      type: 'pie',
+      type: 'line',
       data: {
         labels: tiposDeTortas,
         datasets: [{
@@ -514,7 +544,18 @@ export class DasboardComponent implements OnInit {
             'rgba(255, 206, 86, 0.7)',
             'rgba(75, 192, 192, 0.7)',
             'rgba(153, 102, 255, 0.7)',
-            'rgba(255, 159, 64, 0.7)'
+            'rgba(255, 159, 64, 0.7)',
+
+            'rgba(238, 130, 238, 0.7)',
+            'rgba(106, 90, 205, 0.7)',
+            'rgba(89, 89, 16, 0.7)',
+            'rgba(182, 10, 16, 0.7)',
+            'rgba(182, 10, 181, 0.7)',
+            'rgba(89, 10, 181 0.7)',
+
+            'rgba(89, 147, 181, 0.7)',
+            'rgba(89, 147, 255, 0.7)',
+            'rgba(255, 217, 255, 0.7)'
           ]
         }]
       }
@@ -526,7 +567,7 @@ export class DasboardComponent implements OnInit {
     const ctx = canvas.getContext('2d');
     
     const chart = new Chart(ctx, {
-      type: 'pie',
+      type: 'doughnut',
       data: {
         labels: tiposDeTortas,
         datasets: [{

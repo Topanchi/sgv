@@ -51,6 +51,10 @@ export class VentaService {
     return this._http.post(this.url + 'ventas/buscar-ventas-trimestre', data);
   }
 
+  public contadorProductoPorSeisMeses(data: any): Observable<any>{
+    return this._http.post(this.url + 'ventas/buscar-ventas-semestre', data);
+  }
+
   public contadorProductoPorAnio(data: any): Observable<any>{
     return this._http.post(this.url + 'ventas/buscar-ventas-anio', data);
   }
