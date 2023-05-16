@@ -584,37 +584,20 @@ exports.countBySixMonth = async (req, res) => {
 
 exports.countSalesMountByMonths = async (req, res) => {
     
-    const cantidadVentas = await MontoVentaContador.find({ "mes": req.body.mes , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+    const montosEncontrados = await MontoVentaContador.find({ "mes": req.body.mes , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
         res.status(500).send({
             message:
             err.message || "Some error occurred while retrieving ventas."
         });
     });
 
-    console.log("--- Salida :  ", cantidadVentas);
+    console.log("--- Salida :  ", montosEncontrados);
 
     res.status(200).send({
-        cantidadVentas
+        montosEncontrados
     });
 
 
 };
 
-exports.countByYears = async (req, res) => {
-
-    const cantidadVentas = await MontoVentaContador.countDocuments({ "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while retrieving ventas."
-        });
-    });
-
-    console.log("--- Salida :  ", cantidadVentas);
-
-    res.status(200).send({
-        cantidadVentas
-    });
-
-
-};
 
