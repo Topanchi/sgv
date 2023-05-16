@@ -201,7 +201,7 @@ export class VentaCreateComponent implements OnInit {
     
             console.log("Data final: ", data);
 
-            /* this._ventaService.guardarVenta(data).subscribe(
+            this._ventaService.guardarVenta(data).subscribe(
               response => {
                 Swal.fire({
                   position: 'top-end',
@@ -215,7 +215,7 @@ export class VentaCreateComponent implements OnInit {
               error => {
                 console.log("Error: ", error);
               }
-            ); */
+            );
           }
         })
 
@@ -348,14 +348,14 @@ export class VentaCreateComponent implements OnInit {
           // Añadir el objeto clonado al array de objetos clonados
           console.log("objetoClonado: ", objetoClonado)
           //llamada al servicio que guarda el objeto
-          /* this._ventaService.guardarVentaContador(objetoClonado).subscribe(
+          this._ventaService.guardarVentaContador(objetoClonado).subscribe(
             response => {
               console.log("contador guardado con éxito");
             },
             error => {
               console.log("Error: ", error);
             }
-          ); */
+          );
 
           objetosClonados.push(objetoClonado);
         }
@@ -374,13 +374,13 @@ export class VentaCreateComponent implements OnInit {
       anio: +fecha2Final[2]
     }
     console.log("data monto: ", data);
-    /* this._ventaService.guardarMontoVentaContador(data).subscribe(
+    this._ventaService.guardarMontoVentaContador(data).subscribe(
       response => {
         console.log("contador guardado con éxito");
       },
       error => {
         console.log("Error: ", error);
       }
-    ); */
+    );
   }
 }
