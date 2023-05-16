@@ -2,6 +2,7 @@ const { CONSTANTES_TORTAS } = require('../utils/categoriaconstantes');
 const db = require("../models");
 const Venta = db.venta;
 const VentaContador = db.ventacontador;
+const MontoVentaContador = db.montoventacontador;
 const DetalleVenta = db.detalleventa;
 var detalle = new Array(DetalleVenta());
 
@@ -215,7 +216,7 @@ exports.createMontoVentaContador = (req, res) => {
     }
 
     // Create a Venta
-    const montoVentaContador = new VentaContador({
+    const montoVentaContador = new MontoVentaContador({
         total_venta: req.body.total_venta,
         fecha_venta: req.body.fecha_venta,
         mes: req.body.mes,
@@ -582,9 +583,8 @@ exports.countBySixMonth = async (req, res) => {
 };
 
 exports.countSalesMountByMonths = async (req, res) => {
-    let producto = " ";
-
-    const cantidadVentas = await VentaContador.countDocuments({ "mes": req.body.mes , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+    
+    const cantidadVentas = await MontoVentaContador.find({ "mes": req.body.mes , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
         res.status(500).send({
             message:
             err.message || "Some error occurred while retrieving ventas."
@@ -593,59 +593,28 @@ exports.countSalesMountByMonths = async (req, res) => {
 
     console.log("--- Salida :  ", cantidadVentas);
 
-    switch(req.body.producto_vendido){
-        case CONSTANTES_TORTAS.TORTA_BISCOCHO_15_REDONDA:
-            producto = "15 redonda";
-            break;
-        case CONSTANTES_TORTAS.TORTA_BISCOCHO_20_REDONDA:
-            producto = "20 redonda";
-            break;
-        case CONSTANTES_TORTAS.TORTA_BISCOCHO_30_REDONDA:
-            producto = "30 redonda";
-            break;
-        case CONSTANTES_TORTAS.TORTA_BISCOCHO_40_REDONDA:
-            producto = "40 redonda";
-            break;
-        case CONSTANTES_TORTAS.TORTA_BISCOCHO_50_REDONDA:
-            producto = "50 redonda";
-            break;
-        case CONSTANTES_TORTAS.TORTA_BISCOCHO_15_REECTANGULAR:
-            producto = "15 rectangular";
-            break;
-        case CONSTANTES_TORTAS.TORTA_BISCOCHO_30_REECTANGULAR:
-            producto = "30 rectangular";
-            break;
-        case CONSTANTES_TORTAS.TORTA_BISCOCHO_40_REECTANGULAR:
-            producto = "40 rectangular";
-            break;
-        case CONSTANTES_TORTAS.TORTA_BISCOCHO_60_REECTANGULAR:
-            producto = "60 rectangular";
-            break;
-        case CONSTANTES_TORTAS.TORTA_ESPECIAL_12_PANQUEQUE:
-            producto = "12 panqueque";
-            break;
-        case CONSTANTES_TORTAS.TORTA_ESPECIAL_20_PANQUEQUE:
-            producto = "20 panqueque";
-            break;
-        case CONSTANTES_TORTAS.TORTA_ESPECIAL_30_PANQUEQUE:
-            producto = "30 panqueque";
-            break;
-        case CONSTANTES_TORTAS.TORTA_ESPECIAL_15_HOJARASCA_MILHOJA:
-            producto = "15 milhoja";
-            break;
-        case CONSTANTES_TORTAS.TORTA_ESPECIAL_20_HOJARASCA_MILHOJA:
-            producto = "20 milhoja";
-            break;
-        case CONSTANTES_TORTAS.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA:
-            producto = "30 milhoja";
-            break;
-
-    }
-
     res.status(200).send({
-        producto,
         cantidadVentas
     });
 
 
 };
+
+exports.countByYears = async (req, res) => {
+
+    const cantidadVentas = await MontoVentaContador.countDocuments({ "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+
+    console.log("--- Salida :  ", cantidadVentas);
+
+    res.status(200).send({
+        cantidadVentas
+    });
+
+
+};
+

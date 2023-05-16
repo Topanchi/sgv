@@ -115,16 +115,5 @@ function initial() {
         console.log("*** Categorias registrados:", categoriasRes );
         console.log("*** Prodcutos registrados::", productosRes );
         console.log("*** Ventas registrados:::::", ventasRes );
-
-        const ventasMarzo = await Ventas.countDocuments({
-            "mes": 3
-        });
-
-        const ventasAbril = await Ventas.countDocuments({
-            "mes": 4
-        });
-
-        console.log("*** Ventas en Marzo:::::", ventasMarzo );
-        console.log("*** Ventas en Abril:::::", ventasAbril );
     })();
 }
