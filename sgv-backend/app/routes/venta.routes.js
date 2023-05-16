@@ -38,6 +38,9 @@ module.exports = app => {
 
     // Create a new VentaContador
     router.post("/guardar-monto-venta-contador", ventas.createMontoVentaContador);
+
+    // Search montos totales por año y mes 
+    router.post("/buscar-montos-ventas", ventas.countSalesMountByMonths);
   
     app.use("/api/ventas", router);
 };

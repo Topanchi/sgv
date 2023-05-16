@@ -580,3 +580,72 @@ exports.countBySixMonth = async (req, res) => {
 
 
 };
+
+exports.countSalesMountByMonths = async (req, res) => {
+    let producto = " ";
+
+    const cantidadVentas = await VentaContador.countDocuments({ "mes": req.body.mes , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+
+    console.log("--- Salida :  ", cantidadVentas);
+
+    switch(req.body.producto_vendido){
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_15_REDONDA:
+            producto = "15 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_20_REDONDA:
+            producto = "20 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_30_REDONDA:
+            producto = "30 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_40_REDONDA:
+            producto = "40 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_50_REDONDA:
+            producto = "50 redonda";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_15_REECTANGULAR:
+            producto = "15 rectangular";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_30_REECTANGULAR:
+            producto = "30 rectangular";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_40_REECTANGULAR:
+            producto = "40 rectangular";
+            break;
+        case CONSTANTES_TORTAS.TORTA_BISCOCHO_60_REECTANGULAR:
+            producto = "60 rectangular";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_12_PANQUEQUE:
+            producto = "12 panqueque";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_20_PANQUEQUE:
+            producto = "20 panqueque";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_30_PANQUEQUE:
+            producto = "30 panqueque";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_15_HOJARASCA_MILHOJA:
+            producto = "15 milhoja";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_20_HOJARASCA_MILHOJA:
+            producto = "20 milhoja";
+            break;
+        case CONSTANTES_TORTAS.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA:
+            producto = "30 milhoja";
+            break;
+
+    }
+
+    res.status(200).send({
+        producto,
+        cantidadVentas
+    });
+
+
+};
