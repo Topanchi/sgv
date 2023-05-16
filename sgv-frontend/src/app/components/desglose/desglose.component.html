@@ -19,11 +19,31 @@
                 <div class="row">
                     <p style="text-align: center;">Si data == null entonces no mostrar datos</p>
                     <br>
-                    <div class="col">
-                        <p>Aquí va un selector de año</p>
+                    <div class="col-lg-6 form-group">
+                        <label for=""><b>Seleccione año a consultar</b></label>
+                        <select class="form-control" (change)="getDataAnio($event.target)" #idanio="ngModel" name="idanio" [(ngModel)]="anio.idanio">
+                            <option value="" disabled>Seleccionar</option>
+                            <option *ngFor="let year of years">{{ year }}</option>
+                        </select>
                     </div>
-                    <div class="col">
-                        <p>Aquí va un selector de mes</p>
+                    <div class="col-lg-6 form-group">
+                        <label for=""><b>Seleccione mes a consultar</b></label>
+                        <select class="form-control" (change)="getDataMes($event.target)" #idmes="ngModel" name="idmes" [(ngModel)]="mes.idmes">
+                            <option value="" disabled>Seleccionar</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                            <!-- <option *ngFor="let item of productos" value="{{item._id}}">{{item.descripcion}}</option> -->
+                        </select>
                     </div>
                 </div>
     
