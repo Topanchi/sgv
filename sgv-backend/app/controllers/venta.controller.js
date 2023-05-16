@@ -206,6 +206,40 @@ exports.createVentaContador = (req, res) => {
   
 };
 
+//Create and save a new Mount Venta
+exports.createMontoVentaContador = (req, res) => {
+    // Validate request
+    if (!req.body) {
+        res.status(400).send({ message: "Content can not be empty!" });
+        return;
+    }
+
+    // Create a Venta
+    const montoVentaContador = new VentaContador({
+        total_venta: req.body.total_venta,
+        fecha_venta: req.body.fecha_venta,
+        mes: req.body.mes,
+        anio: req.body.anio
+    });
+
+    montoVentaContador.save(montoVentaContador).then((data) => {
+        if(data){
+            res.status(200).send({
+                message:
+                    err.message || "Monto Venta Contador guardado con éxito."
+            });
+        }
+        
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while creating the Venta."
+        });
+    });
+  
+};
+
 // Delete all Ventas from the database.
 exports.countByMonths = async (req, res) => {
     let producto = " ";

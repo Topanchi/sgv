@@ -43,6 +43,10 @@ export class VentaService {
     return this._http.post(this.url + 'ventas/guardar-venta-contador', data);
   }
 
+  public guardarMontoVentaContador(data: any): Observable<any>{
+    return this._http.post(this.url + 'ventas/guardar-monto-venta-contador', data);
+  }
+
   public contadorProductoPorMeses(data: any): Observable<any>{
     return this._http.post(this.url + 'ventas/buscar-ventas', data);
   }

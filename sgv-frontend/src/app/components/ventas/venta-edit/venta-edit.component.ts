@@ -184,6 +184,7 @@ export class VentaEditComponent implements OnInit {
       this.seteoCantidadDeProductos(this.data_detalle);
       this.pivote_data_detalles = this.data_detalle;
       this.envioDataContadores(this.pivote_data_detalles, ventaForm.value, fechaPicker, fecha2Final);
+      this.envioDataMontoContadores(fechaPicker, fecha2Final);
 
       if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
 
@@ -401,5 +402,23 @@ export class VentaEditComponent implements OnInit {
     });
 
     
+  }
+
+  private envioDataMontoContadores( fechaPicker: any, fecha2Final: any ) {
+    let data = {
+      total_venta: this.total,
+      fecha_venta: fechaPicker,
+      mes: +fecha2Final[1],
+      anio: +fecha2Final[2]
+    }
+
+    this._ventaService.guardarMontoVentaContador(data).subscribe(
+      response => {
+        console.log("contador guardado con éxito");
+      },
+      error => {
+        console.log("Error: ", error);
+      }
+    );
   }
 }
