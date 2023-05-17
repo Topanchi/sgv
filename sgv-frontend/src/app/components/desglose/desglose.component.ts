@@ -14,6 +14,9 @@ export class DesgloseComponent implements OnInit {
   public mesSeleccionado: number;
   public anioSeleccionado: number;
   public totalMesActual: number = 0;
+  public totalMesActualDulce: number = 0;
+  public totalMesActualSalada: number = 0;
+  public totalMesActualEventos: number = 0;
 
   public anio: any = {
     idanio: ''
