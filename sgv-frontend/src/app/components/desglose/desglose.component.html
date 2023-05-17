@@ -46,7 +46,7 @@
                     </div>
                 </div>
     
-                <div *ngIf="mostrarDatos" class="row">
+                <div [hidden]="!mostrarDatos" class="row">
                     <div class="col-12 col-xl-3">
                         <div class="card" style="background:#943527 !important">
                             <div class="card-header">
@@ -89,14 +89,14 @@
                     </div>  
                 </div>
 
-                <div *ngIf="mostrarDatos" class="row">
+                <div [hidden]="!mostrarDatos" class="row">
                     <div class="col-12 col-xl-6">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">Cantidad de tortas vendidas</h5>
                             </div>
                             <div class="card-body">
-                                <canvas id="tortaChart" width="300" height="200"></canvas>
+                                <canvas id="tortaChartTortas" width="300" height="200"></canvas>
                             </div>
                         </div>
                     </div>
@@ -106,20 +106,20 @@
                                 <h5 class="card-title">Cantidad de banquetería dulce vendidas</h5>
                             </div>
                             <div class="card-body">
-                                <!-- <canvas id="tortaChart" width="300" height="200"></canvas> -->
+                                <!-- <canvas id="barraChartBanqueteriaDulce" width="300" height="200"></canvas> -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div *ngIf="mostrarDatos" class="row">
+                <div [hidden]="!mostrarDatos" class="row">
                     <div class="col-12 col-xl-6">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">Cantidad de banquetería salada vendidas</h5>
                             </div>
                             <div class="card-body">
-                                <!-- <canvas id="tortaChart" width="300" height="200"></canvas> -->
+                                <!-- <canvas id="barraChartBanqueteriaSalada" width="300" height="200"></canvas> -->
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                                 <h5 class="card-title">Cantidad de eventos vendidos</h5>
                             </div>
                             <div class="card-body">
-                                <!-- <canvas id="tortaChart" width="300" height="200"></canvas> -->
+                                <!-- <canvas id="lineChartEventos" width="300" height="200"></canvas> -->
                             </div>
                         </div>
                     </div>

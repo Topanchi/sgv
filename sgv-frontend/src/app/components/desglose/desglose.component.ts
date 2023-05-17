@@ -33,12 +33,14 @@ export class DesgloseComponent implements OnInit {
   }
 
   public getDataAnio(id:any) {
+    this.totalMesActual = 0;
     console.log("Año seleccionado: ", +id.value);
     console.log("Año seleccionado: ", typeof +id.value);
     this.anioSeleccionado = +id.value;
   }
 
   public getDataMes(id:any) {
+    this.totalMesActual = 0;
     console.log("Mes seleccionado: ", +id.value);
     console.log("Mes seleccionado: ", typeof +id.value);
     this.mesSeleccionado = +id.value;
@@ -46,8 +48,8 @@ export class DesgloseComponent implements OnInit {
     console.log("año: ", this.anioSeleccionado, "mes: ", this.mesSeleccionado);
     //Llamar al servicio y llenar data
 
-    this.obtenerDataGraficos(this.anioSeleccionado, this.mesSeleccionado);
     this.llamadaMontosData(this.anioSeleccionado, this.mesSeleccionado);
+    this.obtenerDataGraficos(this.anioSeleccionado, this.mesSeleccionado);
   }
 
   private obtenerDataGraficos(anioSeleccionado: number, mesSeleccionado: number) {
@@ -142,7 +144,7 @@ export class DesgloseComponent implements OnInit {
 
   /* Generación de gráficos */
   private setgraficoMesActual(tiposDeTortas: string[], cantidadDeTortas: number[]) {
-    const canvas: any = document.getElementById('tortaChart');
+    const canvas: any = document.getElementById('tortaChartTortas');
     const ctx = canvas.getContext('2d');
     
     const chart = new Chart(ctx, {
