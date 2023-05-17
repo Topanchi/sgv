@@ -90,7 +90,9 @@ export class DesgloseComponent implements OnInit {
           this.mostrarDatos = false;
         }
       });
-      //this.setgraficoMesActual(dataLabels, dataResults);
+      console.log("results: ",dataResults);
+      console.log("labels:: ", dataLabels);
+      this.setgraficoMesActual(dataLabels, dataResults);
     })
     .catch(error => {
       console.error(error);
