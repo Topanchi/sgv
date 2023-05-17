@@ -17,7 +17,6 @@
                 </div>
     
                 <div class="row">
-                    <p style="text-align: center;">Si data == null entonces no mostrar datos</p>
                     <br>
                     <div class="col-lg-6 form-group">
                         <label for=""><b>Seleccione año a consultar</b></label>
@@ -47,8 +46,17 @@
                     </div>
                 </div>
     
-                <div *ngIf="mostrarDatos !== null" class="row">
-                    
+                <div *ngIf="mostrarDatos" class="row">
+                    <div class="col-12 col-xl-3">
+                        <div class="card" style="background:#943527 !important">
+                            <div class="card-header">
+                                <h5 class="card-title titulo-montos">Total mes actual: Tortas</h5>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="titulo-montos">${{this.totalMesActual}}</h2>
+                            </div>
+                        </div>
+                    </div>    
                 </div>
             </div>
         </main>

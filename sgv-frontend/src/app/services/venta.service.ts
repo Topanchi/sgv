@@ -62,4 +62,8 @@ export class VentaService {
   public contadorProductoPorAnio(data: any): Observable<any>{
     return this._http.post(this.url + 'ventas/buscar-ventas-anio', data);
   }
+
+  public contadorMontoVenta(data: any): Observable<any>{
+    return this._http.post(this.url + 'ventas/buscar-montos-ventas', data);
+  }
 }
