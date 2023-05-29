@@ -18,14 +18,14 @@
     
                 <div class="row">
                     <br>
-                    <div class="col-lg-6 form-group">
+                    <div class="col-lg-4 form-group">
                         <label for=""><b>Seleccione año a consultar</b></label>
                         <select class="form-control" (change)="getDataAnio($event.target)" #idanio="ngModel" name="idanio" [(ngModel)]="anio.idanio">
                             <option value="" disabled>Seleccionar</option>
                             <option *ngFor="let year of years">{{ year }}</option>
                         </select>
                     </div>
-                    <div class="col-lg-6 form-group">
+                    <div [hidden]="!mostrarSelectorMes" class="col-lg-4 form-group">
                         <label for=""><b>Seleccione mes a consultar</b></label>
                         <select class="form-control" (change)="getDataMes($event.target)" #idmes="ngModel" name="idmes" [(ngModel)]="mes.idmes">
                             <option value="" disabled>Seleccionar</option>
@@ -43,6 +43,11 @@
                             <option value="12">Diciembre</option>
                             <!-- <option *ngFor="let item of productos" value="{{item._id}}">{{item.descripcion}}</option> -->
                         </select>
+                    </div>
+
+                    <div [hidden]="!mostrarSelectorMes" class="col-lg-4 form-group">
+                        <label><b>+</b></label>
+                        <button [disabled]="!selectoresCompletos" type="submit" class="btn btn-primary btn-block" (click)="buscarDatos()">Buscar</button>
                     </div>
                 </div>
     

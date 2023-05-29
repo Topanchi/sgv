@@ -10,7 +10,9 @@ import * as Chart from 'chart.js';
 })
 export class DesgloseComponent implements OnInit {
 
-  public mostrarDatos = false;
+  public mostrarDatos: boolean = false;
+  public selectoresCompletos: boolean = false;
+  public mostrarSelectorMes: boolean = false;
   public mesSeleccionado: number;
   public anioSeleccionado: number;
   public totalMesActual: number = 0;
@@ -37,6 +39,10 @@ export class DesgloseComponent implements OnInit {
     console.log("Año seleccionado: ", +id.value);
     console.log("Año seleccionado: ", typeof +id.value);
     this.anioSeleccionado = +id.value;
+
+    if(this.anioSeleccionado !== null){
+      this.mostrarSelectorMes = true;
+    }
   }
 
   public getDataMes(id:any) {
@@ -45,11 +51,22 @@ export class DesgloseComponent implements OnInit {
     console.log("Mes seleccionado: ", typeof +id.value);
     this.mesSeleccionado = +id.value;
 
-    console.log("año: ", this.anioSeleccionado, "mes: ", this.mesSeleccionado);
-    //Llamar al servicio y llenar data
+    if(this.anioSeleccionado !== null && this.mesSeleccionado !== null){
+      this.selectoresCompletos = true;
+    }
+  }
 
-    this.llamadaMontosData(this.anioSeleccionado, this.mesSeleccionado);
-    this.obtenerDataGraficos(this.anioSeleccionado, this.mesSeleccionado);
+  public buscarDatos() {
+    console.log("Mes: ", this.mesSeleccionado);
+    console.log("Año: ", this.anioSeleccionado);
+
+    if(this.anioSeleccionado !== null && this.mesSeleccionado !== null){
+      //this.selectoresCompletos = true;
+      this.llamadaMontosData(this.anioSeleccionado, this.mesSeleccionado);
+      this.obtenerDataGraficos(this.anioSeleccionado, this.mesSeleccionado);
+    }
+
+    
   }
 
   private obtenerDataGraficos(anioSeleccionado: number, mesSeleccionado: number) {
