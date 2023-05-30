@@ -19,7 +19,7 @@ export class ProductoCreateComponent implements OnInit {
     private _router: Router,
     private _productoService: ProductoService
   ) { 
-    this.producto = new Producto('','','','','');
+    this.producto = new Producto('','','','','','');
   }
 
   ngOnInit(): void {
@@ -32,7 +32,8 @@ export class ProductoCreateComponent implements OnInit {
       this._productoService.guardarProducto({
         descripcion: productoForm.value.descripcion,
         valor_producto: productoForm.value.valor_producto,
-        categoria: productoForm.value.categoria
+        categoria: productoForm.value.categoria,
+        tipo_producto: productoForm.value.tipo_producto
       }).subscribe(
         response => {
           this.success_msg = "Se registró el producto correctamente";

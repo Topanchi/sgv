@@ -57,10 +57,10 @@ export class ProductoEditComponent implements OnInit {
         _id: this.id,
         descripcion: productoForm.value.descripcion,
         valor_producto: productoForm.value.valor_producto,
-        categoria: productoForm.value.categoria
+        categoria: productoForm.value.categoria,
+        tipo_producto: productoForm.value.tipo_producto
       }).subscribe(
         respose => {
-          console.log(respose);
           this.success_msg = "Se actualizó el producto correctamente";
           //this._router.navigate(['productos']);
         },
@@ -78,7 +78,6 @@ export class ProductoEditComponent implements OnInit {
     this._productoService.getCategorias('').subscribe(
       response => {
         this.categorias = response;
-        console.log("Categorias: ",this.categorias);
       },
       error => {
 
