@@ -8,7 +8,8 @@ const Producto = mongoose.model(
     categoria:{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Categoria"
-    }
+    },
+    tipo_producto: String
   })
 );
 
