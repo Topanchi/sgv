@@ -215,13 +215,19 @@ exports.createMontoVentaContador = (req, res) => {
         return;
     }
 
+    console.log(req.body)
+
     // Create a Venta
     const montoVentaContador = new MontoVentaContador({
-        total_venta: req.body.total_venta,
         fecha_venta: req.body.fecha_venta,
         mes: req.body.mes,
-        anio: req.body.anio
+        anio: req.body.anio,
+        producto_vendido: req.body.producto_vendido,
+        tipo_producto: req.body.tipo_producto,
+        valor_producto_vendido: req.body.valor_producto_vendido
     });
+
+    console.log(montoVentaContador);
 
     montoVentaContador.save(montoVentaContador).then((data) => {
         if(data){

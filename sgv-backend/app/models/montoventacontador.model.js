@@ -7,7 +7,10 @@ const MontoVentaContador = mongoose.model(
     total_venta: Number,
     fecha_venta: String,
     mes: Number,
-    anio: Number
+    anio: Number,
+    producto_vendido: String,
+    tipo_producto: String,
+    valor_producto_vendido: Number 
   })
 );
 

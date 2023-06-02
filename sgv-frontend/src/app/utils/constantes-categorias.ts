@@ -18,5 +18,13 @@ export class ConstantesCategorias {
     public static TORTA_ESPECIAL_20_HOJARASCA_MILHOJA = "Torta especial para 20 personas hojarasca/milhoja";
     public static TORTA_ESPECIAL_30_HOJARASCA_MILHOJA = "Torta especial para 30 personas hojarasca/milhoja";
     /* adicionales */
+    public static LAMINA_AZUCAR = "lámina azúcar";
+    public static CUBIERTA_MERENGUE = "cubierta merengue";
+    public static TRES_LECHES = "tres leches";
+    public static DIBUJO_CHOCOLATE = "dibujo chocolate";
+    public static DIBUJO_CHOCOLATE_COLOR = "dibujo chocolate + color";
+    public static JARDIN_FLORES_CREMA = "jardin flores crema";
+    public static FLORES_ARTIFICIALES = "flores artificiales";
+    public static SOLO_COLOR = "solo color";
 
 }
