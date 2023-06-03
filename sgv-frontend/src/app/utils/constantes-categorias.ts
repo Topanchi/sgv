@@ -27,4 +27,6 @@ export class ConstantesCategorias {
     public static FLORES_ARTIFICIALES = "flores artificiales";
     public static SOLO_COLOR = "solo color";
 
+    /*  */
+    public static TORTA = "torta";
 }

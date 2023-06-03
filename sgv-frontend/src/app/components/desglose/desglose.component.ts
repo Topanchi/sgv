@@ -11,6 +11,7 @@ import * as Chart from 'chart.js';
 export class DesgloseComponent implements OnInit {
 
   public mostrarDatos: boolean = false;
+  public mostrarDatosTotales: boolean = false;
   public selectoresCompletos: boolean = false;
   public mostrarSelectorMes: boolean = false;
   public mesSeleccionado: number;
@@ -36,8 +37,6 @@ export class DesgloseComponent implements OnInit {
 
   public getDataAnio(id:any) {
     this.totalMesActual = 0;
-    console.log("Año seleccionado: ", +id.value);
-    console.log("Año seleccionado: ", typeof +id.value);
     this.anioSeleccionado = +id.value;
 
     if(this.anioSeleccionado !== null){
@@ -47,8 +46,6 @@ export class DesgloseComponent implements OnInit {
 
   public getDataMes(id:any) {
     this.totalMesActual = 0;
-    console.log("Mes seleccionado: ", +id.value);
-    console.log("Mes seleccionado: ", typeof +id.value);
     this.mesSeleccionado = +id.value;
 
     if(this.anioSeleccionado !== null && this.mesSeleccionado !== null){
@@ -62,11 +59,14 @@ export class DesgloseComponent implements OnInit {
 
     if(this.anioSeleccionado !== null && this.mesSeleccionado !== null){
       //this.selectoresCompletos = true;
-      this.llamadaMontosData(this.anioSeleccionado, this.mesSeleccionado);
+      this.obtenerMontosData(this.anioSeleccionado, this.mesSeleccionado);
+      //this.llamadaMontosData(this.anioSeleccionado, this.mesSeleccionado, ConstantesCategorias.TORTA);
       this.obtenerDataGraficos(this.anioSeleccionado, this.mesSeleccionado);
     }
+  }
 
-    
+  private obtenerMontosData(anioSeleccionado: number, mesSeleccionado: number) {
+    this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.TORTA)
   }
 
   private obtenerDataGraficos(anioSeleccionado: number, mesSeleccionado: number) {
@@ -109,8 +109,6 @@ export class DesgloseComponent implements OnInit {
           this.mostrarDatos = false;
         }
       });
-      console.log("results: ",dataResults);
-      console.log("labels:: ", dataLabels);
       this.setgraficoMesActual(dataLabels, dataResults);
     })
     .catch(error => {
@@ -120,21 +118,38 @@ export class DesgloseComponent implements OnInit {
 
   
 
-  private llamadaMontosData(anioSeleccionado: number, mesSeleccionado: number) {
+  private llamadaMontosData(anioSeleccionado: number, mesSeleccionado: number, constante: String) {
     let data = {
       "mes": mesSeleccionado,
-      "anio": anioSeleccionado
+      "anio": anioSeleccionado,
+      "tipo_producto": constante
     }
-    let dataEncontrada = this._ventaService.contadorMontoVenta(data).toPromise();
+    console.log("llamadaMontosData.data: ", data)
 
-    dataEncontrada.then(responses => {
-      if(responses.montosEncontrados !== [' ']){
-        responses.montosEncontrados.forEach(res =>{
-          console.log(res.total_venta)
-          this.totalMesActual = this.totalMesActual + res.total_venta;
-        }); 
+    this._ventaService.contadorMontoVenta(data).subscribe(montosEncontrados => {
+      console.log("contadorMontoVenta: ",montosEncontrados);
+      if(montosEncontrados !== ['']){
+        this.mostrarDatosTotales = true;
+        montosEncontrados.forEach(encontrado => {
+          this.totalMesActual = this.totalMesActual + encontrado.valor_producto_vendido;
+        });
       }
+      
     });
+
+    /* let dataEncontrada = this._ventaService.contadorMontoVenta(data).toPromise();
+    dataEncontrada.then(responses => {
+      console.log(responses)
+      if(responses.montosEncontrados !== [' ']){
+        this.mostrarDatosTotales = true;
+        responses.montosEncontrados.forEach(res =>{
+          console.log(res.valor_producto_vendido)
+          this.totalMesActual = this.totalMesActual + res.valor_producto_vendido;
+        }); 
+      }else{
+        this.mostrarDatosTotales = false;
+      }
+    }); */
 
     
   }

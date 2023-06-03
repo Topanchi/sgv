@@ -154,7 +154,6 @@ export class VentaCreateComponent implements OnInit {
       let fechaPicker = $("#fecha_venta").datepicker()[0].value;
       ventaForm.value.fecha_venta = fechaPicker;
       let fechaFinal = ventaForm.value.fecha_venta.toString();
-      console.log(fechaFinal)
       let fecha2Final = fechaFinal.split('/');
 
       this.seteoCantidadDeProductos(this.data_detalle);
@@ -218,7 +217,8 @@ export class VentaCreateComponent implements OnInit {
               error => {
                 console.log("Error: ", error);
               }
-            );
+            ); 
+
           }
         })
 
@@ -259,16 +259,6 @@ export class VentaCreateComponent implements OnInit {
       }
     );
   }
-
-  /* public dateChanged($event) {
-    console.log("fecha: ", typeof $event.target.value);
-    let fecha = $event.target.value;
-
-    console.log("fecha: ", fecha);
-    
-    console.log(fecha.toString());
-    console.log("fecha: ", typeof fecha);
-  } */
 
   private obtenerProductos() {
     this._productoService.getProductos('').subscribe(
@@ -357,7 +347,8 @@ export class VentaCreateComponent implements OnInit {
             error => {
               console.log("Error: ", error);
             }
-          );
+          ); 
+
           objetosClonados.push(objetoClonado);
         }
       }
@@ -369,6 +360,7 @@ export class VentaCreateComponent implements OnInit {
     var objetosClonados = [];
 
     data_detalle.forEach(detalle => {
+      console.log("detaleeeee: ", detalle);
       this.mapeoProducto(detalle.producto);
 
       let data = {
@@ -393,7 +385,7 @@ export class VentaCreateComponent implements OnInit {
             error => {
               console.log("Error: ", error);
             }
-          );
+          ); 
 
           objetosClonados.push(objetoClonado);
         }
