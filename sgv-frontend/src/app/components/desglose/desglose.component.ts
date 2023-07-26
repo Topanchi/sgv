@@ -58,9 +58,7 @@ export class DesgloseComponent implements OnInit {
     console.log("Año: ", this.anioSeleccionado);
 
     if(this.anioSeleccionado !== null && this.mesSeleccionado !== null){
-      //this.selectoresCompletos = true;
       this.obtenerMontosData(this.anioSeleccionado, this.mesSeleccionado);
-      //this.llamadaMontosData(this.anioSeleccionado, this.mesSeleccionado, ConstantesCategorias.TORTA);
       this.obtenerDataGraficos(this.anioSeleccionado, this.mesSeleccionado);
     }
   }
