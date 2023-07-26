@@ -119,9 +119,7 @@ export class DesgloseComponent implements OnInit {
     Promise.all(promises).then(responses => {
       // Almacenar los valores en el arreglo de resultados
       responses.forEach(response => {
-        //console.log("obtenerDataGraficos.response : ", response);
         if(response.cantidadVentas !== 0){
-          console.log("VEO")
           dataResults.push(response.cantidadVentas);
           dataLabels.push(response.producto);
         }else{
@@ -143,27 +141,10 @@ export class DesgloseComponent implements OnInit {
       "anio": anioSeleccionado,
       "tipo_producto": constante
     }
-    //console.log("llamadaMontosData.data: ", data)
-
-
-    /* let dataEncontrada = this._ventaService.contadorMontoVenta(data).toPromise();
-    dataEncontrada.then(responses => {
-      console.log("contadorMontoVenta: ", responses)
-      if(responses !== [' ']){
-        this.mostrarDatosTotales = true;
-        responses.forEach(res =>{
-          this.totalMesActual = this.totalMesActual + res.valor_producto_vendido;
-        }); 
-      }else{
-        this.mostrarDatosTotales = false;
-      }
-    }); */
 
     let dataEncontrada = this._ventaService.contadorMontoVenta(data);
-    //console.log("dataEncontrada: ", dataEncontrada);
 
     return dataEncontrada;
-    
   }
 
   private obtenerVentasMesActual(mesActual: number, anioActual: number, constante: String) {
