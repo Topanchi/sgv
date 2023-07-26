@@ -122,7 +122,6 @@ export class DesgloseComponent implements OnInit {
         //console.log("obtenerDataGraficos.response : ", response);
         if(response.cantidadVentas !== 0){
           console.log("VEO")
-          this.mostrarDatos = true;
           dataResults.push(response.cantidadVentas);
           dataLabels.push(response.producto);
         }else{
@@ -189,6 +188,7 @@ export class DesgloseComponent implements OnInit {
 
   /* Generación de gráficos */
   private setgraficoMesActual(tiposDeTortas: string[], cantidadDeTortas: number[]) {
+    this.mostrarDatos = true;
     const canvas: any = document.getElementById('tortaChartTortas');
     const ctx = canvas.getContext('2d');
     
