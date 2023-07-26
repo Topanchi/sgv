@@ -66,7 +66,25 @@ export class DesgloseComponent implements OnInit {
   }
 
   private obtenerMontosData(anioSeleccionado: number, mesSeleccionado: number) {
-    this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.TORTA)
+    const llamadas = [
+      this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.TORTA),
+    ];
+
+    // Promesas para cada llamada al servicio
+    const promises = llamadas.map(call => call.toPromise());
+     // Esperar a que se resuelvan todas las promesas con Promise.all()
+     Promise.all(promises).then(responses => {
+       // Almacenar los valores en el arreglo de resultados
+       responses.forEach((element, index) => {
+        if(element !== 0){
+          this.mostrarDatosTotales = true;
+          this.totalMesActual = element.venta_total;
+        }
+      });
+     })
+     .catch(error => {
+       console.error(error);
+     });
   }
 
   private obtenerDataGraficos(anioSeleccionado: number, mesSeleccionado: number) {
@@ -101,7 +119,9 @@ export class DesgloseComponent implements OnInit {
     Promise.all(promises).then(responses => {
       // Almacenar los valores en el arreglo de resultados
       responses.forEach(response => {
+        //console.log("obtenerDataGraficos.response : ", response);
         if(response.cantidadVentas !== 0){
+          console.log("VEO")
           this.mostrarDatos = true;
           dataResults.push(response.cantidadVentas);
           dataLabels.push(response.producto);
@@ -124,26 +144,15 @@ export class DesgloseComponent implements OnInit {
       "anio": anioSeleccionado,
       "tipo_producto": constante
     }
-    console.log("llamadaMontosData.data: ", data)
+    //console.log("llamadaMontosData.data: ", data)
 
-    this._ventaService.contadorMontoVenta(data).subscribe(montosEncontrados => {
-      console.log("contadorMontoVenta: ",montosEncontrados);
-      if(montosEncontrados !== ['']){
-        this.mostrarDatosTotales = true;
-        montosEncontrados.forEach(encontrado => {
-          this.totalMesActual = this.totalMesActual + encontrado.valor_producto_vendido;
-        });
-      }
-      
-    });
 
     /* let dataEncontrada = this._ventaService.contadorMontoVenta(data).toPromise();
     dataEncontrada.then(responses => {
-      console.log(responses)
-      if(responses.montosEncontrados !== [' ']){
+      console.log("contadorMontoVenta: ", responses)
+      if(responses !== [' ']){
         this.mostrarDatosTotales = true;
-        responses.montosEncontrados.forEach(res =>{
-          console.log(res.valor_producto_vendido)
+        responses.forEach(res =>{
           this.totalMesActual = this.totalMesActual + res.valor_producto_vendido;
         }); 
       }else{
@@ -151,6 +160,10 @@ export class DesgloseComponent implements OnInit {
       }
     }); */
 
+    let dataEncontrada = this._ventaService.contadorMontoVenta(data);
+    //console.log("dataEncontrada: ", dataEncontrada);
+
+    return dataEncontrada;
     
   }
 

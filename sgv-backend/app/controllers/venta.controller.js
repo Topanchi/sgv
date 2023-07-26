@@ -4,6 +4,7 @@ const Venta = db.venta;
 const VentaContador = db.ventacontador;
 const MontoVentaContador = db.montoventacontador;
 const DetalleVenta = db.detalleventa;
+
 var detalle = new Array(DetalleVenta());
 
 // Create and Save a new Venta
@@ -589,21 +590,24 @@ exports.countBySixMonth = async (req, res) => {
 };
 
 exports.countSalesMountByMonths = async (req, res) => {
-    
-    const montosEncontrados = await MontoVentaContador.find({ "mes": req.body.mes , "anio": req.body.anio, "producto_vendido": req.body.producto_vendido}).catch(err => {
+    var parametros = { "mes": req.body.mes , "anio": req.body.anio, "tipo_producto": req.body.tipo_producto};
+    var venta_total = 0;
+     
+    const montosEncontrados = await MontoVentaContador.find(parametros).catch(err => {
         res.status(500).send({
             message:
             err.message || "Some error occurred while retrieving ventas."
         });
     });
-
-    console.log("--- Salida :  ", montosEncontrados);
-
-    res.status(200).send({
-        montosEncontrados
+    
+    montosEncontrados.forEach(element => {
+        venta_total = venta_total + element.valor_producto_vendido;
     });
 
-
+    res.status(200).send({
+        venta_total
+    }); 
+    
 };
 
 
