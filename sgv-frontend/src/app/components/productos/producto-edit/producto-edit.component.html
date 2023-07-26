@@ -51,11 +51,6 @@
                                                                 <span aria-hidden="true">x</span>
                                                             </button>
                                                         </div>
-                                                        <!-- <div class="col-lg-3 form-group">
-                                                            <label><b>Titulo del producto</b></label>
-                                                            <input type="text" class="form-control" placeholder="Titulo del producto"
-                                                                #titulo="ngModel" name="titulo" [(ngModel)]="producto.titulo" required="">
-                                                        </div> -->
                                                         <div class="col-lg-4 form-group">
                                                             <label><b>Categoría</b></label>
                                                             <select name="" class="form-control" #categoria="ngModel" name="categoria" [(ngModel)]="producto.categoria" required>
@@ -68,15 +63,22 @@
                                                             <input type="text" name="descripcion" class="form-control" placeholder="Descripción del producto"
                                                                 #descripcion="ngModel" name="descripcion" [(ngModel)]="producto.descripcion" required>
                                                         </div>
-                                                        <div class="col-lg-4 form-group">
+                                                        <div class="col-lg-2 form-group">
+                                                            <label><b>Tipo de producto</b></label>
+                                                            <select name="" class="form-control" #tipo_producto="ngModel" name="tipo_producto" [(ngModel)]="producto.tipo_producto" required>
+                                                                <option value="" disabled>Seleccionar</option>
+                                                                <option value="torta" >Torta</option>
+                                                                <option value="adicional">Adicional</option>
+                                                                <option value="evento">Evento</option>
+                                                                <option value="banqueteria salada" >Banquetería salada</option>
+                                                                <option value="banqueteria dulce" >Banquetería dulce</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-2 form-group">
                                                             <label><b>Valor</b></label>
-                                                            <input type="text" name="valor_producto" class="form-control" placeholder="Precio del producto"
+                                                            <input type="text" name="valor_producto" class="form-control" placeholder="Precio producto"
                                                                 #valor_producto="ngModel" name="valor_producto" [(ngModel)]="producto.valor_producto" required>
                                                         </div>
-                                                       
-                                                        <!-- <div class="col-lg-12 form-group">
-                                                            <textarea name="" id="editor"></textarea>
-                                                        </div> -->
                                                         <div class="col-lg-12 form-group">
                                                             <div class="row">
                                                                 <div class="col-lg-6">

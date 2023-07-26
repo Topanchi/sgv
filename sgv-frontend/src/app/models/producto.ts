@@ -4,7 +4,8 @@ export class Producto {
         public titulo: String,
         public descripcion: String,
         public valor_producto: String,
-        public categoria: String
+        public categoria: String,
+        public tipo_producto: String
     ){
         
 

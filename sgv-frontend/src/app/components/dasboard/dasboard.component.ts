@@ -341,8 +341,6 @@ export class DasboardComponent implements OnInit {
           dataLabels.push(response.producto);
         }
       });
-      console.log("anio dataResults: ",dataResults);
-      console.log("anio dataLabels:: " ,dataLabels);
       this.setgraficoAnioActual(dataLabels, dataResults);
     })
     .catch(error => {
@@ -434,21 +432,6 @@ export class DasboardComponent implements OnInit {
           if((venta.mes == (fecha.getMonth()-2)) || (venta.mes == (fecha.getMonth()-1) || (venta.mes == (fecha.getMonth()) || (venta.mes == (fecha.getMonth()+1)|| (venta.mes == (fecha.getMonth()+2) || (venta.mes == (fecha.getMonth()+3))))))){
             this.ventasAnioActual++;
             this.totalSemestrePrimer = this.totalSemestrePrimer + venta.valor_venta; /* Total en ventas en mes actual */
-            this.cantidadUltimosSeisTortaBiscocho15Redonda = this.cantidadUltimosSeisTortaBiscocho15Redonda + venta.torta_bizcocho_15_redonda;
-            this.cantidadUltimosSeisTortaBiscocho20Redonda = this.cantidadUltimosSeisTortaBiscocho20Redonda + venta.torta_bizcocho_20_redonda;
-            this.cantidadUltimosSeisTortaBiscocho30Redonda = this.cantidadUltimosSeisTortaBiscocho30Redonda + venta.torta_bizcocho_30_redonda;
-            this.cantidadUltimosSeisTortaBiscocho40Redonda = this.cantidadUltimosSeisTortaBiscocho40Redonda + venta.torta_bizcocho_40_redonda;
-            this.cantidadUltimosSeisTortaBiscocho50Redonda = this.cantidadUltimosSeisTortaBiscocho50Redonda + venta.torta_bizcocho_50_redonda;
-            this.cantidaUltimosSeisTortaBiscocho15Rectangular = this.cantidaUltimosSeisTortaBiscocho15Rectangular + venta.torta_bizcocho_15_rectangular;
-            this.cantidadUltimosSeisTortaBiscocho30Rectangular = this.cantidadUltimosSeisTortaBiscocho30Rectangular + venta.torta_bizcocho_30_rectangular;
-            this.cantidadUltimosSeisTortaBiscocho40Rectangular = this.cantidadUltimosSeisTortaBiscocho40Rectangular + venta.torta_bizcocho_40_rectangular;
-            this.cantidadUltimosSeisTortaBiscocho60Rectangular = this.cantidadUltimosSeisTortaBiscocho60Rectangular + venta.torta_bizcocho_60_rectangular;
-            this.cantidadUltimosSeisTortaEspecial12Panqueue = this.cantidadUltimosSeisTortaEspecial12Panqueue + venta.torta_especial_12_panqueque;
-            this.cantidadUltimosSeisTortaEspecial20Panqueue = this.cantidadUltimosSeisTortaEspecial20Panqueue + venta.torta_especial_20_panqueque;
-            this.cantidadUltimosSeisTortaEspecial30Panqueue = this.cantidadUltimosSeisTortaEspecial30Panqueue + venta.torta_especial_30_panqueque;
-            this.cantidadUltimosSeisTortaEspecial15HojarascaMilhoja = this.cantidadUltimosSeisTortaEspecial15HojarascaMilhoja + venta.torta_especial_15_hojarasca_milhoja;
-            this.cantidadUltimosSeisTortaEspecial20HojarascaMilhoja = this.cantidadUltimosSeisTortaEspecial20HojarascaMilhoja + venta.torta_especial_20_hojarasca_milhoja;
-            this.cantidadUltimosSeisTortaEspecial30HojarascaMilhoja = this.cantidadUltimosSeisTortaEspecial30HojarascaMilhoja + venta.torta_especial_30_hojarasca_milhoja;
           }
           /* FIN lógica de último semestre */
         });
@@ -527,8 +510,6 @@ export class DasboardComponent implements OnInit {
   }
 
   private setgraficoSeisMeses(tiposDeTortas: string[], cantidadDeTortas: number[]) {
-    console.log("setgraficoSeisMeses tipos de tortas: ", tiposDeTortas);
-    console.log("setgraficoSeisMeses cantidad de tortas: ", cantidadDeTortas);
     const canvas: any = document.getElementById('barChartSeisMeses');
     const ctx = canvas.getContext('2d');
     

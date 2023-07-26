@@ -2,7 +2,9 @@ const { CONSTANTES_TORTAS } = require('../utils/categoriaconstantes');
 const db = require("../models");
 const Venta = db.venta;
 const VentaContador = db.ventacontador;
+const MontoVentaContador = db.montoventacontador;
 const DetalleVenta = db.detalleventa;
+
 var detalle = new Array(DetalleVenta());
 
 // Create and Save a new Venta
@@ -193,6 +195,46 @@ exports.createVentaContador = (req, res) => {
             res.status(200).send({
                 message:
                     err.message || "Venta Contador guardado con éxito."
+            });
+        }
+        
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while creating the Venta."
+        });
+    });
+  
+};
+
+//Create and save a new Mount Venta
+exports.createMontoVentaContador = (req, res) => {
+    // Validate request
+    if (!req.body) {
+        res.status(400).send({ message: "Content can not be empty!" });
+        return;
+    }
+
+    console.log(req.body)
+
+    // Create a Venta
+    const montoVentaContador = new MontoVentaContador({
+        fecha_venta: req.body.fecha_venta,
+        mes: req.body.mes,
+        anio: req.body.anio,
+        producto_vendido: req.body.producto_vendido,
+        tipo_producto: req.body.tipo_producto,
+        valor_producto_vendido: req.body.valor_producto_vendido
+    });
+
+    console.log(montoVentaContador);
+
+    montoVentaContador.save(montoVentaContador).then((data) => {
+        if(data){
+            res.status(200).send({
+                message:
+                    err.message || "Monto Venta Contador guardado con éxito."
             });
         }
         
@@ -546,3 +588,26 @@ exports.countBySixMonth = async (req, res) => {
 
 
 };
+
+exports.countSalesMountByMonths = async (req, res) => {
+    var parametros = { "mes": req.body.mes , "anio": req.body.anio, "tipo_producto": req.body.tipo_producto};
+    var venta_total = 0;
+     
+    const montosEncontrados = await MontoVentaContador.find(parametros).catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while retrieving ventas."
+        });
+    });
+    
+    montosEncontrados.forEach(element => {
+        venta_total = venta_total + element.valor_producto_vendido;
+    });
+
+    res.status(200).send({
+        venta_total
+    }); 
+    
+};
+
+

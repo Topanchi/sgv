@@ -1,0 +1,145 @@
+<div class="wrapper">
+    <app-sidebar style="background:white !important;"></app-sidebar>
+    <div class="main">
+        <app-topbar></app-topbar>
+        <main class="content">
+            <div class="container-fluid">
+                <div class="header">
+                    <h1 class="header-title">
+                        Desglose de ventas
+                    </h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item" style="color:#f5f5f5 !important"><a>Desglose</a></li>
+                        </ol>
+                    </nav>
+                    <p class="header-subtitle">Detalle de ventas realizadas, consultas por año y mes.</p>
+                </div>
+    
+                <div class="row">
+                    <br>
+                    <div class="col-lg-4 form-group">
+                        <label for=""><b>Seleccione año a consultar</b></label>
+                        <select class="form-control" (change)="getDataAnio($event.target)" #idanio="ngModel" name="idanio" [(ngModel)]="anio.idanio">
+                            <option value="" disabled>Seleccionar</option>
+                            <option *ngFor="let year of years">{{ year }}</option>
+                        </select>
+                    </div>
+                    <div [hidden]="!mostrarSelectorMes" class="col-lg-4 form-group">
+                        <label for=""><b>Seleccione mes a consultar</b></label>
+                        <select class="form-control" (change)="getDataMes($event.target)" #idmes="ngModel" name="idmes" [(ngModel)]="mes.idmes">
+                            <option value="" disabled>Seleccionar</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                            <!-- <option *ngFor="let item of productos" value="{{item._id}}">{{item.descripcion}}</option> -->
+                        </select>
+                    </div>
+
+                    <div [hidden]="!mostrarSelectorMes" class="col-lg-4 form-group">
+                        <label><b>+</b></label>
+                        <button [disabled]="!selectoresCompletos" type="submit" class="btn btn-primary btn-block" (click)="buscarDatos()">Buscar</button>
+                    </div>
+                </div>
+    
+                <div [hidden]="!mostrarDatosTotales" class="row">
+                    <div class="col-12 col-xl-3">
+                        <div class="card" style="background:#943527 !important">
+                            <div class="card-header">
+                                <h5 class="card-title titulo-montos">Total: Tortas</h5>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="titulo-montos">${{this.totalMesActual}}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-3">
+                        <div class="card" style="background:#3d2794 !important">
+                            <div class="card-header">
+                                <h5 class="card-title titulo-montos">Total: Banquetería dulce</h5>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="titulo-montos">${{this.totalMesActualDulce}}</h2>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="col-12 col-xl-3">
+                        <div class="card" style="background:#18235a !important">
+                            <div class="card-header">
+                                <h5 class="card-title titulo-montos">Total: Banquetería salada</h5>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="titulo-montos">${{this.totalMesActualSalada}}</h2>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="col-12 col-xl-3">
+                        <div class="card" style="background:#205f13 !important">
+                            <div class="card-header">
+                                <h5 class="card-title titulo-montos">Total: Eventos</h5>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="titulo-montos">${{this.totalMesActualEventos}}</h2>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+
+                <div [hidden]="!mostrarDatos" class="row">
+                    <div class="col-12 col-xl-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Cantidad de tortas vendidas</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="tortaChartTortas" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Cantidad de banquetería dulce vendidas</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- <canvas id="barraChartBanqueteriaDulce" width="300" height="200"></canvas> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div [hidden]="!mostrarDatos" class="row">
+                    <div class="col-12 col-xl-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Cantidad de banquetería salada vendidas</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- <canvas id="barraChartBanqueteriaSalada" width="300" height="200"></canvas> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">Cantidad de eventos vendidos</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- <canvas id="lineChartEventos" width="300" height="200"></canvas> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

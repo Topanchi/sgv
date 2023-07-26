@@ -75,6 +75,7 @@ export class VentaCreateComponent implements OnInit {
   public pivote_torta_especial_20_hojarasca_milhoja: number = 0;
   public pivote_torta_especial_30_hojarasca_milhoja: number = 0;
   public pivote_data_detalles: any[];
+  public tipo_producto: String;
 
   constructor(
     private _userService: UserService,
@@ -127,7 +128,8 @@ export class VentaCreateComponent implements OnInit {
           idproducto: detalleForm.value.idproducto,
           cantidad: +detalleForm.value.cantidad,
           valor_producto: this.producto.valor_producto,
-          producto: this.producto.descripcion
+          producto: this.producto.descripcion,
+          tipo_producto: this.producto.tipo_producto
         });
 
         this.total = this.total + ((parseInt(this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
@@ -152,12 +154,13 @@ export class VentaCreateComponent implements OnInit {
       let fechaPicker = $("#fecha_venta").datepicker()[0].value;
       ventaForm.value.fecha_venta = fechaPicker;
       let fechaFinal = ventaForm.value.fecha_venta.toString();
-      console.log(fechaFinal)
       let fecha2Final = fechaFinal.split('/');
 
       this.seteoCantidadDeProductos(this.data_detalle);
       this.pivote_data_detalles = this.data_detalle;
+
       this.envioDataContadores(this.pivote_data_detalles, ventaForm.value, fechaPicker, fecha2Final);
+      this.envioDataMontoContadoresTortas(this.pivote_data_detalles, fechaPicker, fecha2Final);
 
       if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
 
@@ -214,7 +217,8 @@ export class VentaCreateComponent implements OnInit {
               error => {
                 console.log("Error: ", error);
               }
-            );
+            ); 
+
           }
         })
 
@@ -227,7 +231,7 @@ export class VentaCreateComponent implements OnInit {
       this.error_msg_venta = 'Complete correctamente el formulario';
     }
   }
-
+  
   public close_alert_success() {
     this.success_msg = '';
   }
@@ -255,16 +259,6 @@ export class VentaCreateComponent implements OnInit {
       }
     );
   }
-
-  /* public dateChanged($event) {
-    console.log("fecha: ", typeof $event.target.value);
-    let fecha = $event.target.value;
-
-    console.log("fecha: ", fecha);
-    
-    console.log(fecha.toString());
-    console.log("fecha: ", typeof fecha);
-  } */
 
   private obtenerProductos() {
     this._productoService.getProductos('').subscribe(
@@ -332,6 +326,7 @@ export class VentaCreateComponent implements OnInit {
 
   private envioDataContadores(data_detalle: any[], value: any, fechaPicker: any, fecha2Final: any[]) {
     var objetosClonados = [];
+
     data_detalle.forEach(detalle => {
       let data = {
         fecha_venta: fechaPicker,
@@ -344,8 +339,6 @@ export class VentaCreateComponent implements OnInit {
         for (var i = 0; i < detalle.cantidad; i++) {
           // Crear una copia del objeto original utilizando JSON.parse() y JSON.stringify()
           var objetoClonado = JSON.parse(JSON.stringify(data));
-          // Añadir el objeto clonado al array de objetos clonados
-          console.log("objetoClonado: ", objetoClonado)
           //llamada al servicio que guarda el objeto
           this._ventaService.guardarVentaContador(objetoClonado).subscribe(
             response => {
@@ -354,14 +347,87 @@ export class VentaCreateComponent implements OnInit {
             error => {
               console.log("Error: ", error);
             }
-          );
+          ); 
 
           objetosClonados.push(objetoClonado);
         }
-        console.log("producto a irse a contador: ", objetosClonados);
       }
     });
+  }
 
-    
+  private envioDataMontoContadoresTortas(data_detalle: any[],  fechaPicker: any, fecha2Final: any ) {
+
+    var objetosClonados = [];
+
+    data_detalle.forEach(detalle => {
+      console.log("detaleeeee: ", detalle);
+      this.mapeoProducto(detalle.producto);
+
+      let data = {
+        fecha_venta: fechaPicker,
+        mes: +fecha2Final[1],
+        anio: +fecha2Final[2],
+        producto_vendido: detalle.producto,
+        tipo_producto: this.tipo_producto, 
+        valor_producto_vendido: +detalle.valor_producto
+      }
+
+      if(detalle.cantidad != 0){
+        for (var i = 0; i < detalle.cantidad; i++) {
+          // Crear una copia del objeto original utilizando JSON.parse() y JSON.stringify()
+          var objetoClonado = JSON.parse(JSON.stringify(data));
+          //llamada al servicio que guarda el objeto
+
+          this._ventaService.guardarMontoVentaContador(objetoClonado).subscribe(
+            response => {
+              console.log("contador guardado con éxito");
+            },
+            error => {
+              console.log("Error: ", error);
+            }
+          ); 
+
+          objetosClonados.push(objetoClonado);
+        }
+      }
+    });
+  }
+
+  private mapeoProducto(producto: any) {
+
+    if(producto == ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA 
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_20_REDONDA
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_30_REDONDA
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_40_REDONDA
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_50_REDONDA
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_15_REECTANGULAR
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_30_REECTANGULAR
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_40_REECTANGULAR
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_15_REECTANGULAR
+      || producto == ConstantesCategorias.TORTA_BISCOCHO_60_REECTANGULAR
+      || producto == ConstantesCategorias.TORTA_ESPECIAL_12_PANQUEQUE
+      || producto == ConstantesCategorias.TORTA_ESPECIAL_20_PANQUEQUE
+      || producto == ConstantesCategorias.TORTA_ESPECIAL_30_PANQUEQUE
+      || producto == ConstantesCategorias.TORTA_ESPECIAL_15_HOJARASCA_MILHOJA
+      || producto == ConstantesCategorias.TORTA_ESPECIAL_20_HOJARASCA_MILHOJA
+      || producto == ConstantesCategorias.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA
+      || producto == ConstantesCategorias.LAMINA_AZUCAR
+      || producto == ConstantesCategorias.CUBIERTA_MERENGUE
+      || producto == ConstantesCategorias.TRES_LECHES
+      || producto == ConstantesCategorias.DIBUJO_CHOCOLATE
+      || producto == ConstantesCategorias.DIBUJO_CHOCOLATE_COLOR
+      || producto == ConstantesCategorias.JARDIN_FLORES_CREMA
+      || producto == ConstantesCategorias.FLORES_ARTIFICIALES
+      || producto == ConstantesCategorias.SOLO_COLOR
+      ){
+        this.tipo_producto= "torta";
+    }
+
+    /* Agregar if evento */
+
+    /* Agregar if banqueteria salada */
+
+    /* Agregar if banqueteria dulce */
   }
 }

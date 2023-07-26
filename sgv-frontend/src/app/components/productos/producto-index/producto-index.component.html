@@ -21,18 +21,6 @@
     
                 <div class="row">
                     <div  class="col-12 col-xl-12">
-                        <!-- <div class="alert alert-success alert-outline alert-dismissible" role="alert">
-                            <div class="alert-icon">
-                                <i class="far fa-fw fa-bell"></i>
-                            </div>
-                            <div class="alert-message">
-                                <strong>Hello there!</strong> A simple success alert—check it out!
-                            </div>
-    
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                            </button>
-                        </div> -->
                     </div>
                     <div class="col-12 col-xl-12">
                         <div class="card">
@@ -75,6 +63,7 @@
                                     <tr>
                                         <th>Producto</th>
                                         <th>Valor</th>
+                                        <th>Tipo</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -84,6 +73,7 @@
                                             {{item.descripcion}}
                                         </td>
                                         <td> <b>$</b>{{item.valor_producto}}</td>
+                                        <td>{{item.tipo_producto}}</td>
                                         <td class="text-center">
                                             <button type="submit" class="input-group-test btn btn-info" ngbTooltip="Ver producto">
                                                 <i class="fa fa-eye"></i>

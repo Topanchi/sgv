@@ -13,7 +13,8 @@ exports.create = (req, res) => {
     const producto = new Producto({
         descripcion: req.body.descripcion,
         valor_producto: +req.body.valor_producto,
-        categoria: req.body.categoria
+        categoria: req.body.categoria,
+        tipo_producto: req.body.tipo_producto
     });
 
     producto.save(producto).then(data => {
