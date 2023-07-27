@@ -319,6 +319,15 @@ exports.countByMonths = async (req, res) => {
         case CONSTANTES_TORTAS.MIX_DULCE_ESTACION:
             producto = "dulce est.";
             break;
+        case CONSTANTES_TORTAS.CAJA_DULCE_1:
+            producto = "dulce 1";
+            break;
+        case CONSTANTES_TORTAS.CAJA_DULCE_2:
+            producto = "dulce 2";
+            break;
+        case CONSTANTES_TORTAS.CAJA_DULCE_3:
+            producto = "dulce 3";
+            break;
     }
 
     res.status(200).send({
