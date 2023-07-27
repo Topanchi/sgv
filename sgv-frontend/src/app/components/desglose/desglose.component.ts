@@ -71,7 +71,8 @@ export class DesgloseComponent implements OnInit {
     const llamadas = [
       this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.TORTA),
       this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.BANQUETERIA_DULCE),
-      this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.BANQUETERIA_SALADA)
+      this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.BANQUETERIA_SALADA),
+      this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.EVENTO),
     ];
 
     // Promesas para cada llamada al servicio
@@ -90,6 +91,9 @@ export class DesgloseComponent implements OnInit {
           }
           if(index == 2){
             this.totalMesActualSalada = element.venta_total;
+          }
+          if(index == 3){
+            this.totalMesActualEventos = element.venta_total;
           }
           console.log(element, index)
         }
@@ -223,7 +227,34 @@ export class DesgloseComponent implements OnInit {
     });
   }
 
-  
+  private obtenerDataGraficosEventos(anioSeleccionado: number, mesSeleccionado: number) {
+    const dataResults = [];
+    const dataLabels = [];
+
+    const llamadas = [
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.EVENTOS)
+    ];
+
+    // Promesas para cada llamada al servicio
+    const promises = llamadas.map(call => call.toPromise());
+
+    // Esperar a que se resuelvan todas las promesas con Promise.all()
+    Promise.all(promises).then(responses => {
+      // Almacenar los valores en el arreglo de resultados
+      responses.forEach(response => {
+        if(response.cantidadVentas !== 0){
+          dataResults.push(response.cantidadVentas);
+          dataLabels.push(response.producto);
+        }else{
+          this.mostrarDatos = false;
+        }
+      });
+      this.setgraficoMesActualEvento(dataLabels, dataResults);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
 
   private llamadaMontosData(anioSeleccionado: number, mesSeleccionado: number, constante: String) {
     let data = {
@@ -264,7 +295,7 @@ export class DesgloseComponent implements OnInit {
     const ctx = canvas.getContext('2d');
     
     const chart = new Chart(ctx, {
-      type: 'pie',
+      type: 'doughnut',
       data: {
         labels: tiposDeTortas,
         datasets: [{
@@ -334,7 +365,7 @@ export class DesgloseComponent implements OnInit {
     const ctx = canvas.getContext('2d');
     
     const chart = new Chart(ctx, {
-      type: 'pie',
+      type: 'doughnut',
       data: {
         labels: tiposDeTortas,
         datasets: [{
@@ -363,4 +394,38 @@ export class DesgloseComponent implements OnInit {
     });
   }
 
+  private setgraficoMesActualEvento(tiposDeTortas: string[], cantidadDeTortas: number[]) {
+    this.mostrarDatos = true;
+    const canvas: any = document.getElementById('barraChartEvento');
+    const ctx = canvas.getContext('2d');
+    
+    const chart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: tiposDeTortas,
+        datasets: [{
+          data: cantidadDeTortas,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+
+            'rgba(238, 130, 238, 0.7)',
+            'rgba(106, 90, 205, 0.7)',
+            'rgba(89, 89, 16, 0.7)',
+            'rgba(182, 10, 16, 0.7)',
+            'rgba(182, 10, 181, 0.7)',
+            'rgba(89, 10, 181 0.7)',
+
+            'rgba(89, 147, 181, 0.7)',
+            'rgba(89, 147, 255, 0.7)',
+            'rgba(255, 217, 255, 0.7)'
+          ]
+        }]
+      }
+    });
+  }
 }

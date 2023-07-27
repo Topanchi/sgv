@@ -31,6 +31,7 @@ export class ConstantesCategorias {
     public static TORTA = "torta";
     public static BANQUETERIA_DULCE = "banqueteria dulce";
     public static BANQUETERIA_SALADA = "banqueteria salada";
+    public static EVENTO = "evento";
 
     /* Banquetería dulce */
     public static REPOLLITOS = "Repollos";
@@ -53,9 +54,10 @@ export class ConstantesCategorias {
     public static MIX_SALADO = "Mix salado (empanadas, crostinis , mini pizzas)";
     public static CAJA_SALADA_1 = "Caja salada 1 (empanadas, tapaditos, mini pizzas)";
     public static CAJA_SALADA_2 = "Caja salada 2 (empanadas, crostinis surtidos)";
-
     public static MINI_QUICHE_SURTIDO = "Mini quiche surtidos";
     public static TAPADITOS_PREMUIM_SURTIDO = "Tapaditos premium surtidos";
     public static MINI_POSTRES = "Mini postres";
 
+    /* Eventos */
+    public static EVENTOS = "Evento";
 }

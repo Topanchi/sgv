@@ -421,11 +421,13 @@ export class VentaCreateComponent implements OnInit {
       || producto == ConstantesCategorias.FLORES_ARTIFICIALES
       || producto == ConstantesCategorias.SOLO_COLOR
       ){
-        this.tipo_producto= "torta";
+        this.tipo_producto= ConstantesCategorias.TORTA;
     }
 
     /* Agregar if evento */
-
+    if(producto == ConstantesCategorias.EVENTOS){
+      this.tipo_producto= ConstantesCategorias.EVENTO;
+    }
   
     /* Agregar if banqueteria salada */
     if(producto == ConstantesCategorias.EMPANADAS_SURTIDAS 
@@ -442,7 +444,7 @@ export class VentaCreateComponent implements OnInit {
       || producto == ConstantesCategorias.MINI_QUICHE_SURTIDO
       || producto == ConstantesCategorias.TAPADITOS_PREMUIM_SURTIDO
       ){
-        this.tipo_producto= "banqueteria salada";
+        this.tipo_producto = ConstantesCategorias.BANQUETERIA_SALADA;
     }
 
     /* Agregar if banqueteria dulce */
@@ -455,7 +457,7 @@ export class VentaCreateComponent implements OnInit {
       || producto == ConstantesCategorias.CAJA_DULCE_3
       || producto == ConstantesCategorias.MINI_POSTRES
       ){
-        this.tipo_producto= "banqueteria dulce";
+        this.tipo_producto = ConstantesCategorias.BANQUETERIA_DULCE;
     }
   }
 }
