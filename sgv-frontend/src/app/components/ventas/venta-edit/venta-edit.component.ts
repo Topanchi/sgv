@@ -485,6 +485,9 @@ export class VentaEditComponent implements OnInit {
       || producto == ConstantesCategorias.MIX_DULCE_TRADICIONAL
       || producto == ConstantesCategorias.MIX_DULCE_ESPECIAL
       || producto == ConstantesCategorias.MIX_DULCE_ESTACION
+      || producto == ConstantesCategorias.CAJA_DULCE_1
+      || producto == ConstantesCategorias.CAJA_DULCE_2
+      || producto == ConstantesCategorias.CAJA_DULCE_3
       ){
         this.tipo_producto= "banqueteria dulce";
     }

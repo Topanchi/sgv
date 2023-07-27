@@ -36,4 +36,7 @@ export class ConstantesCategorias {
     public static MIX_DULCE_TRADICIONAL = "Mix dulce tradicional (brownies, repollitos, brazo de reina)";
     public static MIX_DULCE_ESPECIAL = "Mix dulce especial (repollitos, mini pie de limón, maicenitos)";
     public static MIX_DULCE_ESTACION = "Mix dulce estación (brownie limón, tartaleta de fruta, pie de chocolate)";
+    public static CAJA_DULCE_1 = "caja dulce 1 (brownie, pie limón, maicenitos)";
+    public static CAJA_DULCE_2 = "caja dulce 2 (brownie, repollitos, brazo reina)";
+    public static CAJA_DULCE_3 = "caja dulce 3 (brownie limón, pie de chocolate, maicenitos)";
 }
