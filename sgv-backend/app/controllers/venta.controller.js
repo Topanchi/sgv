@@ -307,7 +307,18 @@ exports.countByMonths = async (req, res) => {
         case CONSTANTES_TORTAS.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA:
             producto = "30 milhoja";
             break;
-
+        case CONSTANTES_TORTAS.REPOLLITOS:
+            producto = "Repollitos";
+            break;
+        case CONSTANTES_TORTAS.MIX_DULCE_TRADICIONAL:
+            producto = "dulce trad.";
+            break;
+        case CONSTANTES_TORTAS.MIX_DULCE_ESPECIAL:
+            producto = "dulce esp.";
+            break;
+        case CONSTANTES_TORTAS.MIX_DULCE_ESTACION:
+            producto = "dulce est.";
+            break;
     }
 
     res.status(200).send({

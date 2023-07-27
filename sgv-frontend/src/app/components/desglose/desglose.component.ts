@@ -37,6 +37,7 @@ export class DesgloseComponent implements OnInit {
 
   public getDataAnio(id:any) {
     this.totalMesActual = 0;
+    this.totalMesActualDulce = 0;
     this.anioSeleccionado = +id.value;
 
     if(this.anioSeleccionado !== null){
@@ -46,6 +47,7 @@ export class DesgloseComponent implements OnInit {
 
   public getDataMes(id:any) {
     this.totalMesActual = 0;
+    this.totalMesActualDulce = 0;
     this.mesSeleccionado = +id.value;
 
     if(this.anioSeleccionado !== null && this.mesSeleccionado !== null){
@@ -59,13 +61,15 @@ export class DesgloseComponent implements OnInit {
 
     if(this.anioSeleccionado !== null && this.mesSeleccionado !== null){
       this.obtenerMontosData(this.anioSeleccionado, this.mesSeleccionado);
-      this.obtenerDataGraficos(this.anioSeleccionado, this.mesSeleccionado);
+      this.obtenerDataGraficosTortas(this.anioSeleccionado, this.mesSeleccionado);
+      this.obtenerDataGraficosBanqDulce(this.anioSeleccionado, this.mesSeleccionado);
     }
   }
 
   private obtenerMontosData(anioSeleccionado: number, mesSeleccionado: number) {
     const llamadas = [
       this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.TORTA),
+      this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.BANQUETERIA_DULCE),
     ];
 
     // Promesas para cada llamada al servicio
@@ -76,7 +80,13 @@ export class DesgloseComponent implements OnInit {
        responses.forEach((element, index) => {
         if(element !== 0){
           this.mostrarDatosTotales = true;
-          this.totalMesActual = element.venta_total;
+          if(index == 0){
+            this.totalMesActual = element.venta_total;
+          }
+          if(index == 1){
+            this.totalMesActualDulce = element.venta_total;
+          }
+          console.log(element, index)
         }
       });
      })
@@ -85,7 +95,7 @@ export class DesgloseComponent implements OnInit {
      });
   }
 
-  private obtenerDataGraficos(anioSeleccionado: number, mesSeleccionado: number) {
+  private obtenerDataGraficosTortas(anioSeleccionado: number, mesSeleccionado: number) {
     const dataResults = [];
     const dataLabels = [];
 
@@ -107,7 +117,7 @@ export class DesgloseComponent implements OnInit {
 
       this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.TORTA_ESPECIAL_15_HOJARASCA_MILHOJA),
       this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.TORTA_ESPECIAL_20_HOJARASCA_MILHOJA),
-      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.TORTA_ESPECIAL_30_HOJARASCA_MILHOJA)
     ];
 
     // Promesas para cada llamada al servicio
@@ -125,6 +135,38 @@ export class DesgloseComponent implements OnInit {
         }
       });
       this.setgraficoMesActual(dataLabels, dataResults);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  private obtenerDataGraficosBanqDulce(anioSeleccionado: number, mesSeleccionado: number) {
+    const dataResults = [];
+    const dataLabels = [];
+
+    const llamadas = [
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.REPOLLITOS),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MIX_DULCE_TRADICIONAL),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MIX_DULCE_ESPECIAL),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MIX_DULCE_ESTACION)
+    ];
+
+    // Promesas para cada llamada al servicio
+    const promises = llamadas.map(call => call.toPromise());
+
+    // Esperar a que se resuelvan todas las promesas con Promise.all()
+    Promise.all(promises).then(responses => {
+      // Almacenar los valores en el arreglo de resultados
+      responses.forEach(response => {
+        if(response.cantidadVentas !== 0){
+          dataResults.push(response.cantidadVentas);
+          dataLabels.push(response.producto);
+        }else{
+          this.mostrarDatos = false;
+        }
+      });
+      this.setgraficoMesActualBanqDulce(dataLabels, dataResults);
     })
     .catch(error => {
       console.error(error);
@@ -173,6 +215,41 @@ export class DesgloseComponent implements OnInit {
     
     const chart = new Chart(ctx, {
       type: 'pie',
+      data: {
+        labels: tiposDeTortas,
+        datasets: [{
+          data: cantidadDeTortas,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+
+            'rgba(238, 130, 238, 0.7)',
+            'rgba(106, 90, 205, 0.7)',
+            'rgba(89, 89, 16, 0.7)',
+            'rgba(182, 10, 16, 0.7)',
+            'rgba(182, 10, 181, 0.7)',
+            'rgba(89, 10, 181 0.7)',
+
+            'rgba(89, 147, 181, 0.7)',
+            'rgba(89, 147, 255, 0.7)',
+            'rgba(255, 217, 255, 0.7)'
+          ]
+        }]
+      }
+    });
+  }
+
+  private setgraficoMesActualBanqDulce(tiposDeTortas: string[], cantidadDeTortas: number[]) {
+    this.mostrarDatos = true;
+    const canvas: any = document.getElementById('barraChartBanqueteriaDulce');
+    const ctx = canvas.getContext('2d');
+    
+    const chart = new Chart(ctx, {
+      type: 'bar',
       data: {
         labels: tiposDeTortas,
         datasets: [{
