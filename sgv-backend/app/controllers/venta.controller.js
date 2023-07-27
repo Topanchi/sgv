@@ -328,6 +328,48 @@ exports.countByMonths = async (req, res) => {
         case CONSTANTES_TORTAS.CAJA_DULCE_3:
             producto = "dulce 3";
             break;
+        case CONSTANTES_TORTAS.MINI_POSTRES:
+            producto = "postres mini";
+            break;
+        case CONSTANTES_TORTAS.EMPANADAS_SURTIDAS:
+            producto = "emp. surtidas";
+            break;
+        case CONSTANTES_TORTAS.EMPANADAS_VEGETARIANAS:
+            producto = "emp. vega";
+            break;
+        case CONSTANTES_TORTAS.TAPADITOS_SURTIDOS:
+            producto = "tapaditos";
+            break;
+        case CONSTANTES_TORTAS.CANAPES_SURTIDOS:
+            producto = "canapes";
+            break;
+        case CONSTANTES_TORTAS.CROSTINIS_SURTIDOS:
+            producto = "crostinis";
+            break;
+        case CONSTANTES_TORTAS.MINI_PIZZAS:
+            producto = "pizzas";
+            break;    
+        case CONSTANTES_TORTAS.MINI_BROCHETAS_POLLO:
+            producto = "broch. pollo";
+            break;
+        case CONSTANTES_TORTAS.MINI_CHAPARRITAS:
+            producto = "chaparritas";
+            break;
+        case CONSTANTES_TORTAS.MIX_SALADO:
+            producto = "mix salado";
+            break;
+        case CONSTANTES_TORTAS.CAJA_SALADA_1:
+            producto = "caja salada 1";
+            break;
+        case CONSTANTES_TORTAS.CAJA_SALADA_2:
+            producto = "caja salada 2";
+            break;
+        case CONSTANTES_TORTAS.MINI_QUICHE_SURTIDO:
+            producto = "quiche surt.";
+            break;
+        case CONSTANTES_TORTAS.TAPADITOS_PREMUIM_SURTIDO:
+            producto = "tap. surtido";
+            break;
     }
 
     res.status(200).send({

@@ -30,6 +30,7 @@ export class ConstantesCategorias {
     /*  */
     public static TORTA = "torta";
     public static BANQUETERIA_DULCE = "banqueteria dulce";
+    public static BANQUETERIA_SALADA = "banqueteria salada";
 
     /* Banquetería dulce */
     public static REPOLLITOS = "Repollos";
@@ -39,4 +40,22 @@ export class ConstantesCategorias {
     public static CAJA_DULCE_1 = "caja dulce 1 (brownie, pie limón, maicenitos)";
     public static CAJA_DULCE_2 = "caja dulce 2 (brownie, repollitos, brazo reina)";
     public static CAJA_DULCE_3 = "caja dulce 3 (brownie limón, pie de chocolate, maicenitos)";
+
+    /* Banquetería salada */
+    public static EMPANADAS_SURTIDAS = "Empanaditas surtidas";
+    public static EMPANADAS_VEGETARIANAS = "Empanaditas vegetarianas";
+    public static TAPADITOS_SURTIDOS = "Tapaditos surtidos";
+    public static CANAPES_SURTIDOS = "Canapes surtidos";
+    public static CROSTINIS_SURTIDOS = "Crostinis surtidos";
+    public static MINI_PIZZAS = "Mini pizzas";
+    public static MINI_BROCHETAS_POLLO = "Mini brochetas de pollo";
+    public static MINI_CHAPARRITAS = "Mini chaparritas";
+    public static MIX_SALADO = "Mix salado (empanadas, crostinis , mini pizzas)";
+    public static CAJA_SALADA_1 = "Caja salada 1 (empanadas, tapaditos, mini pizzas)";
+    public static CAJA_SALADA_2 = "Caja salada 2 (empanadas, crostinis surtidos)";
+
+    public static MINI_QUICHE_SURTIDO = "Mini quiche surtidos";
+    public static TAPADITOS_PREMUIM_SURTIDO = "Tapaditos premium surtidos";
+    public static MINI_POSTRES = "Mini postres";
+
 }
