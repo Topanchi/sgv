@@ -21,5 +21,8 @@ exports.CONSTANTES_TORTAS = {
     REPOLLITOS : "Repollos",
     MIX_DULCE_TRADICIONAL : "Mix dulce tradicional (brownies, repollitos, brazo de reina)",
     MIX_DULCE_ESPECIAL : "Mix dulce especial (repollitos, mini pie de limón, maicenitos)",
-    MIX_DULCE_ESTACION : "Mix dulce estación (brownie limón, tartaleta de fruta, pie de chocolate)"
+    MIX_DULCE_ESTACION : "Mix dulce estación (brownie limón, tartaleta de fruta, pie de chocolate)",
+    CAJA_DULCE_1 : "caja dulce 1 (brownie, pie limón, maicenitos)",
+    CAJA_DULCE_2 : "caja dulce 2 (brownie, repollitos, brazo reina)",
+    CAJA_DULCE_3 : "caja dulce 3 (brownie limón, pie de chocolate, maicenitos)"
   };
