@@ -427,6 +427,21 @@ export class VentaCreateComponent implements OnInit {
     /* Agregar if evento */
 
     /* Agregar if banqueteria salada */
+    /* Agregar if banqueteria salada */
+    if(producto == ConstantesCategorias.EMPANADAS_SURTIDAS 
+      || producto == ConstantesCategorias.EMPANADAS_VEGETARIANAS
+      || producto == ConstantesCategorias.TAPADITOS_SURTIDOS
+      || producto == ConstantesCategorias.CANAPES_SURTIDOS
+      || producto == ConstantesCategorias.CROSTINIS_SURTIDOS
+      || producto == ConstantesCategorias.MINI_PIZZAS
+      || producto == ConstantesCategorias.MINI_BROCHETAS_POLLO
+      || producto == ConstantesCategorias.MINI_CHAPARRITAS
+      || producto == ConstantesCategorias.MIX_SALADO
+      || producto == ConstantesCategorias.CAJA_SALADA_1
+      || producto == ConstantesCategorias.CAJA_SALADA_2
+      ){
+        this.tipo_producto= "banqueteria salada";
+    }
 
     /* Agregar if banqueteria dulce */
     if(producto == ConstantesCategorias.REPOLLITOS 
