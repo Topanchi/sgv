@@ -490,6 +490,8 @@ export class VentaEditComponent implements OnInit {
       || producto == ConstantesCategorias.MIX_SALADO
       || producto == ConstantesCategorias.CAJA_SALADA_1
       || producto == ConstantesCategorias.CAJA_SALADA_2
+      || producto == ConstantesCategorias.MINI_QUICHE_SURTIDO
+      || producto == ConstantesCategorias.TAPADITOS_PREMUIM_SURTIDO
       ){
         this.tipo_producto= "banqueteria salada";
     }
@@ -502,6 +504,7 @@ export class VentaEditComponent implements OnInit {
       || producto == ConstantesCategorias.CAJA_DULCE_1
       || producto == ConstantesCategorias.CAJA_DULCE_2
       || producto == ConstantesCategorias.CAJA_DULCE_3
+      || producto == ConstantesCategorias.MINI_POSTRES
       ){
         this.tipo_producto= "banqueteria dulce";
     }

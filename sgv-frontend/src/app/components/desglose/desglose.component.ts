@@ -63,6 +63,7 @@ export class DesgloseComponent implements OnInit {
       this.obtenerMontosData(this.anioSeleccionado, this.mesSeleccionado);
       this.obtenerDataGraficosTortas(this.anioSeleccionado, this.mesSeleccionado);
       this.obtenerDataGraficosBanqDulce(this.anioSeleccionado, this.mesSeleccionado);
+      this.obtenerDataGraficosBanqSalada(this.anioSeleccionado, this.mesSeleccionado);
     }
   }
 
@@ -70,6 +71,7 @@ export class DesgloseComponent implements OnInit {
     const llamadas = [
       this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.TORTA),
       this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.BANQUETERIA_DULCE),
+      this.llamadaMontosData(anioSeleccionado, mesSeleccionado, ConstantesCategorias.BANQUETERIA_SALADA)
     ];
 
     // Promesas para cada llamada al servicio
@@ -85,6 +87,9 @@ export class DesgloseComponent implements OnInit {
           }
           if(index == 1){
             this.totalMesActualDulce = element.venta_total;
+          }
+          if(index == 2){
+            this.totalMesActualSalada = element.venta_total;
           }
           console.log(element, index)
         }
@@ -149,7 +154,11 @@ export class DesgloseComponent implements OnInit {
       this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.REPOLLITOS),
       this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MIX_DULCE_TRADICIONAL),
       this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MIX_DULCE_ESPECIAL),
-      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MIX_DULCE_ESTACION)
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MIX_DULCE_ESTACION),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.CAJA_DULCE_1),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.CAJA_DULCE_2),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.CAJA_DULCE_3),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MINI_POSTRES)
     ];
 
     // Promesas para cada llamada al servicio
@@ -167,6 +176,47 @@ export class DesgloseComponent implements OnInit {
         }
       });
       this.setgraficoMesActualBanqDulce(dataLabels, dataResults);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
+  private obtenerDataGraficosBanqSalada(anioSeleccionado: number, mesSeleccionado: number) {
+    const dataResults = [];
+    const dataLabels = [];
+
+    const llamadas = [
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.EMPANADAS_SURTIDAS),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.EMPANADAS_VEGETARIANAS),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.TAPADITOS_SURTIDOS),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.CANAPES_SURTIDOS),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.CROSTINIS_SURTIDOS),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MINI_PIZZAS),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MINI_BROCHETAS_POLLO),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MINI_CHAPARRITAS),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MIX_SALADO),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.CAJA_SALADA_1),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.CAJA_SALADA_2),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.MINI_QUICHE_SURTIDO),
+      this.obtenerVentasMesActual(mesSeleccionado, anioSeleccionado, ConstantesCategorias.TAPADITOS_PREMUIM_SURTIDO)
+    ];
+
+    // Promesas para cada llamada al servicio
+    const promises = llamadas.map(call => call.toPromise());
+
+    // Esperar a que se resuelvan todas las promesas con Promise.all()
+    Promise.all(promises).then(responses => {
+      // Almacenar los valores en el arreglo de resultados
+      responses.forEach(response => {
+        if(response.cantidadVentas !== 0){
+          dataResults.push(response.cantidadVentas);
+          dataLabels.push(response.producto);
+        }else{
+          this.mostrarDatos = false;
+        }
+      });
+      this.setgraficoMesActualBanqSalada(dataLabels, dataResults);
     })
     .catch(error => {
       console.error(error);
@@ -249,7 +299,42 @@ export class DesgloseComponent implements OnInit {
     const ctx = canvas.getContext('2d');
     
     const chart = new Chart(ctx, {
-      type: 'bar',
+      type: 'doughnut',
+      data: {
+        labels: tiposDeTortas,
+        datasets: [{
+          data: cantidadDeTortas,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+
+            'rgba(238, 130, 238, 0.7)',
+            'rgba(106, 90, 205, 0.7)',
+            'rgba(89, 89, 16, 0.7)',
+            'rgba(182, 10, 16, 0.7)',
+            'rgba(182, 10, 181, 0.7)',
+            'rgba(89, 10, 181 0.7)',
+
+            'rgba(89, 147, 181, 0.7)',
+            'rgba(89, 147, 255, 0.7)',
+            'rgba(255, 217, 255, 0.7)'
+          ]
+        }]
+      }
+    });
+  }
+
+  private setgraficoMesActualBanqSalada(tiposDeTortas: string[], cantidadDeTortas: number[]) {
+    this.mostrarDatos = true;
+    const canvas: any = document.getElementById('barraChartBanqueteriaSalada');
+    const ctx = canvas.getContext('2d');
+    
+    const chart = new Chart(ctx, {
+      type: 'pie',
       data: {
         labels: tiposDeTortas,
         datasets: [{

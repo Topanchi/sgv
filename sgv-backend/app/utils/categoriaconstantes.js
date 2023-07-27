@@ -25,6 +25,7 @@ exports.CONSTANTES_TORTAS = {
   CAJA_DULCE_1 : "caja dulce 1 (brownie, pie limón, maicenitos)",
   CAJA_DULCE_2 : "caja dulce 2 (brownie, repollitos, brazo reina)",
   CAJA_DULCE_3 : "caja dulce 3 (brownie limón, pie de chocolate, maicenitos)",
+  MINI_POSTRES : "Mini postres",
   /* Banquetería salada */
   EMPANADAS_SURTIDAS : "Empanaditas surtidas",
   EMPANADAS_VEGETARIANAS : "Empanaditas vegetarianas",
@@ -37,4 +38,7 @@ exports.CONSTANTES_TORTAS = {
   MIX_SALADO: "Mix salado (empanadas, crostinis , mini pizzas)",
   CAJA_SALADA_1: "Caja salada 1 (empanadas, tapaditos, mini pizzas)",
   CAJA_SALADA_2: "Caja salada 2 (empanadas, crostinis surtidos)",
+  MINI_QUICHE_SURTIDO: "Mini quiche surtidos",
+  TAPADITOS_PREMUIM_SURTIDO: "Tapaditos premium surtidos",
+  
 };

@@ -426,7 +426,7 @@ export class VentaCreateComponent implements OnInit {
 
     /* Agregar if evento */
 
-    /* Agregar if banqueteria salada */
+  
     /* Agregar if banqueteria salada */
     if(producto == ConstantesCategorias.EMPANADAS_SURTIDAS 
       || producto == ConstantesCategorias.EMPANADAS_VEGETARIANAS
@@ -439,6 +439,8 @@ export class VentaCreateComponent implements OnInit {
       || producto == ConstantesCategorias.MIX_SALADO
       || producto == ConstantesCategorias.CAJA_SALADA_1
       || producto == ConstantesCategorias.CAJA_SALADA_2
+      || producto == ConstantesCategorias.MINI_QUICHE_SURTIDO
+      || producto == ConstantesCategorias.TAPADITOS_PREMUIM_SURTIDO
       ){
         this.tipo_producto= "banqueteria salada";
     }
@@ -451,6 +453,7 @@ export class VentaCreateComponent implements OnInit {
       || producto == ConstantesCategorias.CAJA_DULCE_1
       || producto == ConstantesCategorias.CAJA_DULCE_2
       || producto == ConstantesCategorias.CAJA_DULCE_3
+      || producto == ConstantesCategorias.MINI_POSTRES
       ){
         this.tipo_producto= "banqueteria dulce";
     }
