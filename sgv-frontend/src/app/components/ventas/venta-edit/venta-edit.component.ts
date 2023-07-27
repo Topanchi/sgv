@@ -481,5 +481,12 @@ export class VentaEditComponent implements OnInit {
     /* Agregar if banqueteria salada */
 
     /* Agregar if banqueteria dulce */
+    if(producto == ConstantesCategorias.REPOLLITOS 
+      || producto == ConstantesCategorias.MIX_DULCE_TRADICIONAL
+      || producto == ConstantesCategorias.MIX_DULCE_ESPECIAL
+      || producto == ConstantesCategorias.MIX_DULCE_ESTACION
+      ){
+        this.tipo_producto= "banqueteria dulce";
+    }
   }
 }

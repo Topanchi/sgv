@@ -29,4 +29,11 @@ export class ConstantesCategorias {
 
     /*  */
     public static TORTA = "torta";
+    public static BANQUETERIA_DULCE = "banqueteria dulce";
+
+    /* Banquetería dulce */
+    public static REPOLLITOS = "Repollos";
+    public static MIX_DULCE_TRADICIONAL = "Mix dulce tradicional (brownies, repollitos, brazo de reina)";
+    public static MIX_DULCE_ESPECIAL = "Mix dulce especial (repollitos, mini pie de limón, maicenitos)";
+    public static MIX_DULCE_ESTACION = "Mix dulce estación (brownie limón, tartaleta de fruta, pie de chocolate)";
 }

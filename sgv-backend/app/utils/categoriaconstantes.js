@@ -17,4 +17,9 @@ exports.CONSTANTES_TORTAS = {
     TORTA_ESPECIAL_15_HOJARASCA_MILHOJA : "Torta especial para 15 personas hojarasca/milhoja",
     TORTA_ESPECIAL_20_HOJARASCA_MILHOJA : "Torta especial para 20 personas hojarasca/milhoja",
     TORTA_ESPECIAL_30_HOJARASCA_MILHOJA : "Torta especial para 30 personas hojarasca/milhoja",
+    /* Banquetería dulce */
+    REPOLLITOS : "Repollos",
+    MIX_DULCE_TRADICIONAL : "Mix dulce tradicional (brownies, repollitos, brazo de reina)",
+    MIX_DULCE_ESPECIAL : "Mix dulce especial (repollitos, mini pie de limón, maicenitos)",
+    MIX_DULCE_ESTACION : "Mix dulce estación (brownie limón, tartaleta de fruta, pie de chocolate)"
   };
