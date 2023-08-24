@@ -76,6 +76,8 @@ export class VentaCreateComponent implements OnInit {
   public pivote_torta_especial_30_hojarasca_milhoja: number = 0;
   public pivote_data_detalles: any[];
   public tipo_producto: String;
+  public esta_pagado: boolean = null;
+  public es_evento: boolean = null;
 
   constructor(
     private _userService: UserService,
@@ -179,6 +181,7 @@ export class VentaCreateComponent implements OnInit {
               descripcion_venta: ventaForm.value.descripcion_venta,
               nombre_cliente: ventaForm.value.nombre_cliente,
               iduser: this.identity.id,
+              pagado: this.esta_pagado,
               fecha_venta: fechaPicker,
               mes: +fecha2Final[1],
               anio: +fecha2Final[2],
@@ -258,6 +261,18 @@ export class VentaCreateComponent implements OnInit {
 
       }
     );
+  }
+
+  public setVenta(valor:any) {
+    console.log("es venta?: ", valor.value);
+
+    this.es_evento = valor.value == 1 ? true : false;
+  }
+
+  public setPagado(valor:any) {
+    console.log("Está pagado?: ", valor.value);
+
+    this.esta_pagado = valor.value == 1 ? true : false;
   }
 
   private obtenerProductos() {

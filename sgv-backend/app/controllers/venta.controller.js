@@ -18,6 +18,7 @@ exports.create = (req, res) => {
     // Create a Venta
     const venta = new Venta({
         valor_venta: req.body.valor_venta,
+        pagado: req.body.pagado,
         fecha_venta: req.body.fecha_venta,
         mes: req.body.mes,
         anio: req.body.anio,
