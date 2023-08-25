@@ -40,5 +40,6 @@ exports.CONSTANTES_TORTAS = {
   CAJA_SALADA_2: "Caja salada 2 (empanadas, crostinis surtidos)",
   MINI_QUICHE_SURTIDO: "Mini quiche surtidos",
   TAPADITOS_PREMUIM_SURTIDO: "Tapaditos premium surtidos",
-  
+  /* Evento */
+  EVENTO: "Evento",
 };

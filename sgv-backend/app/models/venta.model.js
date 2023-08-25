@@ -5,6 +5,7 @@ const Venta = mongoose.model(
   new mongoose.Schema({
     valor_venta: Number,
     fecha_ingreso: {type: Date, default: Date.now},
+    pagado: Boolean,
     fecha_venta: String,
     mes: Number,
     anio: Number,

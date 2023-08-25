@@ -371,6 +371,9 @@ exports.countByMonths = async (req, res) => {
         case CONSTANTES_TORTAS.TAPADITOS_PREMUIM_SURTIDO:
             producto = "tap. surtido";
             break;
+        case CONSTANTES_TORTAS.EVENTO:
+            producto = "Evento";
+            break;
     }
 
     res.status(200).send({

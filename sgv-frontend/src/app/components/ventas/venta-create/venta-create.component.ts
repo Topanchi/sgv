@@ -120,28 +120,44 @@ export class VentaCreateComponent implements OnInit {
   }
 
   public onSubmitDetalle(detalleForm:any) {
-    if(detalleForm.valid){
+    if(!this.es_evento){
+      if(detalleForm.valid){
 
-      if(detalleForm.value.cantidad == '0' || detalleForm.value.cantidad == null || detalleForm.value.cantidad == ''){
-        console.log("error en el formulario");
-        this.error_msg = 'La cantidad debe ser mayor a 0'
+        if(detalleForm.value.cantidad == '0' || detalleForm.value.cantidad == null || detalleForm.value.cantidad == ''){
+          console.log("error en el formulario");
+          this.error_msg = 'La cantidad debe ser mayor a 0'
+        }else{
+          /* TODO: Validar evento */
+          this.data_detalle.push({
+            idproducto:  this.es_evento ? '64e8aae7db191924708534cc' : detalleForm.value.idproducto,
+            cantidad:  this.es_evento ? 1 : +detalleForm.value.cantidad,
+            valor_producto: this.es_evento ? +detalleForm.value.valor_producto : this.producto.valor_producto,
+            producto: this.es_evento ? 'evento' : this.producto.descripcion,
+            tipo_producto:  this.es_evento ? 'evento' : this.producto.tipo_producto
+          });
+  
+          this.total = this.total + ((parseInt(this.es_evento ? detalleForm.value.valor_producto : this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
+          //console.log("detalle: ", this.data_detalle);
+          this.detalle = new DetalleVenta('','','','');
+          this.producto.valor_producto = '0';
+        }
       }else{
-        this.data_detalle.push({
-          idproducto: detalleForm.value.idproducto,
-          cantidad: +detalleForm.value.cantidad,
-          valor_producto: this.producto.valor_producto,
-          producto: this.producto.descripcion,
-          tipo_producto: this.producto.tipo_producto
-        });
-
-        this.total = this.total + ((parseInt(this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
-        //console.log("detalle: ", this.data_detalle);
-        this.detalle = new DetalleVenta('','','','');
-        this.producto.valor_producto = '0';
+        console.log("error en el formulario");
+        this.error_msg = 'Complete correctamente el formulario'
       }
-    }else{
-      console.log("error en el formulario");
-      this.error_msg = 'Complete correctamente el formulario'
+    }else {
+      /* TODO: refacotrizar */
+      this.data_detalle.push({
+        idproducto:  this.es_evento ? '64e8aae7db191924708534cc' : detalleForm.value.idproducto,
+        cantidad:  this.es_evento ? 1 : +detalleForm.value.cantidad,
+        valor_producto: this.es_evento ? +detalleForm.value.valor_producto : this.producto.valor_producto,
+        producto: this.es_evento ? ConstantesCategorias.EVENTOS : this.producto.descripcion,
+        tipo_producto:  this.es_evento ? ConstantesCategorias.EVENTO : this.producto.tipo_producto
+      });
+
+      this.total = this.total + ((parseInt(detalleForm.value.valor_producto)) * (1));
+      this.detalle = new DetalleVenta('','','','');
+      this.producto.valor_producto = '0';
     }
   }
 
@@ -151,8 +167,8 @@ export class VentaCreateComponent implements OnInit {
   }
 
   public onSubmitVenta(ventaForm:any){
-    if(ventaForm.valid){
-      console.log(ventaForm.value);
+    if(ventaForm.value.nombre_cliente !== null && ventaForm.value.descripcion_venta !== null){
+
       let fechaPicker = $("#fecha_venta").datepicker()[0].value;
       ventaForm.value.fecha_venta = fechaPicker;
       let fechaFinal = ventaForm.value.fecha_venta.toString();
@@ -178,7 +194,7 @@ export class VentaCreateComponent implements OnInit {
           if (result.isConfirmed) {
 
             let data = {
-              descripcion_venta: ventaForm.value.descripcion_venta,
+              descripcion_venta: this.es_evento ? "Evento" : ventaForm.value.descripcion_venta,
               nombre_cliente: ventaForm.value.nombre_cliente,
               iduser: this.identity.id,
               pagado: this.esta_pagado,
@@ -205,7 +221,7 @@ export class VentaCreateComponent implements OnInit {
             }
     
             console.log("Data final: ", data);
-
+            /***/
             this._ventaService.guardarVenta(data).subscribe(
               response => {
                 Swal.fire({
@@ -221,16 +237,16 @@ export class VentaCreateComponent implements OnInit {
                 console.log("Error: ", error);
               }
             ); 
-
+             
           }
         })
 
       }else{
-        console.log("error en el formulario");
+        console.log("error en el formulario", "me caí por service?");
         this.error_msg_venta = 'Complete correctamente el formulario';
       }
     }else{
-      console.log("error en el formulario");
+      console.log("error en el formulario", "me caí por form?");
       this.error_msg_venta = 'Complete correctamente el formulario';
     }
   }
