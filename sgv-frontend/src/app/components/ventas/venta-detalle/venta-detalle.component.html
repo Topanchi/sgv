@@ -28,31 +28,33 @@
                             <div class="card-body">
                                 <form action="">
                                     <div class="row">
-                                        <div class="col-lg-2 form-group">
+                                        <div class="col-lg-4 form-group">
                                             <label><b>Trabajador que ingresa venta</b></label>
                                             <input type="text" class="form-control" value="{{venta.iduser.nombre +' '+ venta.iduser.apellidos}}" readonly>
                                         </div>
-                                        <div class="col-lg-2 form-group">
+                                        <div class="col-lg-4 form-group">
                                             <label><b>Correo electrónico</b></label>
                                             <input type="text" class="form-control" value="{{venta.iduser.email}}" readonly>
                                         </div>
-                                        <div class="col-lg-3 form-group">
+                                        <div class="col-lg-4 form-group">
                                             <label><b>Nombre del Cliente</b></label>
                                             <input type="text" class="form-control" value="{{venta.nombre_cliente}}" readonly>
                                         </div>
-                                        <div class="col-lg-3 form-group">
+                                    </div>
+                                    <div class="row">
+                                        
+                                        <div class="col-lg-4 form-group">
                                             <label><b>Descripción de la venta</b></label>
                                             <input type="text" class="form-control" value="{{venta.descripcion_venta}}" readonly> 
-                                        
                                         </div>
-                                        <div class="col-lg-2 form-group">
+                                        <div class="col-lg-4 form-group">
                                             <label><b>Fecha venta</b></label>
                                             <input type="text" class="form-control"value="{{venta.fecha_venta}}" readonly>
                                         </div>
-                                        <!-- <div class="col-lg-3 form-group">
-                                            <label><b>-</b></label>
-                                            <button type="submit" class="btn btn-warning btn-block" [routerLink]="['/ventas']">Volver</button>
-                                        </div> -->
+                                        <div class="col-lg-2 form-group">
+                                            <label><b>¿ Está pagado ?</b></label>
+                                            <input type="text" class="form-control"value="{{this.venta.pagado ? 'Sí' : 'No'}}" readonly>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12 col-lg-12 col-xl-12 form-group">
@@ -84,9 +86,9 @@
                                     </thead>
                                     <tbody *ngFor="let item of detalle_venta">
                                         <td class="text-center">{{item.idProducto.descripcion}}</td>
-                                        <td class="text-center">{{item.idProducto.valor_producto}}</td>
+                                        <td class="text-center">{{item.idProducto.valor_producto !== 0 ? item.idProducto.valor_producto: this.venta.valor_venta}}</td>
                                         <td class="text-center">{{item.cantidad}}</td>
-                                        <td class="text-center">{{(item.idProducto.valor_producto) * (item.cantidad)}}</td>
+                                        <td class="text-center">{{(item.idProducto.valor_producto !== 0 ? item.idProducto.valor_producto: this.venta.valor_venta) * (item.cantidad)}}</td>
                                     </tbody>
                                     <tfoot>
                                         <td class="text-center"><b>Total</b> </td>

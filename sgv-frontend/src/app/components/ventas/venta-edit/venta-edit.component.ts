@@ -77,6 +77,8 @@ export class VentaEditComponent implements OnInit {
   public pivote_torta_especial_30_hojarasca_milhoja: number = 0;
   public pivote_data_detalles: any[];
   public tipo_producto: String;
+  public esta_pagado: boolean = null;
+  public es_evento: boolean = null;
 
   constructor(
     private _userService: UserService,
@@ -118,19 +120,35 @@ export class VentaEditComponent implements OnInit {
         this._ventaService.getVentaPorId(this.id).subscribe(
           (response) => {
             this.venta = response.venta;
+            
             console.log("obj:::::::::::: ", response);
-            response.detalles.forEach((element, index) => {
-              console.log(element,index);
-              this.data_detalle.push({
-                idproducto: element.idProducto._id,
-                cantidad: +element.cantidad,
-                valor_producto: element.idProducto.valor_producto,
-                producto: element.idProducto.descripcion
-              });
-              this.total = this.total + ((parseInt(element.idProducto.valor_producto)) * (parseInt(element.cantidad)));
-            });            
-            console.log("venta editar::: ", this.venta);
-            console.log("detalle editar: ", this.data_detalle);
+
+            /* TODO: refactorizar lógica de separación de evento-venta al mayor */
+            if(response.detalles[0].idProducto.tipo_producto == ConstantesCategorias.EVENTO){
+              response.detalles.forEach((element, index) => {
+                //console.log(element,index);
+                this.data_detalle.push({
+                  idproducto: element.idProducto._id,
+                  cantidad: +element.cantidad,
+                  valor_producto: this.venta.valor_venta,
+                  producto: element.idProducto.descripcion
+                });
+                this.total = this.total + ((parseInt(this.venta.valor_venta)) * (parseInt(element.cantidad)));
+              });      
+            } else {
+              response.detalles.forEach((element, index) => {
+                //console.log(element,index);
+                this.data_detalle.push({
+                  idproducto: element.idProducto._id,
+                  cantidad: +element.cantidad,
+                  valor_producto: element.idProducto.valor_producto,
+                  producto: element.idProducto.descripcion
+                });
+                this.total = this.total + ((parseInt(element.idProducto.valor_producto)) * (parseInt(element.cantidad)));
+              });            
+            }
+            //console.log("venta editar::: ", this.venta);
+            //console.log("detalle editar: ", this.data_detalle);
             
           },
           error => {}
@@ -144,28 +162,44 @@ export class VentaEditComponent implements OnInit {
   }
 
   public onSubmitDetalle(detalleForm:any) {
-    if(detalleForm.valid){
+    if(!this.es_evento){
+      if(detalleForm.valid){
 
-      if(detalleForm.value.cantidad == '0' || detalleForm.value.cantidad == null || detalleForm.value.cantidad == ''){
-        console.log("error en el formulario");
-        this.error_msg = 'La cantidad debe ser mayor a 0'
+        if(detalleForm.value.cantidad == '0' || detalleForm.value.cantidad == null || detalleForm.value.cantidad == ''){
+          console.log("error en el formulario");
+          this.error_msg = 'La cantidad debe ser mayor a 0'
+        }else{
+          /* TODO: Validar evento */
+          this.data_detalle.push({
+            idproducto:  this.es_evento ? '64e8aae7db191924708534cc' : detalleForm.value.idproducto,
+            cantidad:  this.es_evento ? 1 : +detalleForm.value.cantidad,
+            valor_producto: this.es_evento ? this.venta.valor_venta : this.producto.valor_producto,
+            producto: this.es_evento ? 'evento' : this.producto.descripcion,
+            tipo_producto:  this.es_evento ? 'evento' : this.producto.tipo_producto
+          });
+  
+          this.total = this.total + ((parseInt(this.es_evento ? this.venta.valor_venta : this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
+          //console.log("detalle: ", this.data_detalle);
+          this.detalle = new DetalleVenta('','','','');
+          this.producto.valor_producto = '0';
+        }
       }else{
-        this.data_detalle.push({
-          idproducto: detalleForm.value.idproducto,
-          cantidad: +detalleForm.value.cantidad,
-          valor_producto: this.producto.valor_producto,
-          producto: this.producto.descripcion,
-          tipo_producto: this.producto.tipo_producto
-        });
-        console.log("this.data_detalle.push:", this.data_detalle);
-        this.total = this.total + ((parseInt(this.producto.valor_producto)) * (parseInt(detalleForm.value.cantidad)));
-
-        this.detalle = new DetalleVenta('','','','');
-        this.producto.valor_producto = '0';
+        console.log("error en el formulario");
+        this.error_msg = 'Complete correctamente el formulario'
       }
-    }else{
-      console.log("error en el formulario");
-      this.error_msg = 'Complete correctamente el formulario'
+    }else {
+      /* TODO: refacotrizar */
+      this.data_detalle.push({
+        idproducto:  this.es_evento ? '64e8aae7db191924708534cc' : detalleForm.value.idproducto,
+        cantidad:  this.es_evento ? 1 : +detalleForm.value.cantidad,
+        valor_producto: this.es_evento ? +detalleForm.value.valor_producto : this.producto.valor_producto,
+        producto: this.es_evento ? ConstantesCategorias.EVENTOS : this.producto.descripcion,
+        tipo_producto:  this.es_evento ? ConstantesCategorias.EVENTO : this.producto.tipo_producto
+      });
+
+      this.total = this.total + ((parseInt(detalleForm.value.valor_producto)) * (1));
+      this.detalle = new DetalleVenta('','','','');
+      this.producto.valor_producto = '0';
     }
   }
 
@@ -175,18 +209,17 @@ export class VentaEditComponent implements OnInit {
   }
 
   public onSubmitVenta(ventaForm:any){
-    if(ventaForm.valid){
-      console.log(ventaForm.value);
+    if(ventaForm.value.nombre_cliente !== null && ventaForm.value.descripcion_venta !== null){
+
       let fechaPicker = $("#fecha_venta").datepicker()[0].value;
       ventaForm.value.fecha_venta = fechaPicker;
       let fechaFinal = ventaForm.value.fecha_venta.toString();
-      console.log(fechaFinal)
       let fecha2Final = fechaFinal.split('/');
 
       this.seteoCantidadDeProductos(this.data_detalle);
       this.pivote_data_detalles = this.data_detalle;
-      this.envioDataContadores(this.pivote_data_detalles, ventaForm.value, fechaPicker, fecha2Final);
 
+      this.envioDataContadores(this.pivote_data_detalles, ventaForm.value, fechaPicker, fecha2Final);
       this.envioDataMontoContadoresTortas(this.pivote_data_detalles, fechaPicker, fecha2Final);
 
       if(ventaForm.value.descripcion_venta != '' && ventaForm.value.fecha_venta != undefined){
@@ -207,10 +240,11 @@ export class VentaEditComponent implements OnInit {
               descripcion_venta: ventaForm.value.descripcion_venta,
               nombre_cliente: ventaForm.value.nombre_cliente,
               iduser: this.identity.id,
+              pagado: this.venta.pagado !== null ? this.venta.pagado : this.esta_pagado,
               fecha_venta: fechaPicker,
               mes: +fecha2Final[1],
               anio: +fecha2Final[2],
-              valor_venta: this.total,
+              valor_venta: this.total != 0 ? this.total : this.venta.valor_venta,
               tipo_producto: ConstantesCategorias.TORTA_BISCOCHO_15_REDONDA,
               detalles: this.data_detalle
             }
@@ -219,9 +253,10 @@ export class VentaEditComponent implements OnInit {
 
             this._ventaService.actualizarVenta({
               _id: this.id,
-              descripcion_venta: ventaForm.value.descripcion_venta,
+              descripcion_venta: this.es_evento ? "Evento" : ventaForm.value.descripcion_venta,
               nombre_cliente: ventaForm.value.nombre_cliente,
               iduser: this.identity.id,
+              pagado: this.esta_pagado,
               fecha_venta: fechaPicker,
               mes: +fecha2Final[1],
               anio: +fecha2Final[2],
@@ -298,15 +333,17 @@ export class VentaEditComponent implements OnInit {
     );
   }
 
-  /* public dateChanged($event) {
-    console.log("fecha: ", typeof $event.target.value);
-    let fecha = $event.target.value;
+  public setVenta(valor:any) {
+    console.log("es venta?: ", valor.value);
 
-    console.log("fecha: ", fecha);
-    
-    console.log(fecha.toString());
-    console.log("fecha: ", typeof fecha);
-  } */
+    this.es_evento = valor.value == 1 ? true : false;
+  }
+
+  public setPagado(valor:any) {
+    console.log("Está pagado?: ", valor.value);
+
+    this.esta_pagado = valor.value == 1 ? true : false;
+  }
 
   private obtenerProductos() {
     this._productoService.getProductos('').subscribe(

@@ -45,7 +45,6 @@
                                         
                                     </div>
                                     <div class="row">
-                                       
                                         <div class="col-lg-4 form-group">
                                             <label><b>Nombre del Cliente</b></label>
                                             <input type="text" class="form-control" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="venta.nombre_cliente">
@@ -58,6 +57,21 @@
                                             <label><b>Fecha venta</b></label>
                                             <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" placeholder="Ejemplo 05/06/1999"> -->
                                             <input type="text" class="form-control" id="fecha_venta" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 form-group">
+                                            <label><b>¿ Está pagado ?</b></label><br>
+                                            <input type="text" disabled value="{{this.venta.pagado ? 'Sí' : 'No'}}">
+                                            <!-- <p>{{this.venta.pagado ? 'Sí' : 'No'}}</p> -->
+                                        </div>
+                                        <div *ngIf="!this.venta.pagado" class="col-lg-4 form-group">
+                                            <label><b>¿ Quedará pagado ?</b></label> 
+                                            <select name="" class="form-control" (change)="setPagado($event.target)" #pagado="ngModel" name="evento" [(ngModel)]="producto.pagado" required>
+                                                <option value="" disabled>Seleccionar</option>
+                                                <option value="1">Sí</option>
+                                                <option value="0">No</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row">
