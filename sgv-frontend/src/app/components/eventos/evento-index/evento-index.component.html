@@ -63,7 +63,44 @@
                                 </div>
                             </div>
 
+                            <table class="table table-striped table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>N° Factura</th>
+                                        <th>Valor factura</th>
+                                        <th>Fecha de ingreso factura</th>
+                                        <th>Orden de compra</th>
+                                        <th>Cotización</th>
+                                        <th>Trabajador</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let item of eventos | paginate: { itemsPerPage: 10, currentPage: p }">
+                                    <tr>
+                                        <td>
+                                            {{item.descripcion_venta}}
+                                        </td>
+                                        <td> <b>$</b>{{item.valor_venta}}</td>
+                                        <td>{{item.nombre_cliente}}</td>
+                                        <td>{{item.fecha_venta }}</td>
+                                        <td>
+                                            {{item.iduser.nombre}}
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="submit" class="input-group-test btn btn-info" ngbTooltip="Ver evento" [routerLink]="['/evento/',item._id]">
+                                                <i class="fa fa-eye"></i>
+                                            </button> &nbsp;
+                                            <button type="submit" class="input-group-test btn btn-warning" ngbTooltip="Editar evento" [routerLink]="['/evento/editar/',item._id]"> 
+                                                <i class="fa fa-edit"></i>
+                                            </button> &nbsp;
+                                            <!-- <button type="submit" class="input-group-test btn btn-danger" ngbTooltip="Eliminar producto" (click)="eliminarVenta(item._id)">
+                                                <i class="fa fa-trash"></i>
+                                            </button>  -->
+                                        </td>
+                                    </tr>
                             
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

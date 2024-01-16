@@ -11,6 +11,7 @@ const Evento = mongoose.model(
     orden_compra: String,
     fecha_ingreso: {type: Date, default: Date.now},
     fecha_venta: String,
+    esta_pagada: Boolean,
     mes: Number,
     anio: Number,
     iduser: {
