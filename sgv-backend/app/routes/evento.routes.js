@@ -4,7 +4,7 @@ module.exports = app => {
     var router = require("express").Router();
 
     // Create a new Evento
-    router.post("/crear", eventos.create);
+    //router.post("/crear", eventos.create);
   
     // Retrieve all Eventos
     router.get("/listar", eventos.findAll);
@@ -13,12 +13,12 @@ module.exports = app => {
     router.get("/buscar/:id", eventos.findOne);
   
     // Update a Evento with id
-    router.put("/:id", eventos.update);
+    //router.put("/:id", eventos.update);
   
     // Delete a Evento with id
-    router.delete("/borrar/:id", eventos.delete);
+    //router.delete("/borrar/:id", eventos.delete);
   
     // Create a new Evento
-    router.delete("/borrar", eventos.deleteAll);
+    //router.delete("/borrar", eventos.deleteAll);
   
 }

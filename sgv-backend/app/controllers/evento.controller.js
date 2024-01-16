@@ -1,6 +1,6 @@
 const db = require("../models");
 
-const Evento = require("../models");
+const Evento = db.evento;
 
 // Retrieve all Eventos from the database.
 exports.findAll = (req, res) => {

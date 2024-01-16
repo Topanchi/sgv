@@ -33,6 +33,7 @@ const Role = db.role;
 const Categorias = db.categoria;
 const Productos = db.producto;
 const Ventas = db.venta;
+const Eventos = db.evento;
 
 // DB connection
 db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
@@ -60,6 +61,7 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/categoria.routes")(app);
 require("./app/routes/producto.routes")(app);
 require("./app/routes/venta.routes")(app);
+require("./app/routes/evento.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
