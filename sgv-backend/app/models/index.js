@@ -13,6 +13,7 @@ db.venta = require("./venta.model");
 db.detalleventa = require("./detalleventa.model");
 db.ventacontador = require("./ventacontador.model");
 db.montoventacontador = require("./montoventacontador.model");
+db.evento = require("./evento.model");
 
 db.ROLES = ["user", "admin", "moderator"];
 

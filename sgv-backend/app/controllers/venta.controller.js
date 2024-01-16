@@ -5,8 +5,6 @@ const VentaContador = db.ventacontador;
 const MontoVentaContador = db.montoventacontador;
 const DetalleVenta = db.detalleventa;
 
-var detalle = new Array(DetalleVenta());
-
 // Create and Save a new Venta
 exports.create = (req, res) => {
     // Validate request
@@ -78,7 +76,7 @@ exports.create = (req, res) => {
 // Retrieve all Ventas from the database.
 exports.findAll = (req, res) => {
     const valor_venta = req.query.valor_venta;
-    var condition = valor_venta ? { valor_venta: { $regex: new RegExp(valor_venta), $options: "i" } } : {};
+    let condition = valor_venta ? { valor_venta: { $regex: new RegExp(valor_venta), $options: "i" } } : {};
 
     Venta.find(condition).populate('iduser').then(data => {
         res.send(data);
@@ -652,8 +650,8 @@ exports.countBySixMonth = async (req, res) => {
 };
 
 exports.countSalesMountByMonths = async (req, res) => {
-    var parametros = { "mes": req.body.mes , "anio": req.body.anio, "tipo_producto": req.body.tipo_producto};
-    var venta_total = 0;
+    let parametros = { "mes": req.body.mes , "anio": req.body.anio, "tipo_producto": req.body.tipo_producto};
+    let venta_total = 0;
      
     const montosEncontrados = await MontoVentaContador.find(parametros).catch(err => {
         res.status(500).send({
