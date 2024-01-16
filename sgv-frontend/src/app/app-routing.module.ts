@@ -11,6 +11,10 @@ import { VentaCreateComponent } from './components/ventas/venta-create/venta-cre
 import { VentaDetalleComponent } from './components/ventas/venta-detalle/venta-detalle.component';
 import { VentaEditComponent } from './components/ventas/venta-edit/venta-edit.component';
 import { DesgloseComponent } from './components/desglose/desglose.component';
+import { EventoIndexComponent } from './components/eventos/evento-index/evento-index.component';
+import { EventoCreateComponent } from './components/eventos/evento-create/evento-create.component';
+import { EventoEditComponent } from './components/eventos/evento-edit/evento-edit.component';
+import { EventoDetalleComponent } from './components/eventos/evento-detalle/evento-detalle.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -24,6 +28,10 @@ const routes: Routes = [
   { path: 'venta/registrar', component: VentaCreateComponent },
   { path: 'venta/:id', component: VentaDetalleComponent },
   { path: 'venta/editar/:id', component: VentaEditComponent },
+  { path: 'eventos', component: EventoIndexComponent },
+  { path: 'evento/registrar', component: EventoCreateComponent },
+  { path: 'evento/:id', component: EventoDetalleComponent },
+  { path: 'evento/editar/:id', component: EventoEditComponent },
 ];
 
 @NgModule({

@@ -31,6 +31,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VentaEditComponent } from './components/ventas/venta-edit/venta-edit.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { DesgloseComponent } from './components/desglose/desglose.component';
+import { EventoIndexComponent } from './components/eventos/evento-index/evento-index.component';
+import { EventoCreateComponent } from './components/eventos/evento-create/evento-create.component';
+import { EventoEditComponent } from './components/eventos/evento-edit/evento-edit.component';
+import { EventoDetalleComponent } from './components/eventos/evento-detalle/evento-detalle.component';
 
 
 @NgModule({
@@ -48,7 +52,11 @@ import { DesgloseComponent } from './components/desglose/desglose.component';
     VentaDetalleComponent,
     VentaEditComponent,
     TopbarComponent,
-    DesgloseComponent
+    DesgloseComponent,
+    EventoIndexComponent,
+    EventoCreateComponent,
+    EventoEditComponent,
+    EventoDetalleComponent
   ],
   imports: [
     BrowserModule,

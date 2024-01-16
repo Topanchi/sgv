@@ -1,0 +1,73 @@
+<div class="wrapper">
+    <app-sidebar style="background: white !important;"></app-sidebar>
+    <div class="main">
+        <app-topbar></app-topbar>
+        <main class="content">
+            <div class="container-fluid">
+                <div class="header">
+                    <h1 class="header-title">
+                        Mis eventos
+                    </h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a [routerLink]="['/dasboard']">Dasboard</a></li>
+                            <li class="breadcrumb-item" style="color:#f5f5f5 !important"><a>Eventos</a></li>
+                        </ol>
+                    </nav>
+                    <p class="header-subtitle">Listado de eventos registrados.</p>
+                </div>
+
+                <div class="row">
+                    <div  class="col-12 col-xl-12">
+                        <!-- <div class="alert alert-success alert-outline alert-dismissible" role="alert">
+                            <div class="alert-icon">
+                                <i class="far fa-fw fa-bell"></i>
+                            </div>
+                            <div class="alert-message">
+                                <strong>Hello there!</strong> A simple success alert—check it out!
+                            </div>
+    
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                            </button>
+                        </div> -->
+                    </div>
+                    <div  class="col-12 col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                            
+                                <h5 class="card-title">Filtro de eventos</h5>
+                                <div class="row">
+                                    <!--BUSCADOR DE EVENTOS-->
+                                    <div class="col-lg-6">
+                                        <form #searchForm="ngForm" (ngSubmit)="search(searchForm)">
+                                            <div class="input-group date" id="datetimepicker-minimun" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" #filtro="ngModel" name="filtro" [(ngModel)]="filtroText">
+                                                <div class="input-group-append">
+
+                                                    <button type="submit" class="input-group-test btn btn-info">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!--FIN BUSCADOR DE PRODUCTOS-->
+                                    <div class="col-lg-2">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn mb-1 btn-primary" aria-haspopup="true" [routerLink]="['/evento/registrar']">
+                                                Registrar evento
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
