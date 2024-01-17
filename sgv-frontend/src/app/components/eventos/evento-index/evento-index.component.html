@@ -80,7 +80,7 @@
                                         <td>{{item.num_factura}}</td>
                                         <td> <b>$</b>{{item.valor_factura}}</td>
                                         <td>{{item.fecha_ingreso | date}}</td>
-                                        <td>{{item.orden_compra}}</td>
+                                        <td class="text-center" *ngIf="item.orden_compra != ''; else vacio"><i class="fa fa-check"></i></td>
                                         <td class="text-center" *ngIf="item.cotizacion != ''; else vacio"><i class="fa fa-check"></i></td>
                                         <td>{{item.iduser.nombre}}</td>
                                         <td class="text-center">
