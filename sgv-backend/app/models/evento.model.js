@@ -6,6 +6,7 @@ const Evento = mongoose.model(
     valor_factura: Number,
     num_factura: Number,
     golsa_factura: String,
+    tiene_factura: Boolean,
     cotizacion: String,
     tiene_oc: Boolean,
     orden_compra: String,

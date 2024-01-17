@@ -15,6 +15,7 @@ exports.create = (req, res) => {
         valor_factura: +req.body.valor_factura,
         num_factura: +req.body.num_factura,
         golsa_factura: req.body.golsa_factura,
+        tiene_factura: req.body.tiene_factura,
         cotizacion: req.body.cotizacion,
         tiene_oc: req.body.tiene_oc,
         orden_compra: req.body.orden_compra,
