@@ -1,10 +1,10 @@
 module.exports = app => {
     const eventos = require("../controllers/evento.controller");
   
-    var router = require("express").Router();
+    let router = require("express").Router();
 
     // Create a new Evento
-    //router.post("/crear", eventos.create);
+    router.post("/crear", eventos.create);
   
     // Retrieve all Eventos
     router.get("/listar", eventos.findAll);
@@ -20,5 +20,7 @@ module.exports = app => {
   
     // Create a new Evento
     //router.delete("/borrar", eventos.deleteAll);
+
+    app.use("/api/eventos", router);
   
 }

@@ -1,7 +1,7 @@
 module.exports = app => {
     const ventas = require("../controllers/venta.controller");
   
-    var router = require("express").Router();
+    let router = require("express").Router();
   
     // Create a new Venta
     router.post("/crear", ventas.create);

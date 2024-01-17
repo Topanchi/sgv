@@ -77,15 +77,12 @@
                                 </thead>
                                 <tbody *ngFor="let item of eventos | paginate: { itemsPerPage: 10, currentPage: p }">
                                     <tr>
-                                        <td>
-                                            {{item.descripcion_venta}}
-                                        </td>
-                                        <td> <b>$</b>{{item.valor_venta}}</td>
-                                        <td>{{item.nombre_cliente}}</td>
-                                        <td>{{item.fecha_venta }}</td>
-                                        <td>
-                                            {{item.iduser.nombre}}
-                                        </td>
+                                        <td>{{item.num_factura}}</td>
+                                        <td> <b>$</b>{{item.valor_factura}}</td>
+                                        <td>{{item.fecha_ingreso | date}}</td>
+                                        <td>{{item.orden_compra}}</td>
+                                        <td class="text-center" *ngIf="item.cotizacion != ''; else vacio"><i class="fa fa-check"></i></td>
+                                        <td>{{item.iduser.nombre}}</td>
                                         <td class="text-center">
                                             <button type="submit" class="input-group-test btn btn-info" ngbTooltip="Ver evento" [routerLink]="['/evento/',item._id]">
                                                 <i class="fa fa-eye"></i>
@@ -98,9 +95,11 @@
                                             </button>  -->
                                         </td>
                                     </tr>
-                            
                                 </tbody>
                             </table>
+                            <ng-template #vacio>
+                                <td class="text-center"><i class="fa fa-times-circle"></i></td> 
+                            </ng-template>
                         </div>
                     </div>
                 </div>

@@ -112,10 +112,12 @@ function initial() {
         const categoriasRes = await Categorias.countDocuments();
         const productosRes = await Productos.countDocuments();
         const ventasRes = await Ventas.countDocuments();
-        console.log("*** Roles ingresados:::::::", res );
-        console.log("*** Usuarios registrados:::", userRes );
-        console.log("*** Categorias registrados:", categoriasRes );
-        console.log("*** Prodcutos registrados::", productosRes );
-        console.log("*** Ventas registrados:::::", ventasRes );
+        const eventosRes = await Eventos.countDocuments();
+        console.log("*** Roles ingresados::::::::", res );
+        console.log("*** Usuarios registrados::::", userRes );
+        console.log("*** Categorias registrados::", categoriasRes );
+        console.log("*** Prodcutos registrados:::", productosRes );
+        console.log("*** Ventas registrados::::::", ventasRes );
+        console.log("*** Eventos registrados:::::", eventosRes );
     })();
 }
