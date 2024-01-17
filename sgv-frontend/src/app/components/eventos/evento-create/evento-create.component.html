@@ -1,1 +1,78 @@
-<p>evento-create works!</p>
+<div class="wrapper">
+    <app-sidebar style="background: white !important;"></app-sidebar>
+    <div class="main">
+        <app-topbar></app-topbar>
+        <main class="content">
+            <div class="header">
+                <h1 class="header-title">
+                    Registrar evento
+                </h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="['/dasboard']">Dasboard</a></li>
+                        <li class="breadcrumb-item" style="color:#f5f5f5 !important"><a>Registrar</a></li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-xl-12 form-group">
+                    <div *ngIf="error_msg_venta" (click)="close_alert_error_venta()" class="col-12 col-lg-12 alert alert-danger alert-dismissible" role="alert">
+                        <div class="alert-message">
+                            <strong>{{this.error_msg_venta}}</strong>
+                        </div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Datos de la venta</h2>
+                        </div>
+                        <div class="card-body">
+                            <form #eventoForm="ngForm" (ngSubmit)="onSubmitEvento(eventoForm)">
+                                <div class="row">
+                                    <div class="col-lg-6 form-group">
+                                        <label><b>Trabajador que ingresa venta</b></label>
+                                        <input type="text" class="form-control" value="{{identity.nombre +' '+ identity.apellidos}}" readonly>
+                                    </div>
+                                    <div class="col-lg-6 form-group">
+                                        <label><b>Correo electrónico</b></label>
+                                        <input type="text" class="form-control" value="{{identity.email}}" readonly>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                   
+                                        <div class="col-lg-4 form-group">
+                                            <label><b>Nombre del Cliente</b></label>
+                                            <input type="text" class="form-control" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="evento.nombre_cliente">
+                                        </div>
+                                        <div class="col-lg-4 form-group">
+                                            <label><b>Descripción de la venta</b></label>
+                                            <input type="text" class="form-control" #descripcion_venta="ngModel" name="descripcion_venta" [(ngModel)]="evento.descripcion_venta" placeholder="Pequeña deescripción de la venta" autocomplete="off">
+                                        </div>
+                                        <div class="col-lg-4 form-group">
+                                            <label><b>Fecha venta</b></label>
+                                            <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" placeholder="Ejemplo 05/06/1999"> -->
+                                            <input type="text" class="form-control" id="fecha_venta" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="evento.fecha_venta" autocomplete="off">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    
+                                                </div>
+                                            </div> 
+                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-lg-12 col-xl-12 form-group">
+                                        <button type="submit" class="btn btn-success btn-block">Registrar evento</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
