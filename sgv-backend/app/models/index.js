@@ -14,6 +14,9 @@ db.detalleventa = require("./detalleventa.model");
 db.ventacontador = require("./ventacontador.model");
 db.montoventacontador = require("./montoventacontador.model");
 db.evento = require("./evento.model");
+db.facturaevento = require("./facturaevento.model");
+db.cotizacionevento = require("./cotizacionevento.model");
+db.ocevento = require("./ocevento.model");
 
 db.ROLES = ["user", "admin", "moderator"];
 

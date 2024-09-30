@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const multer = require('multer');
 const dbConfig = require("./app/config/db.config");
 
 const app = express();
@@ -15,6 +16,10 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+// Configuración de Multer para la carga de archivos
+/* const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }); */
 
 app.use((req,res,next)=>{
     res.header('Content-Type: application/json');
@@ -62,6 +67,7 @@ require("./app/routes/categoria.routes")(app);
 require("./app/routes/producto.routes")(app);
 require("./app/routes/venta.routes")(app);
 require("./app/routes/evento.routes")(app);
+require("./app/routes/file.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

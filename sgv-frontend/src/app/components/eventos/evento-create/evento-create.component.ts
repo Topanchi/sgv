@@ -3,13 +3,13 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { EventoService } from '../../../services/evento.service';
-import { ProductoService } from '../../../services/producto.service';
+import { FileService } from '../../../services/file.service';
 import { UserService } from '../../../services/user.service';
 import { ConstantesCategorias } from '../../../utils/constantes-categorias';
-import { DetalleVenta } from '../../../models/detalleventa';
 
 import datepickerFactory from 'jquery-datepicker';
 import datepickerJAFactory from 'jquery-datepicker/i18n/jquery.ui.datepicker-en-GB';
+
 
 declare const $: any; // avoid the error on $(this.eInput).datepicker();
 datepickerFactory($);
@@ -58,8 +58,14 @@ export class EventoCreateComponent implements OnInit {
   public total: number = 0;
   public model:any;
 
+  selectedFile: File | null = null;
+  nombreDoc: string = "";
+  tipoDoc: string = "";
+  tamanioDoc: number = 0;
+  idFacturaEvento: string = "";
+
   constructor(private _userService: UserService,
-    private _productoService: ProductoService,
+    private _fileService: FileService,
     private _eventoService: EventoService,
     private _router: Router
   ) {
@@ -92,10 +98,39 @@ export class EventoCreateComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    this.tamanioDoc = this.selectedFile.size;
+    this.nombreDoc = this.selectedFile.name;
+    this.tipoDoc = this.selectedFile.type;
+ 
+    console.log("this.selectedFile: ", typeof this.selectedFile, this.selectedFile); 
+    console.log("this.tamanioDoc: ",  this.tamanioDoc); 
+    console.log("this.nombreDoc: ", this.nombreDoc); 
+    console.log("this.tipoDoc: ", this.tipoDoc); 
+  }
+
+  uploadFile() {
+    if (this.selectedFile) {
+      this._fileService.uploadFacturaEvento(this.selectedFile, this.nombreDoc, this.tipoDoc, this.tamanioDoc)
+        .subscribe(response => {
+        const fileId = response.fileId;
+        // Use fileId to associate the uploaded file with the corresponding Evento
+        console.log(`File uploaded successfully with id ${fileId}`);
+        this.idFacturaEvento = fileId;
+      });
+      
+    } else {
+      console.warn('No file selected');
+    }
+
+    
+  }
+
   public onSubmitEvento(eventoForm:any){
     if(eventoForm.valid){
       console.log(eventoForm.value);
-      
+      console.log("this.idFacturaEvento: ", this.idFacturaEvento);
     }else{
       console.log("error en el formulario");
       this.error_msg_venta = 'Complete correctamente el formulario';

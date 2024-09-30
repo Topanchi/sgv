@@ -80,7 +80,7 @@
                                     <tr>
                                         <td>{{item.num_factura}}</td>
                                         <td> <b>$</b>{{item.valor_factura}}</td>
-                                        <td class="text-center" *ngIf="item.tiene_factura ; else vacio"><i class="fa fa-check"></i></td>
+                                        <td class="text-center" *ngIf="item.tiene_factura != null ; else vacio"><i class="fa fa-check"></i></td>
                                         <td>{{item.fecha_ingreso | date}}</td>
                                         <td class="text-center" *ngIf="item.orden_compra != ''; else vacio"><i class="fa fa-check"></i></td>
                                         <td class="text-center" *ngIf="item.cotizacion != ''; else vacio"><i class="fa fa-check"></i></td>

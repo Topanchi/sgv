@@ -43,7 +43,6 @@
                                     
                                 </div>
                                 <div class="row">
-                                   
                                         <div class="col-lg-4 form-group">
                                             <label><b>Nombre del Cliente</b></label>
                                             <input type="text" class="form-control" #nombre_cliente="ngModel" name="nombre_cliente" [(ngModel)]="evento.nombre_cliente">
@@ -56,12 +55,15 @@
                                             <label><b>Fecha venta</b></label>
                                             <!-- <input type="text" class="form-control" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="venta.fecha_venta" placeholder="Ejemplo 05/06/1999"> -->
                                             <input type="text" class="form-control" id="fecha_venta" #fecha_venta="ngModel" name="fecha_venta" [(ngModel)]="evento.fecha_venta" autocomplete="off">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    
-                                                </div>
-                                            </div> 
+                                            
                                         </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 form-group">
+                                        <label><b>Subir factura</b></label>
+                                        <input type="file" (change)="onFileSelected($event)" />
+                                        <button (click)="uploadFile()">Cargar Archivo</button>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-lg-12 col-xl-12 form-group">
